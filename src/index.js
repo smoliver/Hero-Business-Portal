@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Routes from './routes';
+
 const App = () => (
-	<div>
-		<h1>Bizness Portal</h1>
-	</div>
-);
+    <Routes />
+)
 
 ReactDOM.render(<App />, document.getElementById('business-portal'));
