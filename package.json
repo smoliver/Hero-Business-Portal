@@ -4,8 +4,8 @@
   "description": "Business portal for the Hero App - hero-app.com",
   "main": "src/index.js",
   "scripts": {
-    "start": "webpack-dev-server --content-base dist",
-    "build": "webpack",
+    "start": "webpack-dev-server --content-base dist --env=STAGE",
+    "build": "webpack --env=PROD",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,6 +15,7 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "css-loader": "^0.25.0",
+    "dotenv": "^2.0.0",
     "file-loader": "^0.9.0",
     "node-sass": "^3.12.0",
     "sass-loader": "^4.0.2",
