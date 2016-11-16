@@ -1,20 +1,10 @@
 import React from 'react';
 
-class Stat extends React.Component {
-    constructor() {
-        super();
-    }
-
-    componentDidMount() {
-
-    }
-
-    render() {
-        return (
-            <div>
-            </div>
-        );
-    }
-}
+const Stat = ({ name, value }) => (
+    <div>
+        <h3>{ name }</h3>
+        <h2>{ value }</h2>
+    </div>
+)
 
 export default Stat;

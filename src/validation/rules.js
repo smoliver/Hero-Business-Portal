@@ -48,9 +48,15 @@ let rules = {
     },
     decimal: {
         rule: value => {
-            return validator.isDecimal(value)
+            return value ? validator.isDecimal(value) : false
         },
         hint: () => <span className="form-error is-visible">Value must be a decimal number e.g. 1.23</span>
+    },
+    integer: {
+        rule: value => {
+            return value ? validator.isInt(value) : false;
+        },
+        hint: () => <span className="form-error is-visible">Value must be an integer</span>
     }
 }
 

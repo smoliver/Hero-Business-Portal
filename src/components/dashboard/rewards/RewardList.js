@@ -2,6 +2,7 @@ import React from 'react';
 
 import Reward from './Reward';
 import RewardForm from './RewardForm';
+import auth from '../../../auth';
 
 class RewardList extends React.Component {
     constructor() {
@@ -11,22 +12,61 @@ class RewardList extends React.Component {
         }
     }
 
+    toggleEditing(idx) {
+        this.state.rewards[idx].editing = !this.state.rewards[idx].editing;
+        this.setState({
+            rewards: this.state.rewards
+        });
+    }
+
+    updateReward(idx, reward) {
+        if (idx < 0) {
+            this.state.rewards.push(reward);
+        } else {
+            this.state.rewards.splice(idx, 1, reward);
+        }
+        this.setState({
+            rewards: this.state.rewards
+        });
+    }
+
     componentDidMount() {
         // Fetch rewards
+        fetch(`${process.env.API_DOMAIN}/rewards/business/${auth.getBusinessId()}/`,{
+            headers: {
+                'Authorization': `Token ${auth.getToken()}`
+            },
+            method: 'GET'
+        }).then(response => {
+            return response.json();
+        }).then(details => {
+            this.setState({
+                rewards: details.results
+            });
+        });
     }
 
     render() {
-        let rewardComponents = this.state.rewards.map((reward) => {
+        let rewardComponents = this.state.rewards.map((reward, idx) => {
+            let detailComponent;
             if (reward.editing) {
-                return <RewardForm reward={reward} />;
+                detailComponent = <RewardForm {...reward} onUpdate={this.updateReward.bind(this, idx)} />;
             } else {
-                return <Reward reward={reward} />;
+                detailComponent = <Reward {...reward} />;
             }
+            return (
+                <div key={reward.id}>
+                    {detailComponent}
+                    <button onClick={this.toggleEditing.bind(this, idx)}>
+                        {reward.editing ? 'Cancel' : 'Edit'}
+                    </button>
+                </div>
+            )
         });
         return (
             <div>
                 {rewardComponents}
-                <RewardForm />
+                <RewardForm onUpdate={this.updateReward.bind(this, -1)} />
             </div>
         );
     }
