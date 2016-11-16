@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Validation from 'react-validation';
-import serialize from 'form-serialize';
 import auth from '../../../auth';
 
 let { Form, Input, Button } = Validation.components;

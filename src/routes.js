@@ -10,8 +10,8 @@ const Routes = () => (
     <Router history={hashHistory}>
         <Route path="/" component={Main}>
             <Route path="dashboard" component={Dashboard} />
-            <Route path="sign-up" component={SignUp} />
-            <Route path="log-in" component={LogIn} />
+            <Route path="signup" component={SignUp} />
+            <Route path="login" component={LogIn} />
         </Route>
     </Router>
 )

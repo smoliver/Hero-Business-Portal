@@ -15,34 +15,36 @@ let storage = {
 
 export default {
     login(email, password, cb) {
-        cb = arguments[arguments.length - 1];
         if (localStorage.token) {
             if (cb) cb(true);
             this.onChange(true);
             return;
         }
-        email = "nwkotto@gmail.com";
-        password = "password123";
-        fetch(`${process.env.API_DOMAIN}/auth/login/business/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email,
-                    password
+        if (email && password) {
+            fetch(`${process.env.API_DOMAIN}/auth/login/business/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(details => {
-                storage.store(details);
-                if (cb) cb(true);
-                this.onChange(true);
-            })
-            .catch(err => {
-                if (cb) cb(false);
-                this.onChange(false);
-            });
+                .then(response => response.json())
+                .then(details => {
+                    storage.store(details);
+                    if (cb) cb(true);
+                    this.onChange(true);
+                })
+                .catch(err => {
+                    if (cb) cb(false);
+                    this.onChange(false);
+                });
+        } else {
+            if (cb) cb(false);
+            this.onChange(false);
+        }
     },
 
     getToken() {
@@ -55,7 +57,7 @@ export default {
 
     logout(cb) {
         storage.clear();
-        if (cb) cb();
+        if (cb) cb(false);
         this.onChange(false);
     },
 
