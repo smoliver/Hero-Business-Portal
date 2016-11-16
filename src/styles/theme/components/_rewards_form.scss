@@ -1,0 +1,81 @@
+/*---------------------------------------
+# Rewards Form
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+
+.rewards-form {
+  box-sizing: border-box;
+  @include display(flex);
+  @include align-items(top);
+  padding: 16px;
+  background-color: $white;
+  border-top: 4px solid $lime-tint-1;
+  margin-bottom: 4px;
+}
+
+.rewards-form--inputs {
+  @include flex(1);
+}
+
+.rewards-form--name {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.rewards-form--row {
+  @include display(flex);
+  @include align-items(center);
+  @include flex-direction(row-reverse);
+}
+
+.rewards-form--points-icon,
+.rewards-form--price-icon {
+  height: $icon-medium;
+  width: $icon-medium;
+  fill: $gray-tint-3;
+  margin: 0px .6em;
+  transition: fill      .2s;
+}
+
+.rewards-form--points-icon {
+  margin-left: 0px;
+}
+
+.rewards-form--points,
+.rewards-form--price {
+  @include flex-grow(1);
+  width: 40%;
+  margin: 0px;
+}
+
+.rewards-form--points:focus + .rewards-form--points-icon,
+.rewards-form--price:focus + .rewards-form--price-icon {
+  fill: $lime;
+}
+
+.rewards-form-actions {
+  margin-left: 16px;
+  margin-top: 12px;
+}
+
+.rewards-form-actions--action {
+  width: $icon-medium;
+  height: $icon-medium;
+  fill: $gray-shade-2;
+  transition: fill        .2s;
+}
+
+.rewards-form-actions--action:hover {
+  fill: $potential-color;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Tablet +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size) {
+
+}

@@ -1,0 +1,68 @@
+/*---------------------------------------
+# Card
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+
+.card-container {
+  @include display(flex);
+  @include flex(1);
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+  background-color: $white;
+}
+
+.card--header {
+  margin: 0px;
+  padding: 16px 32px;
+  background-color: $lime;
+  color: $white;
+}
+
+.card--sub-header {
+  margin: 0px;
+  padding: 16px 32px;
+  @include justify-content(space-between);
+  @include display(flex);
+  @include flex-wrap(wrap);
+  background-color: $lime-tint-1;
+  color: $white;
+}
+
+.card--content {
+  padding: 40px 32px;
+  #{$headers} {
+    color: $lime-shade-2;
+  }
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Tablet +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size) {
+  .card-container {
+    @include align-items(center);
+    @include justify-content(center);
+    padding: 4% 0px;
+  }
+
+  .card {
+    max-width: 480px;
+  }
+
+  .card.wide {
+    max-width: $tablet-size;
+  }
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Small Screen +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $small-screen-size) {
+
+}

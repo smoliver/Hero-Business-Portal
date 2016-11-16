@@ -1,0 +1,79 @@
+/*---------------------------------------
+# form-grid
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+.form-grid {
+  @include display(flex);
+  @include flex-wrap(wrap);
+  @include justify-content(space-between);
+}
+
+.form-grid--row {
+  @include display(flex);
+  @include flex-wrap(wrap);
+  @include justify-content(space-between);
+}
+
+.form-grid .span4 > *,
+.form-grid .span3 > *,
+.form-grid .span2 > *,
+.form-grid .span1 > * {
+  width: 100%;
+}
+
+.form-grid .span4,
+.form-grid .span3,
+.form-grid .span2,
+.form-grid .span1,
+.form-grid--row {
+  width: 100%;
+}
+
+.form-grid .span4,
+.form-grid .span3,
+.form-grid .span2,
+.form-grid .span1 {
+  margin-bottom: 2em;
+}
+
+.form-grid--row .span4:last-child,
+.form-grid--row .span3:last-child,
+.form-grid--row .span2:last-child,
+.form-grid--row .span1:last-child {
+  margin-bottom: 0px;
+}
+
+.form-grid * {
+  max-width: 100%;
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Small Screen +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size){
+  .form-grid .span4 {
+    width: 100%;
+  }
+
+  .form-grid .span3 {
+    width: 74%;
+  }
+
+  .form-grid .span2 {
+    width: 48%;
+  }
+
+  .form-grid  .span1 {
+    width: 22%;
+  }
+
+  .form-grid--row .span4,
+  .form-grid--row .span3,
+  .form-grid--row .span2,
+  .form-grid--row .span1 {
+    margin-bottom: 0px;
+  }
+}

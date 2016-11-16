@@ -1,0 +1,47 @@
+/*---------------------------------------
+# Button
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+button,
+.button,
+input[type="submit"] {
+  background-color: $lime;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  color: $white;
+  border-radius: 1px;
+  padding: 10px 30px;
+  border: none;
+  outline: none;
+  font-size: inherit;
+  font-family: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  letter-spacing: .1em;
+  transition: 0.2s;
+
+} 
+
+button:hover,
+.button:hover,
+input[type="submit"]:hover {
+  background-color: $lime-tint-1;
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Tablet +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size){
+  button,
+  .button,
+  input[type="submit"] {
+    width: auto;
+    max-width: 100%;
+  }
+}

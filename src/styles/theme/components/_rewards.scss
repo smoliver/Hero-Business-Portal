@@ -1,0 +1,146 @@
+/*---------------------------------------
+# Rewards
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+
+.rewards {
+  @include display(flex);
+  @include flex-direction(column);
+  width: 100%;
+}
+
+.rewards--header {
+  display: none;
+}
+
+.rewards-list {
+  @include flex(1);
+  overflow: auto;
+  padding: 4px 0px;
+  margin: 0px;
+}
+
+.rewards-item {
+  box-sizing: border-box;
+  @include display(flex);
+  @include justify-content(left);
+  @include align-items(center);
+  background-color: $white;
+  margin-bottom: 4px;
+  padding: 16px;
+}
+
+.rewards-item:last-child {
+  margin-bottom:0px;
+}
+
+.rewards-item--icon {
+  width: 64px;
+  height: 64px;
+}
+
+.rewards-item--information {
+  box-sizing: border-box;
+  @include flex(1);
+  margin: 0px 32px;
+  text-align: justify;
+}
+
+.rewards-item--title {
+  display: inline-block;
+  margin-bottom: .5em;
+  width: 100%;
+  color: $black;
+}
+
+.rewards-item--points {
+  display: inline-block;
+  width: 30%;
+  min-width: 64px;
+  margin: 0px;
+  margin-right: 4%;
+  text-align: left;
+  color: $lime;
+  fill: $lime;
+}
+
+.rewards-item--points-icon {
+  height: 1.2em;
+  width: 1.2em;
+  vertical-align: middle;
+  margin-right: .2em
+}
+
+.rewards-item--price {
+  display: inline-block;
+  width: 20%;
+  min-width: 64px;
+  margin: 0px;
+  text-align: left;
+  color: $gray-shade-2;
+  fill: $gray-shade-2;
+}
+
+.rewards-item--price-icon {
+  height: 1.2em;
+  width: 1.2em;
+  vertical-align: middle;
+}
+
+.rewards-item-actions {
+  opacity: 0;
+  transition: opacity     .3s;
+}
+
+.rewards-item:hover .rewards-item-actions {
+  opacity: 1;
+}
+
+.rewards-item-actions--action {
+  display: block;
+  width: $icon-medium;
+  height: $icon-medium;
+  margin-bottom: 12px;
+  fill: $gray-shade-2;
+  transition: fill        .2s;
+}
+
+.rewards-item-actions--action:last-child {
+  margin-bottom: 0px
+}
+
+.rewards-item-actions--action:hover {
+  fill: $potential-color;
+}
+
+.rewards-item--delete {
+  margin-bottom: 12px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Tablet +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size) {
+
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Small Screen +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $small-screen-size) {
+  .rewards {
+    width: 480px;
+  }
+
+  .rewards--header {
+    display: block;
+    background-color: $lime;
+    padding: 12px;
+    text-align: center;
+    color: $white;
+    margin: 0px;
+  }
+}

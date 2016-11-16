@@ -1,0 +1,28 @@
+/*---------------------------------------
+# Content
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+
+.content {
+	background-color: $gray-tint-4;
+	@include flex(1);
+	@include display(flex);
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Tablet +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size) {
+
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Small Screen +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $small-screen-size) {
+
+}

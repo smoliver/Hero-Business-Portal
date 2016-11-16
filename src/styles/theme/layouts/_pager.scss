@@ -1,0 +1,25 @@
+/*---------------------------------------
+# Pager
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+
+.pager {
+  overflow: hidden;
+}
+
+.pager--container {
+  @include display(flex);
+  width: 300%;
+  position: relative;
+}
+
+.pager--display {
+  box-sizing: border-box;
+  position: relative;
+  width: 33.33%;
+}
+
+

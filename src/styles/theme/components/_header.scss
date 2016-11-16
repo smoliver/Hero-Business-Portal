@@ -1,0 +1,46 @@
+/*---------------------------------------
+# Header
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+
+.header {
+	position: absolute;
+	left: 0;
+	top: 0;
+	@include display(flex);
+	@include justify-content(space-between);
+	@include align-items(center);
+	box-sizing: border-box;
+	height: 42px;
+	width: 100%;
+	background-color: $white;
+}
+
+.header--logo-container {
+	box-sizing: border-box;
+	height: 100%;
+	padding: 8px;
+}
+
+.header--logo {
+	height: 100%;
+	width: auto;
+	display: inline-block;
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Tablet +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size) {
+
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Small Screen +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $small-screen-size) {
+
+}

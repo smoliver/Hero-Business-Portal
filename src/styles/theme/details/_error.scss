@@ -1,0 +1,25 @@
+/*---------------------------------------
+# Button
+---------------------------------------*/
+
+.error {
+  box-sizing: border-box;
+  padding: 0px 1em;
+  color: $failure-color;
+  font-size: .8em;
+  opacity: 0;
+  max-height: 0px;
+  transition: opacity     .2s,
+              padding     .1s,
+              max-height  .5s;
+}
+
+.error a {
+  text-decoration: underline;
+}
+
+.error.display {
+  opacity: 1;
+  padding: .7px 1em;
+  max-height: 100px;
+}

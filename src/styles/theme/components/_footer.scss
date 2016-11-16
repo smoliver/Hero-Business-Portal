@@ -1,0 +1,40 @@
+/*---------------------------------------
+# Footer
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+
+.footer {
+	height: 32px;
+	width: 100%;
+	background-color: $white;
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(space-between);
+	color: $gray-tint-2;
+	font-size: 10pt;
+}
+
+.footer a {
+	color: $lime;
+}
+
+.footer--links {
+
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Tablet +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size) {
+
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Small Screen +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $small-screen-size) {
+
+}

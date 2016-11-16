@@ -1,0 +1,81 @@
+/*---------------------------------------
+# Typography
+---------------------------------------*/
+
+* {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+body {
+  font-family: Raleway, "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: 400;
+}
+
+h1, 
+h2 {
+  margin-top: 0px;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0px;
+  font-weight: 400;
+}
+
+p {
+  margin-top: 0px;
+  line-height: 1.45em;
+}
+
+p:last-child {
+  margin-bottom: 0px;
+}
+
+body,
+input,
+p   { font-size: 11pt };
+h6  { font-size: 11pt };
+h5  { font-size: 14pt };
+h4  { font-size: 16pt };
+h3  { font-size: 18pt };
+h2  { font-size: 20pt };
+h1  { font-size: 24pt };
+
+@media screen and (min-width: $tablet-size){
+  body,
+  input,
+  p   { font-size: 12pt };
+  h6  { font-size: 12pt };
+  h5  { font-size: 14pt };
+  h4  { font-size: 16pt };
+  h3  { font-size: 18pt };
+  h2  { font-size: 20pt };
+  h1  { font-size: 24pt };
+}
+
+@media screen and (min-width: $small-screen-size){
+  body,
+  input,
+  p   { font-size: 12pt };
+  h6  { font-size: 12pt };
+  h5  { font-size: 14pt };
+  h4  { font-size: 16pt };
+  h3  { font-size: 18pt };
+  h2  { font-size: 22pt };
+  h1  { font-size: 26pt };
+}
+
+@media screen and (min-width: $large-screen-size){
+  body,
+  input,
+  p   { font-size: 12pt };
+  h6  { font-size: 12pt };
+  h5  { font-size: 14pt };
+  h4  { font-size: 18pt };
+  h3  { font-size: 16pt };
+  h2  { font-size: 24pt };
+  h1  { font-size: 28pt };
+}

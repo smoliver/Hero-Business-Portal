@@ -5,7 +5,7 @@ import StatList from './stats/StatList';
 
 const Dashboard = () => (
     <div>
-    	<h2>Dashboard</h2>
+        <h2>Dashboard</h2>
         <RewardList />
         <StatList />
     </div>

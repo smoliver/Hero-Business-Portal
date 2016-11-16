@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
 import Validation from 'react-validation';
 
 import auth from '../../auth';
@@ -36,24 +37,26 @@ class LogIn extends React.Component {
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <h2>Log In</h2>
-                <div>
-                    <label>
-                        Email*
-                        <Input type='email' value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Password*
-                        <Input type='password' value={this.state.user.password} onChange={this.onValueChange.bind(this, 'password')} name='password' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <Button>Log In</Button>
-                </div>
-            </Form>
+            <div className="card-container">
+                <Form className="card" onSubmit={this.handleSubmit}>
+                    <h2 className="card--header">
+                        Log In
+                    </h2>
+                    <p className="card--sub-header">
+                        <Link to="/sign-up">Create an Account</Link>
+                        <Link>Forgot your password?</Link>
+                    </p>
+                    <div className="card--content form-grid">
+                        <div className="span4">
+                            <Input type="email" placeholder="email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
+                        </div>
+                        <div className="span4">
+                            <Input type="password" value={this.state.user.password} onChange={this.onValueChange.bind(this, 'password')} name='password' validations={['required']}/>
+                        </div>
+                        <Button>Log In</Button>
+                    </div>
+                </Form>
+            </div>
         )
     }
 }

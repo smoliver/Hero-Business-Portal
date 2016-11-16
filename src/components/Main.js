@@ -1,7 +1,10 @@
+import '../styles/style.scss';
+
 import React from 'react';
 import { withRouter } from 'react-router';
 
 import Header from './Header';
+import Footer from './Footer';
 import auth from '../auth';
 
 class Main extends React.Component {
@@ -28,7 +31,10 @@ class Main extends React.Component {
         return (
             <div>
                 <Header title={'Bizness Portal'} logout={auth.logout.bind(auth, null)} />
-                { this.props.children }
+                <div className="content">
+                    { this.props.children }
+                </div>
+                <Footer />
             </div>
         )
     }

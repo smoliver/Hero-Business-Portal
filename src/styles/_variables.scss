@@ -1,0 +1,48 @@
+/*---------------------------------------
+# Variables
+---------------------------------------*/
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,700);
+
+$white:                   #FFF;
+$black:                   #191919;
+
+// Gray
+$gray-tint-4:             #F5F5F7;
+$gray-tint-3:             #DCDCDF;
+$gray-tint-2:             #C4C3C6;
+$gray-tint-1:             #ABAAAE;
+$gray:                    #929295;
+$gray-shade-1:            #79797D;
+$gray-shade-2:            #616064;
+$gray-shade-3:            #48474C;
+$gray-shade-4:            #2F2E33;
+
+// lime
+$lime-tint-4:             #FAFFEB;
+$lime-tint-3:             #DDF5C5;
+$lime-tint-2:             #C1EC9F;
+$lime-tint-1:             #A4E278;
+$lime:                    #87D852;
+$lime-shade-1:            #6EB94E;
+$lime-shade-2:            #559A49;
+$lime-shade-3:            #3B7A45;
+$lime-shade-4:            #225B40;
+
+$failure-color:           #C10E27;
+$potential-color:         #38A6F9;
+
+$icon-small:              16px;
+$icon-medium:             24px; 
+$icon-large:              32px;
+
+// Screen Sizes
+$tablet-size:            700px;
+$small-screen-size:      900px;
+$large-screen-size:      1200px;
+
+// Convenience Selectors
+$headers: ('h1', 'h2', 'h3', 'h4', 'h5', 'h6');
+
+//selectors
+$text-input:      'input:not([type=submit]):not([type=file]):not([type=checkbox])';

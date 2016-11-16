@@ -1,0 +1,90 @@
+/*---------------------------------------
+# Elements
+---------------------------------------*/
+
+body {
+  position: relative;
+  box-sizing: border-box;
+  padding-top: 42px;
+  min-height: 100vh;
+  min-width: 100%;
+  @include display(flex);
+  @include flex-direction(column);
+  color: $gray-shade-2;
+  background-color: $white;
+  margin: 0;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+b {
+  font-weight: 700;
+}
+
+footer,
+header {
+  box-sizing: border-box;
+	padding-left: 4%;
+	padding-right: 4%;
+  overflow: hidden;
+  width: 100%;
+}
+
+fieldset {
+  display: block;
+  border-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+main {
+  overflow: hidden;
+}
+
+select {
+  box-sizing: border-box;
+  background-color: transparent;
+  font-size: inherit;
+  color: inherit;
+  padding: 0px;
+  border-width: .5em .75em;
+  border-color: transparent;
+  border-style: solid;
+  border-radius: 0px;
+  outline: 2px solid $lime;
+  outline-offset: -2px;
+  transition: outline         .2s,
+              color           .2s;
+}
+
+select:hover,
+select:focus,
+select:active {
+  outline-color: $lime-tint-1;
+}
+
+input[type="checkbox"] {
+  background-color: $gray-tint-2;
+}
+
+#{$text-input} {
+  box-sizing: border-box;
+  padding: .8em 1em;
+  outline: none;
+  border: 3px solid $gray-tint-3;
+  background-color: $white;
+  color: inherit;
+  transition: border-color      .3s,
+              color           .2s;
+}
+
+#{$text-input}.failure {
+  border-color: $failure-color;
+}
+
+#{$text-input}:focus {
+  border-color: $lime;
+}
