@@ -11,7 +11,7 @@ let rules = {
             return value.toString().trim();
         },
         hint: value => {
-            return <span className='form-error is-visible'>Required</span>
+            return <p className='error'>Required</p>
         }
     },
     email: {
@@ -19,7 +19,7 @@ let rules = {
             return validator.isEmail(value);
         },
         hint: value => {
-            return <span className='form-error is-visible'>{value} isnt an Email.</span>
+            return <p className='error'>{value} isnt an Email.</p>
         }
     },
     password: {
@@ -38,25 +38,25 @@ let rules = {
 
             return password.value === passwordConfirm.value;
         },
-        hint: () => <span className="form-error is-visible">Passwords should be equal.</span>
+        hint: () => <p className="error">Passwords should be equal.</p>
     },
     min_len_8: {
         rule: value => {
             return value.toString().length >= 8
         },
-        hint: () => <span className="form-error is-visible">Must be at least 8 characters long.</span>
+        hint: () => <p className="error">Must be at least 8 characters long.</p>
     },
     decimal: {
         rule: value => {
             return value ? validator.isDecimal(value) : false
         },
-        hint: () => <span className="form-error is-visible">Value must be a decimal number e.g. 1.23</span>
+        hint: () => <p className="error">Value must be a decimal number e.g. 1.23</p>
     },
     integer: {
         rule: value => {
             return value ? validator.isInt(value) : false;
         },
-        hint: () => <span className="form-error is-visible">Value must be an integer</span>
+        hint: () => <p className="error">Value must be an integer</p>
     }
 }
 

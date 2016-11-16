@@ -30,7 +30,7 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <Header title={'Bizness Portal'} logout={auth.logout.bind(auth, null)} />
+                <Header loggedIn={this.state.loggedIn} logout={auth.logout.bind(auth, null)} />
                 <div className="content">
                     { this.props.children }
                 </div>

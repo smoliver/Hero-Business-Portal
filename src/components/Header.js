@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = ({ title, logout }) => {
+const Header = ({ loggedIn, logout }) => {
     let svgString = `<svg class="header--logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            width="140px" height="42px" viewBox="0 0 140 42" enable-background="new 0 0 140 42" xml:space="preserve">
           <path fill="#87D852" d="M16.965,2.702c-7.28,0-13.184,5.903-13.184,13.183c0,11.026,11.167,23.414,13.184,23.414
@@ -31,11 +31,20 @@ const Header = ({ title, logout }) => {
             s-2.033-0.665-3.237-0.665c-1.204,0-2.289,0.222-3.254,0.665c-0.966,0.443-1.783,1.073-2.453,1.891
             c-0.67,0.818-1.188,1.812-1.55,2.981C116.586,17.647,116.404,18.947,116.404,20.378z"/>
         </svg>`;
+    let authComponent;
+    if (loggedIn) {
+        authComponent = <button onClick={logout}>Log Out</button>
+    }
+    let accountComponent = (
+        <div className="account">
+            {authComponent}
+        </div>
+    );
     return (
         <div className="header">
             <div className="header--logo-container" dangerouslySetInnerHTML={{ __html: svgString }}>
             </div>
-            <button onClick={logout}>Log Out</button>
+            {accountComponent}
         </div>
     )
 }

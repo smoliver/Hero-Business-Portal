@@ -1,18 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Validation from 'react-validation';
+import { Link } from 'react-router';
 
 import auth from '../../auth';
 
 let { Form, Input, Button } = Validation.components;
 
 class SignUp extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.nextPage = this.nextPage.bind(this);
 
         this.state = {
+            page: props.page ? props.page % 3 : 0,
             user: {
                 email: '',
                 password1: '',
@@ -30,6 +33,15 @@ class SignUp extends React.Component {
                 location_longitude: ''
             }
         }
+    }
+
+    nextPage(e) {
+        e.preventDefault();
+
+        let nextPage = this.state.page + 1;
+        this.setState({
+            page: nextPage
+        });
     }
 
     handleSubmit(e) {
@@ -60,97 +72,99 @@ class SignUp extends React.Component {
     }
 
     render() {
-        return (
-            <Form onSubmit={this.handleSubmit}>
-                <h2>Sign Up</h2>
-                <div>
-                    <label>
-                        Email*
-                        <Input type='email' value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Password*
-                        <Input type='password' value={this.state.user.password1} onChange={this.onValueChange.bind(this, 'password1')} name='password1' validations={['required', 'password', 'min_len_8']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Confirm Password*
-                        <Input type='password' value={this.state.user.password2} onChange={this.onValueChange.bind(this, 'password2')} name='password2' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        First Name*
-                        <Input type='text' value={this.state.user.first_name} onChange={this.onValueChange.bind(this, 'first_name')} name='first_name' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Last Name*
-                        <Input type='text' value={this.state.user.last_name} onChange={this.onValueChange.bind(this, 'last_name')} name='last_name' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Job Title
-                        <Input type='text' value={this.state.user.job_title} onChange={this.onValueChange.bind(this, 'job_title')} name='job_title' validations={[]}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Business Name*
-                        <Input type='text' value={this.state.user.business_name} onChange={this.onValueChange.bind(this, 'business_name')} name='business_name' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Business Phone Number
-                        <Input type='text' value={this.state.user.business_phone_number} onChange={this.onValueChange.bind(this, 'business_phone_number')} name='business_phone_number' validations={[]}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Address
-                        <Input type='text' value={this.state.user.location_route} onChange={this.onValueChange.bind(this, 'location_route')} name='location_route' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        City
-                        <Input type='text' value={this.state.user.location_city} onChange={this.onValueChange.bind(this, 'location_city')} name='location_city' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        State
-                        <Input type='text' value={this.state.user.location_state} onChange={this.onValueChange.bind(this, 'location_state')} name='location_state' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Postal Code
-                        <Input type='text' value={this.state.user.location_zipcode} onChange={this.onValueChange.bind(this, 'location_zipcode')} name='location_zipcode' validations={['required']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Latitude
-                        <Input type='text' value={this.state.user.location_latitude} onChange={this.onValueChange.bind(this, 'location_latitude')} name='location_latitude' validations={['required', 'decimal']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Longitude
-                        <Input type='text' value={this.state.user.location_longitude} onChange={this.onValueChange.bind(this, 'location_longitude')} name='location_longitude' validations={['required', 'decimal']}/>
-                    </label>
-                </div>
-                <div>
+        let accountSection = (
+            <div className="card--content pager--display">
+                <Form onSubmit={this.nextPage}>
+                    <div className="form-grid">
+                        <h3>Account</h3>
+                        <div className="span2">
+                            <Input type="text" placeholder="First Name" value={this.state.user.first_name} onChange={this.onValueChange.bind(this, 'first_name')} name="first_name" validations={['required']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="text" placeholder="Last Name" value={this.state.user.last_name} onChange={this.onValueChange.bind(this, 'last_name')} name="last_name" validations={['required']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="email" placeholder="Email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name="email" validations={['required', 'email']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="text" placeholder="Position" value={this.state.user.job_title} onChange={this.onValueChange.bind(this, 'job_title')} name="job_title" validations={[]}/>
+                        </div>
+                        <div className="span4">
+                            <div className="form-grid--row">
+                                <div className="span2">
+                                    <Input type="password" placeholder="Password" value={this.state.user.password1} onChange={this.onValueChange.bind(this, 'password1')} name="password1" validations={['required', 'password', 'min_len_8']}/>
+                                </div>
+                                <div className="span2">
+                                    <Input type="password" placeholder="Confirm Password" value={this.state.user.password2} onChange={this.onValueChange.bind(this, 'password2')} name="password2" validations={['required']}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <Button>Continue</Button>
+                </Form>
+            </div>
+        );
+        let businessSection = (
+            <div className="card--content pager--display">
+                <Form onSubmit={this.nextPage}>
+                    <div className="form-grid">
+                        <h3>Business</h3>
+                        <div className="span2">
+                            <Input type="text" placeholder="Business Name" value={this.state.user.business_name} onChange={this.onValueChange.bind(this, 'business_name')} name='business_name' validations={['required']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="text" placeholder="Phone Number" value={this.state.user.business_phone_number} onChange={this.onValueChange.bind(this, 'business_phone_number')} name='business_phone_number' validations={[]}/>
+                        </div>
+                    </div>
+                    <Button>Continue</Button>
+                </Form>
+            </div>
+        );
+        let addressSection = (
+            <div className="card--content pager--display">
+                <Form onSubmit={this.handleSubmit}>
+                    <div className="form-grid">
+                        <h3>Business Address</h3>
+                        <div className="span2">
+                            <Input type="text" placeholder="Address" value={this.state.user.location_route} onChange={this.onValueChange.bind(this, 'location_route')} name='location_route' validations={['required']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="text" placeholder="City" value={this.state.user.location_city} onChange={this.onValueChange.bind(this, 'location_city')} name='location_city' validations={['required']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="text" placeholder="State" value={this.state.user.location_state} onChange={this.onValueChange.bind(this, 'location_state')} name='location_state' validations={['required']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="text" placeholder="Postal Code" value={this.state.user.location_zipcode} onChange={this.onValueChange.bind(this, 'location_zipcode')} name='location_zipcode' validations={['required']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="text" placeholder="Latitude" value={this.state.user.location_latitude} onChange={this.onValueChange.bind(this, 'location_latitude')} name='location_latitude' validations={['required', 'decimal']}/>
+                        </div>
+                        <div className="span2">
+                            <Input type="text" placeholder="Longitude" value={this.state.user.location_longitude} onChange={this.onValueChange.bind(this, 'location_longitude')} name='location_longitude' validations={['required', 'decimal']}/>
+                        </div>
+                    </div>
                     <Button>Submit</Button>
+                </Form>
+            </div>
+        )
+        let pages = [accountSection, businessSection, addressSection];
+        return (
+            <div className="card-container">
+                <div className="card wide">
+                    <h2 className="card--header">
+                        Sign Up
+                    </h2>
+                    <p className="card--sub-header">
+                        <Link to="/login">Already have an account?</Link >
+                    </p>
+                    <div className="pager">
+                        <div className="pager--container">
+                            {pages[this.state.page]}
+                        </div>
+                    </div>
                 </div>
-            </Form>
+            </div>
         )
     }
 }

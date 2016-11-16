@@ -43,15 +43,15 @@ class LogIn extends React.Component {
                         Log In
                     </h2>
                     <p className="card--sub-header">
-                        <Link to="/sign-up">Create an Account</Link>
+                        <Link to="/signup">Create an Account</Link>
                         <Link>Forgot your password?</Link>
                     </p>
                     <div className="card--content form-grid">
                         <div className="span4">
-                            <Input type="email" placeholder="email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
+                            <Input type="email" placeholder="Email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
                         </div>
                         <div className="span4">
-                            <Input type="password" value={this.state.user.password} onChange={this.onValueChange.bind(this, 'password')} name='password' validations={['required']}/>
+                            <Input type="password" placeholder="Password" value={this.state.user.password} onChange={this.onValueChange.bind(this, 'password')} name='password' validations={['required']}/>
                         </div>
                         <Button>Log In</Button>
                     </div>
