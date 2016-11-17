@@ -7,6 +7,9 @@
 $white:                   #FFF;
 $black:                   #191919;
 
+//transparencies
+$black-30:                rgba(25, 25, 25, .3);
+
 // Gray
 $gray-tint-4:             #F5F5F7;
 $gray-tint-3:             #DCDCDF;
@@ -32,9 +35,11 @@ $lime-shade-4:            #225B40;
 $failure-color:           #C10E27;
 $potential-color:         #38A6F9;
 
+// Standard sizes
 $icon-small:              16px;
 $icon-medium:             24px; 
 $icon-large:              32px;
+$icon-xlarge:             48px;
 
 // Screen Sizes
 $tablet-size:            700px;

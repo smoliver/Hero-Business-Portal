@@ -24,20 +24,28 @@
 }
 
 .rewards-item {
+  position: relative;
   box-sizing: border-box;
+  box-shadow: 0px 0px 0px 0px $black-30;
   @include display(flex);
   @include justify-content(left);
   @include align-items(center);
   background-color: $white;
-  margin-bottom: 4px;
-  padding: 16px;
+  margin: 0px 4px 4px;
+  transition: box-shadow      .3s;
 }
 
 .rewards-item:last-child {
   margin-bottom:0px;
 }
 
+.rewards-item.selected {
+  z-index: 1;
+  box-shadow: 0px 0px 4px 0px $black-30;
+}
+
 .rewards-item--icon {
+  padding: 16px;
   width: 64px;
   height: 64px;
 }
@@ -45,7 +53,7 @@
 .rewards-item--information {
   box-sizing: border-box;
   @include flex(1);
-  margin: 0px 32px;
+  padding: 16px;
   text-align: justify;
 }
 
@@ -91,11 +99,14 @@
 }
 
 .rewards-item-actions {
+  padding: 16px;
   opacity: 0;
   transition: opacity     .3s;
 }
 
-.rewards-item:hover .rewards-item-actions {
+
+.rewards-item:hover .rewards-item-actions,
+.rewards-item.selected .rewards-item-actions {
   opacity: 1;
 }
 
@@ -118,13 +129,6 @@
 
 .rewards-item--delete {
   margin-bottom: 12px;
-}
-
-/* * * * * * * * * * * * * * * * * * * * 
- *  Tablet +
- * * * * * * * * * * * * * * * * * * * */
-@media screen and (min-width: $tablet-size) {
-
 }
 
 /* * * * * * * * * * * * * * * * * * * * 
