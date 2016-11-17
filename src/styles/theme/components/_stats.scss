@@ -1,0 +1,60 @@
+/*---------------------------------------
+# Rewards
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Mobile +
+ * * * * * * * * * * * * * * * * * * * */
+
+.stats {
+  display: block;
+  @include display(flex);
+  @include flex-direction(column);
+  @include align-items (flex-start);
+  @include flex(1);
+}
+
+.stats-header {
+  
+}
+
+.stats-card {
+  @include display(flex);
+  @include align-items(center);
+  margin-bottom: 16px;
+  background-color: $lime;
+  color: $white;
+  fill: $white;
+}
+
+.stats-item {
+  padding: 32px;
+  text-align: center;
+  display: inline-block;
+}
+
+.stats-icon {
+  height: $icon-xlarge;
+  width: $icon-xlarge;
+}
+
+.stats-item--number {
+  font-size: 32pt;
+  margin-bottom: 1em;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+}
+
+.stats-item--title {
+  font-size: 11pt;
+  margin-bottom: 0px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Small Screen +
+ * * * * * * * * * * * * * * * * * * * */
+
+@media screen and (min-width: $small-screen-size){
+  .stats {
+    margin-left: 16px;
+  }
+}
