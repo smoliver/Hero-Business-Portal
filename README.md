@@ -5,8 +5,8 @@
 Before running or building, you need to add a .env file to the root of the project (we use dotenv - https://github.com/motdotla/dotenv).  Your .env should look something like this:
 
 ```
-	PROD_API_DOMAIN='https://example.com'
-	STAGE_API_DOMAIN='https://stage.example.com'
+	PROD_API_DOMAIN='https://heroapi3.herokuapp.com'
+	STAGE_API_DOMAIN='https://heroapi3-staging.herokuapp.com'
 ```
 If, for whatever reason, you want to build the app with a different api domain, just add <ENV>_API_DOMAIN to the .env and run 'webpack --env=<ENV>'.
 
