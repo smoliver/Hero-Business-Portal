@@ -41,11 +41,11 @@ const Header = ({ loggedIn, logout }) => {
         </div>
     );
     return (
-        <div className="header">
+        <header className="header">
             <div className="header--logo-container" dangerouslySetInnerHTML={{ __html: svgString }}>
             </div>
             {accountComponent}
-        </div>
+        </header>
     )
 }
 

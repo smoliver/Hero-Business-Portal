@@ -3,13 +3,6 @@
 ---------------------------------------*/
 
 body {
-  position: relative;
-  box-sizing: border-box;
-  padding-top: 42px;
-  min-height: 100vh;
-  min-width: 100%;
-  @include display(flex);
-  @include flex-direction(column);
   color: $gray-shade-2;
   background-color: $white;
   margin: 0;

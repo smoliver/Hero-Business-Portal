@@ -47,12 +47,8 @@ class LogIn extends React.Component {
                         <Link>Forgot your password?</Link>
                     </p>
                     <div className="card--content form-grid">
-                        <div className="span4">
-                            <Input type="email" placeholder="Email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
-                        </div>
-                        <div className="span4">
-                            <Input type="password" placeholder="Password" value={this.state.user.password} onChange={this.onValueChange.bind(this, 'password')} name='password' validations={['required']}/>
-                        </div>
+                        <Input containerClassName="span4" errorContainerClassName="error" errorClassName="failure" type="email" placeholder="Email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
+                        <Input containerClassName="span4" errorContainerClassName="error" errorClassName="failure" type="password" placeholder="Password" value={this.state.user.password} onChange={this.onValueChange.bind(this, 'password')} name='password' validations={['required']}/>
                         <Button>Log In</Button>
                     </div>
                 </Form>
