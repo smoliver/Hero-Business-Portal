@@ -51,6 +51,11 @@
   margin: 0px;
 }
 
+.rewards-form--points input,
+.rewards-form--price input {
+  width: 100%;
+}
+
 .rewards-form--points:focus + .rewards-form--points-icon,
 .rewards-form--price:focus + .rewards-form--price-icon {
   fill: $lime;

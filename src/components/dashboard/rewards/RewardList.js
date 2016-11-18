@@ -32,9 +32,9 @@ class RewardList extends React.Component {
             )
         });
         return (
-            <div>
+            <ul className="rewards-list">
                 {rewardComponents}
-            </div>
+            </ul>
         );
     }
 }
