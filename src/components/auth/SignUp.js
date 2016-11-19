@@ -107,25 +107,15 @@ class SignUp extends React.Component {
         let addressSection = (
             <div className="card--content pager--display">
                 <Form onSubmit={this.handleSubmit}>
+                    <h3>Business Address</h3>
                     <div className="form-grid">
-                        <h3>Business Address</h3>
                         <div className="span2">
-                            <Input type="text" placeholder="Address" value={this.state.user.location_route} onChange={this.onValueChange.bind(this, 'location_route')} name='location_route' validations={['required']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="City" value={this.state.user.location_city} onChange={this.onValueChange.bind(this, 'location_city')} name='location_city' validations={['required']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="State" value={this.state.user.location_state} onChange={this.onValueChange.bind(this, 'location_state')} name='location_state' validations={['required']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="Postal Code" value={this.state.user.location_zipcode} onChange={this.onValueChange.bind(this, 'location_zipcode')} name='location_zipcode' validations={['required']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="Latitude" value={this.state.user.location_latitude} onChange={this.onValueChange.bind(this, 'location_latitude')} name='location_latitude' validations={['required', 'decimal']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="Longitude" value={this.state.user.location_longitude} onChange={this.onValueChange.bind(this, 'location_longitude')} name='location_longitude' validations={['required', 'decimal']}/>
+                            <Input containerClassName="span4" errorClassName="failure" type="text" placeholder="Address" value={this.state.user.location_route} onChange={this.onValueChange.bind(this, 'location_route')} name='location_route' validations={['required']}/>
+                            <Input containerClassName="span4" errorClassName="failure" type="text" placeholder="City" value={this.state.user.location_city} onChange={this.onValueChange.bind(this, 'location_city')} name='location_city' validations={['required']}/>
+                            <div className="form-grid--row">
+                                <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="State" value={this.state.user.location_state} onChange={this.onValueChange.bind(this, 'location_state')} name='location_state' validations={['required']}/>
+                                <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Postal Code" value={this.state.user.location_zipcode} onChange={this.onValueChange.bind(this, 'location_zipcode')} name='location_zipcode' validations={['required']}/>
+                            </div>
                         </div>
                     </div>
                     <Button>Submit</Button>
