@@ -54,7 +54,7 @@ class RewardContainer extends React.Component {
                     Rewards
                 </h3>
                 <RewardList rewards={this.state.rewards} onUpdate={this.updateReward.bind(this)} onToggle={this.toggleEditing.bind(this)} />
-                <RewardForm onUpdate={this.updateReward.bind(this, -1)} />
+                <RewardForm className="main" onUpdate={this.updateReward.bind(this, -1)} />
             </section>
         );
     }

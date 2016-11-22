@@ -3,9 +3,12 @@ import React from 'react';
 import Reward from './Reward';
 import RewardForm from './RewardForm';
 import auth from '../../../auth';
-import Icon from '../../Icon';
 
 class RewardList extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
 
     toggleEditing(idx) {
         this.props.onToggle(idx);
@@ -17,20 +20,11 @@ class RewardList extends React.Component {
 
     render() {
         let rewardComponents = this.props.rewards.map((reward, idx) => {
-            let detailComponent;
             if (reward.editing) {
-                detailComponent = <RewardForm {...reward} onUpdate={this.updateReward.bind(this, idx)} />;
+                return <RewardForm {...reward} key={reward.id} onUpdate={this.updateReward.bind(this, idx)} />;
             } else {
-                detailComponent = <Reward {...reward} />;
+                return <Reward {...reward} key={reward.id} toggleEditing={this.toggleEditing.bind(this, idx)} />;
             }
-            return (
-                <div key={reward.id}>
-                    {detailComponent}
-                    <button onClick={this.toggleEditing.bind(this, idx)}>
-                        {reward.editing ? 'Cancel' : 'Edit'}
-                    </button>
-                </div>
-            )
         });
         return (
             <ul className="rewards-list">
