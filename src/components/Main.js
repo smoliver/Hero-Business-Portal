@@ -1,5 +1,4 @@
 import '../styles/style.scss';
-import '../images/icons.svg';
 
 import React from 'react';
 import { withRouter } from 'react-router';

@@ -3,6 +3,7 @@ import React from 'react';
 import Reward from './Reward';
 import RewardForm from './RewardForm';
 import auth from '../../../auth';
+import Icon from '../../Icon';
 
 class RewardList extends React.Component {
 

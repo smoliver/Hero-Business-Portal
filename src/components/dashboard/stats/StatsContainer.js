@@ -4,11 +4,13 @@ import Stat from './Stat';
 import StatForm from './StatForm';
 import auth from '../../../auth';
 
-class StatList extends React.Component {
+class StatsContainer extends React.Component {
     constructor() {
         super();
         this.state = {
-            stats: []
+            customerAvgSpend: -1,
+            rewardsRedeemed: -1,
+            avgPartySize: -1
         }
     }
 
@@ -21,7 +23,7 @@ class StatList extends React.Component {
             };
 
         // Fetch stats
-        fetch(`${process.env.API_DOMAIN}/business/stats/${auth.getBusinessId()}/`,{
+        fetch(`${process.env.API_DOMAIN}/business/metrics/${auth.getBusinessId()}/`,{
             method: 'GET',
             headers: {
                 'Authorization': `Token ${auth.getToken()}`
@@ -29,6 +31,7 @@ class StatList extends React.Component {
         }).then(response => response.json())
         .then(stats => {
             let statList = [];
+            console.log(stats);
             for (let stat in stats) {
                 let transform = statTransform[stat],
                     val = stats[stat];
@@ -39,26 +42,20 @@ class StatList extends React.Component {
                     });
                 }
             }
-            this.setState({
-                stats: statList
-            });
+            // this.setState({
+            //     stats: statList
+            // });
         });
     }
 
     render() {
-        let statComponents = this.state.stats.map((stat) => {
-            if (stat.editing) {
-                return <StatForm key={stat.name} {...stat} />;
-            } else {
-                return <Stat key={stat.name} {...stat} />;
-            }
-        });
+        
         return (
             <div>
-                {statComponents}
+                
             </div>
         );
     }
 }
 
-export default StatList;
+export default StatsContainer;
