@@ -8,7 +8,7 @@ class RewardContainer extends React.Component {
     constructor() {
         super();
         this.state = {
-            rewards: []
+            rewards: [],
         }
     } 
 
@@ -17,6 +17,16 @@ class RewardContainer extends React.Component {
         this.setState({
             rewards: this.state.rewards
         });
+    }
+
+    interactWithReward(curIdx) {
+        let updatedRewards = this.state.rewards.map((reward, idx) => {
+            reward.interacting = (curIdx == idx && reward.interacting == false);
+            return reward;
+        });
+        this.setState({
+            rewards: updatedRewards
+        })
     }
 
     updateReward(idx, reward) {
@@ -30,6 +40,32 @@ class RewardContainer extends React.Component {
         });
     }
 
+    deactivateReward(idx, reward) {
+        this.state.rewards[idx].updating = true;
+        this.setState({
+            rewards: this.state.rewards
+        });
+        let inactive = {'active': false};
+        let that = this;
+
+        fetch(`${process.env.API_DOMAIN}/rewards/${reward.id}/`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${auth.getToken()}`
+            },
+            body: inactive
+        }).then(response => response.json())
+        .then(function(reward) {
+            that.state.rewards[idx].active = false;
+            that.setState({
+                rewards: that.state.rewards
+            });
+        }).catch(function(err) {
+            console.log(err);
+        });
+    }
+
     componentDidMount() {
         // Fetch rewards
         fetch(`${process.env.API_DOMAIN}/rewards/business/${auth.getBusinessId()}/`,{
@@ -40,9 +76,14 @@ class RewardContainer extends React.Component {
         }).then(response => {
             return response.json();
         }).then(details => {
-            console.log(details);
+            let results = details.results.map((reward) => {
+                reward.updating = false;
+                reward.interacting = false;
+                reward.active = true;
+                return reward;
+            });
             this.setState({
-                rewards: details.results
+                rewards: results
             });
         });
     }
@@ -53,7 +94,12 @@ class RewardContainer extends React.Component {
                 <h3 className="rewards--header">
                     Rewards
                 </h3>
-                <RewardList rewards={this.state.rewards} onUpdate={this.updateReward.bind(this)} onToggle={this.toggleEditing.bind(this)} />
+                <RewardList 
+                    rewards={this.state.rewards} 
+                    onUpdate={this.updateReward.bind(this)} 
+                    onToggle={this.toggleEditing.bind(this)}
+                    onDeactivate={this.deactivateReward.bind(this)}
+                    onInteract={this.interactWithReward.bind(this)} />
                 <RewardForm className="main" onUpdate={this.updateReward.bind(this, -1)} />
             </section>
         );

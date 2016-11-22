@@ -7,15 +7,23 @@ class Reward extends React.Component {
   constructor(props) {
     super(props);
     if (this.props.toggleEditing) this.toggleEditing = this.props.toggleEditing;
-    if (this.props.deactivate) this.deactivate = this.props.deactivate;
+    if (this.props.deactivateReward) this.deactivateReward = this.props.deactivateReward;
+    this.displayClasses = this.displayClasses.bind(this);
   }
 
   toggleEditing() {
     console.log("Toggle Editing `toggleEditing` not provided as a prop");
   }
 
-  deactivate() {
+  deactivateReward() {
     console.log("Deactivate `deactivate` not provided in props");
+  }
+
+  displayClasses() {
+    let classes = '';
+    if (this.props.updating === true) classes += ' updating';
+    if (this.props.interacting === true) classes += ' interacting';
+    return classes;
   }
 
   render() {
@@ -26,7 +34,7 @@ class Reward extends React.Component {
     if (!thumbnail) thumbnail = defaultThumbnail; 
 
     return (
-      <li className="rewards-item">
+      <li className={'rewards-item ' + this.displayClasses()} onClick={this.props.interactWithReward} >
         <img src={thumbnail} className="rewards-item--icon"/>
         <div className="rewards-item--information">
           <h4 className="rewards-item--title">{this.props.name}</h4>
@@ -40,7 +48,7 @@ class Reward extends React.Component {
           </h5>
         </div>
         <div className="rewards-item-actions">
-          <Icon symbol={Icon.SYMBOLS.X} className="rewards-item-actions--action" />
+          <Icon symbol={Icon.SYMBOLS.X} className="rewards-item-actions--action" onClick={this.deactivateReward} />
           <Icon symbol={Icon.SYMBOLS.PENCIL} className="rewards-item-actions--action" onClick={this.toggleEditing} />
         </div>
       </li>
