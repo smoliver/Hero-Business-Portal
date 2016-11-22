@@ -6,7 +6,7 @@ class Icon extends React.Component {
 	
 	render () {
 		return (
-			<svg viewBox='0 0 100 100' {...this.props}>
+			<svg viewBox='0 0 100 100' className={this.props.className} onClick={this.props.onClick}>
 				<use xlinkHref={IconsUrl + '#' + this.props.symbol}></use>
 			</svg>
 		);

@@ -31,10 +31,11 @@ class RewardForm extends React.Component {
         }
 
         this.state = state;
+        this.submit = this.submit.bind(this);
     }
 
     handleSubmit(e) {
-        e.preventDefault();
+        if (e) e.preventDefault();
 
         let formData = this.state.reward;
         formData.cost_of_goods = Math.round(parseFloat(formData.cost_of_goods) * 100);
@@ -65,11 +66,15 @@ class RewardForm extends React.Component {
         });
     }
 
+    submit() {
+        this.handleSubmit();
+    }
+
     render() {
         let className = this.props.className;
         className = className ? className + ' rewards-form' : 'rewards-form';
         return (
-            <Form className={className} ref='rewardForm' onSubmit={this.handleSubmit.bind(this)}>
+            <Form className={this.props.className + ' rewards-form'} ref='rewardForm' onSubmit={this.handleSubmit.bind(this)}>
                 <div className="rewards-form--inputs">
                     <Input className="rewards-form--name" errorClassName="failure" type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required']} placeholder="Reward Name"/>
                     <div className="rewards-form--row">
@@ -80,9 +85,7 @@ class RewardForm extends React.Component {
                     </div>
                 </div>
                 <div className="rewards-form-actions">
-                    <svg viewBox="0 0 100 100" className="rewards-form-actions--action">
-                        <use xlinkHref="../icons.svg#plus"></use>
-                    </svg>
+                    <Icon className="rewards-form-actions--action" symbol={Icon.SYMBOLS.PLUS} onClick={this.submit}/>
                 </div>
             </Form>
         )
