@@ -107,6 +107,10 @@
   padding: 16px;
 }
 
+.rewards-item.updating .rewards-item-actions--action {
+  visibility: hidden;
+}
+
 .rewards-item-actions--action {
   display: block;
   width: $icon-medium;

@@ -9,6 +9,7 @@ class RewardContainer extends React.Component {
         super();
         this.state = {
             rewards: [],
+            refresh: 0
         }
     } 
 
@@ -30,25 +31,29 @@ class RewardContainer extends React.Component {
     }
 
     updatingReward(idx, reward) {
-        console.log(reward);
-
         let finalIndex = idx;
         reward.updating = true;
 
         if (idx < 0) {
             this.state.rewards.push(reward);
             finalIndex = this.state.rewards.length - 1;
+            this.state.refresh = !this.state.refresh;
         } else {
             this.state.rewards.splice(idx, 1, reward);
         }
         this.setState({
-            rewards: this.state.rewards
+            rewards: this.state.rewards,
+            refresh: this.state.refresh
         });
 
         return finalIndex;
     }
 
-    updatedReward(idx) {
+    updatedReward(idx, reward) {
+        console.log(reward);
+        console.log(idx);
+        this.state.rewards[idx] = reward;
+        this.state.rewards[idx].active = true;
         this.state.rewards[idx].updating = false;
         this.setState({
             rewards: this.state.rewards
@@ -117,6 +122,7 @@ class RewardContainer extends React.Component {
                     onDeactivate={this.deactivateReward.bind(this)}
                     onInteract={this.interactWithReward.bind(this)} />
                 <RewardForm 
+                    key={this.state.refresh}
                     className="main" 
                     onUpdating={this.updatingReward.bind(this, -1)}
                     onUpdated={this.updatedReward.bind(this)} />

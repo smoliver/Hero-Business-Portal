@@ -31,7 +31,6 @@
 .rewards-form--row {
   @include display(flex);
   @include align-items(center);
-  @include flex-direction(row-reverse);
 }
 
 .rewards-form--points-icon,

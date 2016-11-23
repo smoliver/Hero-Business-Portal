@@ -31,7 +31,6 @@ class RewardForm extends React.Component {
         }
 
         this.state = state;
-        this.submit = this.submit.bind(this);
     }
 
     handleSubmit(e) {
@@ -46,13 +45,12 @@ class RewardForm extends React.Component {
         rewardData.updating = true;
         rewardData.active = true;
 
-        console.log('rewardData');
-        console.log(rewardData);
-
         let idx = this.props.onUpdating(rewardData);
+        console.log('idx ' +idx);
         formData = JSON.stringify(formData);
 
         let that = this;
+
         fetch(this.state.url, {
             method: this.state.method,
             headers: {
@@ -62,9 +60,8 @@ class RewardForm extends React.Component {
             body: formData
         }).then(response => response.json())
         .then(function(reward) {
-            console.log('returned reward');
-            console.log(reward);
-            that.props.onUpdated(idx);
+            console.log('idx ' +idx);
+            that.props.onUpdated(idx, reward);
         }).catch(function(err) {
             console.log(err);
         });
@@ -78,10 +75,6 @@ class RewardForm extends React.Component {
         });
     }
 
-    submit() {
-        this.handleSubmit();
-    }
-
     render() {
         let className = this.props.className;
         className = className ? className + ' rewards-form' : 'rewards-form';
@@ -90,14 +83,14 @@ class RewardForm extends React.Component {
                 <div className="rewards-form--inputs">
                     <Input className="rewards-form--name" errorClassName="failure" type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required']} placeholder="Reward Name"/>
                     <div className="rewards-form--row">
-                        <Input containerClassName="rewards-form--price" type='text' onChange={this.onValueChange.bind(this, 'cost_of_goods')} value={this.state.reward.cost_of_goods} name='cost_of_goods' placeholder='Cost of Goods' validations={['required', 'decimal']}/>
-                        <Icon symbol={Icon.SYMBOLS.DOLLAR} className="rewards-form--price-icon"/>
-                        <Input containerClassName="rewards-form--points" type='text' onChange={this.onValueChange.bind(this, 'points')} value={this.state.reward.points} name='points' placeholder='Points' validations={['required', 'integer']}/>
                         <Icon symbol={Icon.SYMBOLS.REWARD} className="rewards-form--points-icon"/>
+                        <Input containerClassName="rewards-form--points" type='text' onChange={this.onValueChange.bind(this, 'points')} value={this.state.reward.points} name='points' placeholder='Points' validations={['required', 'integer']}/>
+                        <Icon symbol={Icon.SYMBOLS.DOLLAR} className="rewards-form--price-icon"/>
+                        <Input containerClassName="rewards-form--price" type='text' onChange={this.onValueChange.bind(this, 'cost_of_goods')} value={this.state.reward.cost_of_goods} name='cost_of_goods' placeholder='Cost of Goods' validations={['required', 'decimal']}/>
                     </div>
                 </div>
                 <div className="rewards-form-actions">
-                    <Icon className="rewards-form-actions--action" symbol={Icon.SYMBOLS.PLUS} onClick={this.submit}/>
+                    <Icon className="rewards-form-actions--action" symbol={Icon.SYMBOLS.PLUS} onClick={this.handleSubmit.bind(this)}/>
                 </div>
             </Form>
         )
