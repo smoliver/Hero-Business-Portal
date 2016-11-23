@@ -39,6 +39,17 @@ class RewardForm extends React.Component {
 
         let formData = this.state.reward;
         formData.cost_of_goods = Math.round(parseFloat(formData.cost_of_goods) * 100);
+        
+        let rewardData = formData;
+        rewardData.id = this.props.id;
+        rewardData.editing = false;
+        rewardData.updating = true;
+        rewardData.active = true;
+
+        console.log('rewardData');
+        console.log(rewardData);
+
+        let idx = this.props.onUpdating(rewardData);
         formData = JSON.stringify(formData);
 
         let that = this;
@@ -51,8 +62,9 @@ class RewardForm extends React.Component {
             body: formData
         }).then(response => response.json())
         .then(function(reward) {
-            reward.editing = false;
-            that.props.onUpdate(reward);
+            console.log('returned reward');
+            console.log(reward);
+            that.props.onUpdated(idx);
         }).catch(function(err) {
             console.log(err);
         });
