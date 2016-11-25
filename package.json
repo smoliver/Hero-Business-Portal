@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "load-google-maps-api": "0.0.2",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-router": "^3.0.0",

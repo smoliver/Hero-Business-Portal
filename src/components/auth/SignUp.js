@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Validation from 'react-validation';
 import { Link } from 'react-router';
 
+import AddressAutocomplete from '../inputs/AddressAutocomplete';
 import auth from '../../auth';
 
 let { Form, Input, Button } = Validation.components;
@@ -15,7 +16,7 @@ class SignUp extends React.Component {
         this.nextPage = this.nextPage.bind(this);
 
         this.state = {
-            page: props.page ? props.page % 3 : 0,
+            page: props.page ? props.page % 2 : 0,
             user: {
                 email: '',
                 password1: '',
@@ -38,7 +39,7 @@ class SignUp extends React.Component {
     nextPage(e) {
         e.preventDefault();
 
-        let nextPage = this.state.page + 1;
+        let nextPage = this.state.page + 1 % 2;
         this.setState({
             page: nextPage
         });
@@ -63,9 +64,19 @@ class SignUp extends React.Component {
         });
     }
 
-    onValueChange(attr, event) {
+    handleValueChange(attr, event) {
         let user = this.state.user;
         user[attr] = event.target.value;
+        this.setState({
+            user
+        });
+    }
+
+    handlePlaceSelect(place) {
+        let user = this.state.user;
+        for (var component in place) {
+            user[`location_${component}`] = place[component];
+        }
         this.setState({
             user
         });
@@ -77,14 +88,14 @@ class SignUp extends React.Component {
                 <h3>Account</h3>
                 <Form onSubmit={this.nextPage}>
                     <div className="form-grid">
-                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="First Name" autocomplete="fname" value={this.state.user.first_name} onChange={this.onValueChange.bind(this, 'first_name')} name="first_name" validations={['required']}/>
-                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Last Name" autocomplete="lname" value={this.state.user.last_name} onChange={this.onValueChange.bind(this, 'last_name')} name="last_name" validations={['required']}/>
-                        <Input containerClassName="span2" errorClassName="failure" type="email" placeholder="Email" autocomplete="email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name="email" validations={['required', 'email']}/>
-                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Position" value={this.state.user.job_title} onChange={this.onValueChange.bind(this, 'job_title')} name="job_title" validations={[]}/>
+                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="First Name" value={this.state.user.first_name} onChange={this.handleValueChange.bind(this, 'first_name')} name="first_name" validations={['required']}/>
+                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Last Name" value={this.state.user.last_name} onChange={this.handleValueChange.bind(this, 'last_name')} name="last_name" validations={['required']}/>
+                        <Input containerClassName="span2" errorClassName="failure" type="email" placeholder="Email" value={this.state.user.email} onChange={this.handleValueChange.bind(this, 'email')} name="email" validations={['required', 'email']}/>
+                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Position" value={this.state.user.job_title} onChange={this.handleValueChange.bind(this, 'job_title')} name="job_title" validations={[]}/>
                         <div className="span4">
                             <div className="form-grid--row">
-                                <Input containerClassName="span2" errorClassName="failure" type="password" placeholder="Password" value={this.state.user.password1} onChange={this.onValueChange.bind(this, 'password1')} name="password1" validations={['required', 'password', 'min_len_8']}/>
-                                <Input containerClassName="span2" errorClassName="failure" type="password" placeholder="Confirm Password" value={this.state.user.password2} onChange={this.onValueChange.bind(this, 'password2')} name="password2" validations={['required']}/>
+                                <Input containerClassName="span2" errorClassName="failure" type="password" placeholder="Password" value={this.state.user.password1} onChange={this.handleValueChange.bind(this, 'password1')} name="password1" validations={['required', 'password', 'min_len_8']}/>
+                                <Input containerClassName="span2" errorClassName="failure" type="password" placeholder="Confirm Password" value={this.state.user.password2} onChange={this.handleValueChange.bind(this, 'password2')} name="password2" validations={['required']}/>
                             </div>
                         </div>
                     </div>
@@ -95,44 +106,17 @@ class SignUp extends React.Component {
         let businessSection = (
             <div className="card--content pager--display">
                 <h3>Business</h3>
-                <Form onSubmit={this.nextPage}>
+                <Form onSubmit={this.handleSubmit}>
                     <div className="form-grid">    
-                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Business Name" value={this.state.user.business_name} onChange={this.onValueChange.bind(this, 'business_name')} name='business_name' validations={['required']}/>
-                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Phone Number" value={this.state.user.business_phone_number} onChange={this.onValueChange.bind(this, 'business_phone_number')} name='business_phone_number' validations={[]}/>
+                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Business Name" value={this.state.user.business_name} onChange={this.handleValueChange.bind(this, 'business_name')} name='business_name' validations={['required']}/>
+                        <Input containerClassName="span2" errorClassName="failure" type="text" placeholder="Phone Number" value={this.state.user.business_phone_number} onChange={this.handleValueChange.bind(this, 'business_phone_number')} name='business_phone_number' validations={[]}/>
                     </div>
-                    <Button>Continue</Button>
+                    <AddressAutocomplete className="form-grid" onPlaceSelect={this.handlePlaceSelect.bind(this)} />
+                    <Button>Sign Up</Button>
                 </Form>
             </div>
         );
-        let addressSection = (
-            <div className="card--content pager--display">
-                <Form onSubmit={this.handleSubmit}>
-                    <div className="form-grid">
-                        <h3>Business Address</h3>
-                        <div className="span2">
-                            <Input type="text" placeholder="Address" value={this.state.user.location_route} onChange={this.onValueChange.bind(this, 'location_route')} name='location_route' validations={['required']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="City" value={this.state.user.location_city} onChange={this.onValueChange.bind(this, 'location_city')} name='location_city' validations={['required']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="State" value={this.state.user.location_state} onChange={this.onValueChange.bind(this, 'location_state')} name='location_state' validations={['required']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="Postal Code" value={this.state.user.location_zipcode} onChange={this.onValueChange.bind(this, 'location_zipcode')} name='location_zipcode' validations={['required']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="Latitude" value={this.state.user.location_latitude} onChange={this.onValueChange.bind(this, 'location_latitude')} name='location_latitude' validations={['required', 'decimal']}/>
-                        </div>
-                        <div className="span2">
-                            <Input type="text" placeholder="Longitude" value={this.state.user.location_longitude} onChange={this.onValueChange.bind(this, 'location_longitude')} name='location_longitude' validations={['required', 'decimal']}/>
-                        </div>
-                    </div>
-                    <Button>Submit</Button>
-                </Form>
-            </div>
-        )
-        let pages = [accountSection, businessSection, addressSection];
+        let pages = [accountSection, businessSection];
         return (
             <div className="card-container">
                 <div className="card wide">

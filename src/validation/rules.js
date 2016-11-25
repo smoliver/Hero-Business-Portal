@@ -57,6 +57,15 @@ let rules = {
             return value ? validator.isInt(value) : false;
         },
         hint: () => <p className="error">Value must be an integer</p>
+    },
+    autocomplete_address: {
+        rule: (value, components) => {
+            let latitude = components.latitude.state,
+                longitude = components.longitude.state;
+            console.log(latitude, longitude);
+            return latitude.value && longitude.value;
+        },
+        hint: () => <p className="error">Must specify a valid address</p>
     }
 }
 
