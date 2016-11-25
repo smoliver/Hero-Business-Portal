@@ -7,11 +7,51 @@ import auth from '../../../auth';
 class StatsContainer extends React.Component {
     constructor() {
         super();
+
+        this.updateAvgSpend = this.updateAvgSpend.bind(this);
         this.state = {
-            customerAvgSpend: -1,
-            rewardsRedeemed: -1,
-            avgPartySize: -1
+            avgSpend: null,
+            rewardsRedeemed: null,
+            avgPartySize: null
         }
+    }
+
+    updatePartySize(size){
+        let that = this;
+        fetch(`${process.env.API_DOMAIN}/business/${auth.getBusinessId()}/`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${auth.getToken()}`
+            },
+            body: {
+                'avg_party_size': size
+            }
+        }).then(response => response.json())
+        .then(function(business) {
+            that.setState({
+                avgPartySize: business['avg_party_size']
+            })
+        });
+    }
+
+    updateAvgSpend(spent){
+        let that = this;
+        fetch(`${process.env.API_DOMAIN}/business/${auth.getBusinessId()}/`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${auth.getToken()}`
+            },
+            body: {
+                'avg_customer_spent': spent
+            }
+        }).then(response => response.json())
+        .then(function(business) {
+            that.setState({
+                avgSpend: business['avg_customer_spent']
+            })
+        });
     }
 
     componentDidMount() {
@@ -23,33 +63,25 @@ class StatsContainer extends React.Component {
             };
 
         // Fetch stats
-        fetch(`${process.env.API_DOMAIN}/business/metrics/${auth.getBusinessId()}/`,{
+        let that = this;
+
+        fetch(`${process.env.API_DOMAIN}/business/transactions/${auth.getBusinessId()}/`, {
             method: 'GET',
             headers: {
                 'Authorization': `Token ${auth.getToken()}`
             }
         }).then(response => response.json())
         .then(stats => {
-            let statList = [];
+            console.log('Transactions');
             console.log(stats);
-            for (let stat in stats) {
-                let transform = statTransform[stat],
-                    val = stats[stat];
-                if (transform) {
-                    statList.push({
-                        name: stat,
-                        value: transform(val)
-                    });
-                }
-            }
-            // this.setState({
-            //     stats: statList
-            // });
+            that.setState({
+                rewardsRedeemed: stats['count']
+            })
         });
     }
 
     render() {
-        
+        console.log(this.state);
         return (
             <div>
                 

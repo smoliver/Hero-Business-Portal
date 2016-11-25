@@ -30,7 +30,8 @@ class Reward extends React.Component {
     let dollarCost;
     if (this.props.cost_of_goods) dollarCost = this.props.cost_of_goods / 100;
 
-    let thumbnail = this.props.business.thumbnail;
+    let thumbnail = null;
+    if(this.props.business) thumbnail = this.props.business.thumbnail;
     if (!thumbnail) thumbnail = defaultThumbnail; 
 
     return (

@@ -9,6 +9,7 @@ class RewardContainer extends React.Component {
         super();
         this.state = {
             rewards: [],
+            business: null,
             refresh: 0
         }
     } 
@@ -60,6 +61,20 @@ class RewardContainer extends React.Component {
         })
     }
 
+    updateBusiness(business){
+        fetch(`${process.env.API_DOMAIN}/business/${auth.getBusinessId()}/`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${auth.getToken()}`
+            },
+            body: business
+        });
+        this.setState({
+            'business': business
+        });
+    }
+
     deactivateReward(idx, reward) {
         this.state.rewards[idx].updating = true;
         this.setState({
@@ -84,6 +99,21 @@ class RewardContainer extends React.Component {
         }).catch(function(err) {
             console.log(err);
         });
+
+        fetch(`${process.env.API_DOMAIN}/business/${auth.getBusinessId()}/`,{
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${auth.getToken()}`
+            }
+        }).then(response => {
+            return response.json();
+        }).then(business => {
+            that.setState({
+                'business': business
+            });
+        }).cathc(function(err) {
+            console.log(err);
+        });
     }
 
     componentDidMount() {
@@ -102,6 +132,7 @@ class RewardContainer extends React.Component {
                 reward.active = true;
                 return reward;
             });
+            console.log(results[0]);
             this.setState({
                 rewards: results
             });
@@ -116,6 +147,7 @@ class RewardContainer extends React.Component {
                 </h3>
                 <RewardList 
                     rewards={this.state.rewards} 
+                    business={this.state.business}
                     onUpdating={this.updatingReward.bind(this)}
                     onUpdated={this.updatedReward.bind(this)} 
                     onToggle={this.toggleEditing.bind(this)}

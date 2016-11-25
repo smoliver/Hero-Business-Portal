@@ -2,7 +2,7 @@ import React from 'react';
 
 const Stat = ({ name, value }) => (
     <div>
-    	<h2>{ value }</h2>
+    	<strong>{ value }</strong>
         <h3>{ name }</h3>
     </div>
 )
