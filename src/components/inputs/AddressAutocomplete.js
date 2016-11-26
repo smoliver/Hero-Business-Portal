@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Validation from 'react-validation';
 
+import HeroStaticMap from '../maps/HeroStaticMap';
+
 let { Input } = Validation.components;
 
 class AddressAutocomplete extends React.Component {
@@ -44,8 +46,8 @@ class AddressAutocomplete extends React.Component {
         let address = this.state.address,
             place = this.state.autocomplete.getPlace(),
             coords = place.geometry.location;
-        address.longitude = coords.lat();
-        address.latitude = coords.lng();
+        address.longitude = coords.lng();
+        address.latitude = coords.lat();
 
         place.address_components.forEach((component) => {
             component.types.forEach((type) => {
@@ -90,9 +92,10 @@ class AddressAutocomplete extends React.Component {
     render() {
         return (
             <div className={this.props.className}>
-                <Input name="autocomplete" value={this.state.selectedAddress} containerClassName="span2" ref="autocomplete" errorClassName="failure" type="text" validations={['required', 'autocomplete_address']} />
+                <Input name="autocomplete" value={this.state.selectedAddress} containerClassName="span4" ref="autocomplete" errorClassName="failure" type="text" validations={['required', 'autocomplete_address']} />
                 <Input name="latitude" type="hidden" value={this.state.address.latitude} validations={[]} />
                 <Input name="longitude" type="hidden" value={this.state.address.longitude} validations={[]} />
+                <HeroStaticMap latitude={this.state.address.latitude} longitude={this.state.address.longitude} />
             </div>
         )
     }
