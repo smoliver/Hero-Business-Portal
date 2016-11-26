@@ -14,7 +14,7 @@ const HeroStaticMap = ({ latitude, longitude }) => {
   mapProps.longitude = longitude
   mapProps.zoom = 16
   mapProps.width = 300
-  mapProps.height = 300
+  mapProps.height = 150
   mapProps.scale = 2
   mapProps.markers = {
     locations: [ 
@@ -77,7 +77,7 @@ const HeroStaticMap = ({ latitude, longitude }) => {
 
   mapProps.APIKey = 'AIzaSyAAZvR0LhIx6x6LWF3tt4oNSG2SEv40zFU'
 
-  mapProps.className = 'map'
+  mapProps.className = 'span4'
 
   let mapLink = "https://www.google.com/maps/dir/Current+Location/" + latitude + ',' + longitude
 

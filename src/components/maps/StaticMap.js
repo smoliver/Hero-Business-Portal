@@ -20,7 +20,6 @@ const StaticMap = ({ className, latitude, longitude, markers, zoom, width, heigh
       URL += and + scaleURL
   }
 
-  console.log(markers);
   if (markers){
       let markersURL =  "markers="
       if (markers.style){
@@ -71,14 +70,12 @@ const StaticMap = ({ className, latitude, longitude, markers, zoom, width, heigh
   URL += and + keyURL
 
   let mapStyle = {
-      backgroundImage: 'url(' + URL + ')',
-      backgroundSize: 'cover',
-      width,
-      height
+      // width: '100%',
+      // objectFit: 'contain'
   }
 
   return (
-      <div className={ className } style={ mapStyle }/>
+      <img src={ URL } className={ className } style={ mapStyle } />
   )
 }
 
