@@ -50,9 +50,7 @@ class RewardContainer extends React.Component {
         return finalIndex;
     }
 
-    updatedReward(idx, reward) {
-        console.log(reward);
-        console.log(idx);
+    updatedReward(idx, reward) { 
         this.state.rewards[idx] = reward;
         this.state.rewards[idx].active = true;
         this.state.rewards[idx].updating = false;
@@ -132,7 +130,6 @@ class RewardContainer extends React.Component {
                 reward.active = true;
                 return reward;
             });
-            console.log(results[0]);
             this.setState({
                 rewards: results
             });

@@ -46,7 +46,6 @@ class RewardForm extends React.Component {
         rewardData.active = true;
 
         let idx = this.props.onUpdating(rewardData);
-        console.log('idx ' +idx);
         formData = JSON.stringify(formData);
 
         let that = this;
@@ -60,7 +59,6 @@ class RewardForm extends React.Component {
             body: formData
         }).then(response => response.json())
         .then(function(reward) {
-            console.log('idx ' +idx);
             that.props.onUpdated(idx, reward);
         }).catch(function(err) {
             console.log(err);

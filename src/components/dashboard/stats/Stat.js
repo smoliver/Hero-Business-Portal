@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Stat = ({ name, value }) => (
-    <div>
-    	<strong>{ value }</strong>
-        <h3>{ name }</h3>
+    <div className="stat">
+    	<strong className="stat--number">{ value }</strong>
+        <h6 className="stat--title">{ name }</h6>
     </div>
 )
 

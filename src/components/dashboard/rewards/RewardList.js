@@ -19,8 +19,6 @@ class RewardList extends React.Component {
     }
 
     updatedReward(idx, reward) {
-        console.log('reward list updatedReward');
-        console.log(reward);
         return this.props.onUpdated(idx, reward);
     }
 
@@ -36,9 +34,16 @@ class RewardList extends React.Component {
         let rewardComponents = this.props.rewards.map((reward, idx) => {
             if(reward.active === true){
                 if (reward.editing) {
-                    return <RewardForm {...reward} key={reward.id || idx} onUpdating={this.updatingReward.bind(this, idx)} onUpdated={this.updatedReward.bind(this)} />;
+                    return <RewardForm {...reward} key={reward.id || idx} 
+                        onUpdating={this.updatingReward.bind(this, idx)} 
+                        onUpdated={this.updatedReward.bind(this)} />;
                 } else {
-                    return <Reward {...reward} key={reward.id || idx} toggleEditing={this.toggleEditing.bind(this, idx)} deactivateReward={this.deactivateReward.bind(this, idx, reward)} onUpdating={this.updatingReward.bind(this, idx)} onUpdated={this.updatedReward.bind(this)} interactWithReward={this.interactWithReward.bind(this, idx)} business={this.props.business} />;
+                    return <Reward {...reward} key={reward.id || idx} 
+                        toggleEditing={this.toggleEditing.bind(this, idx)} 
+                        deactivateReward={this.deactivateReward.bind(this, idx, reward)}
+                        onUpdating={this.updatingReward.bind(this, idx)} onUpdated={this.updatedReward.bind(this)} 
+                        interactWithReward={this.interactWithReward.bind(this, idx)} 
+                        business={this.props.business} />;
                 }
             }
         });
