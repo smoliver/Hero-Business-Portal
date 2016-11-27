@@ -1,7 +1,6 @@
 import React from 'react';
-
+import phone from 'phone';
 import Validation from 'react-validation';
-
 import validator from 'validator';
 
 // Adapted from https://www.npmjs.com/package/react-validation
@@ -11,7 +10,7 @@ let rules = {
             return value.toString().trim();
         },
         hint: value => {
-            return <p className='error'>Required</p>
+            return <p className="error">Required</p>
         }
     },
     email: {
@@ -19,7 +18,7 @@ let rules = {
             return validator.isEmail(value);
         },
         hint: value => {
-            return <p className='error'>{value} isnt an Email.</p>
+            return <p className="error">{value} isnt an Email.</p>
         }
     },
     password: {
@@ -62,10 +61,16 @@ let rules = {
         rule: (value, components) => {
             let latitude = components.latitude.state,
                 longitude = components.longitude.state;
-            console.log(latitude, longitude);
             return latitude.value && longitude.value;
         },
         hint: () => <p className="error">Must specify a valid address</p>
+    },
+    phone: {
+        rule: value => {
+            let formatted = phone(value);
+            return formatted.length > 0;
+        },
+        hint: () => <p className="error">Must submit a valid phone number</p>
     }
 }
 

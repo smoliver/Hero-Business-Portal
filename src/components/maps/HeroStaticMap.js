@@ -3,7 +3,6 @@ import React from 'react';
 import StaticMap from './StaticMap';
 
 const HeroStaticMap = ({ latitude, longitude }) => {
-  console.log(latitude, longitude);
 
   let white = "0xFFFFFF"
   let black = "0x222222"
@@ -14,7 +13,7 @@ const HeroStaticMap = ({ latitude, longitude }) => {
   mapProps.longitude = longitude
   mapProps.zoom = 16
   mapProps.width = 300
-  mapProps.height = 150
+  mapProps.height = 250
   mapProps.scale = 2
   mapProps.markers = {
     locations: [ 

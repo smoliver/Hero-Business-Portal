@@ -70,12 +70,13 @@ const StaticMap = ({ className, latitude, longitude, markers, zoom, width, heigh
   URL += and + keyURL
 
   let mapStyle = {
-      // width: '100%',
-      // objectFit: 'contain'
+      background: `url(${URL}) no-repeat center center`,
+      backgroundSize: 'cover',
+      height
   }
 
   return (
-      <img src={ URL } className={ className } style={ mapStyle } />
+      <div src={ URL } className={ className } style={ mapStyle }></div>
   )
 }
 

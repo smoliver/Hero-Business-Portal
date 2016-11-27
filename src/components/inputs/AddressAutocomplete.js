@@ -71,9 +71,6 @@ class AddressAutocomplete extends React.Component {
                     case 'postal_code':
                         address['zipcode'] = component.short_name;
                         break;
-                    
-                    case 'postal_code_suffix':
-                        address['zipcode'] = [address['zipcode'], component.short_name].join('-');
 
                     default:
                         break;
@@ -90,12 +87,15 @@ class AddressAutocomplete extends React.Component {
     }
 
     render() {
+        let lat = this.state.address.latitude,
+            lng = this.state.address.longitude,
+            mapComponent = lat && lng ? <HeroStaticMap latitude={this.state.address.latitude} longitude={this.state.address.longitude} /> : null;
         return (
             <div className={this.props.className}>
                 <Input name="autocomplete" value={this.state.selectedAddress} containerClassName="span4" ref="autocomplete" errorClassName="failure" type="text" validations={['required', 'autocomplete_address']} />
-                <Input name="latitude" type="hidden" value={this.state.address.latitude} validations={[]} />
-                <Input name="longitude" type="hidden" value={this.state.address.longitude} validations={[]} />
-                <HeroStaticMap latitude={this.state.address.latitude} longitude={this.state.address.longitude} />
+                <Input name="latitude" type="hidden" value={lat} validations={[]} />
+                <Input name="longitude" type="hidden" value={lng} validations={[]} />
+                {mapComponent}
             </div>
         )
     }
