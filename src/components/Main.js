@@ -10,6 +10,7 @@ import auth from '../auth';
 class Main extends React.Component {
     constructor(props) {
         super();
+        
         this.state = {
             loggedIn: auth.loggedIn()
         }
