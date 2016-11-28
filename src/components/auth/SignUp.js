@@ -15,6 +15,7 @@ class SignUp extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.nextPage = this.nextPage.bind(this);
+        this.previousPage = this.previousPage.bind(this);
 
         this.state = {
             page: props.page ? props.page % 2 : 0,
@@ -37,18 +38,27 @@ class SignUp extends React.Component {
         }
     }
 
-    nextPage() {
-        let nextPage = this.state.page + 1 % 2;
+    changePage(offset) {
+        let nextPage = (this.state.page + offset) % 2;
         this.setState({
             page: nextPage
         });
+    }
+
+    nextPage() {
+        this.changePage(1);
+    }
+
+    previousPage() {
+        this.changePage(-1);
     }
 
     handleSubmit() {
         let formData = this.state.user;
         formData.business_phone_number = phone(formData.business_phone_number)[0].slice(-10);
 
-        let url = `${process.env.API_DOMAIN}/auth/registration/business/`;
+        let url = `${process.env.API_DOMAIN}/auth/registration/business/`,
+            ok;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -56,9 +66,17 @@ class SignUp extends React.Component {
             },
             body: JSON.stringify(formData)
         }).then(function(response) {
+            ok = response.ok;
+            return response.json()
+        }).then(function(values) {
+            if (!ok) {
+                throw values;
+            }
+            return values;
+        }).then(function(user) {
             auth.login(formData.email, formData.password1);
         }).catch(function(err) {
-            console.log(err);
+            console.log("Err", err);
         });
     }
 
@@ -94,7 +112,7 @@ class SignUp extends React.Component {
         let accountSection = (
             <div className="card--content pager--display">
                 <h3>Account</h3>
-                <Form ref="accountForm" onSubmit={this.validateAndContinue.bind(this, 'accountForm', this.nextPage)}>
+                <Form ref="form1" onSubmit={this.validateAndContinue.bind(this, 'form1', this.nextPage)}>
                     <div className="form-grid">
                         <Input key="first_name" containerClassName="span2" errorClassName="failure" type="text" placeholder="First Name" value={this.state.user.first_name} onChange={this.handleValueChange.bind(this, 'first_name')} name="first_name" validations={['required']}/>
                         <Input key="last_name" containerClassName="span2" errorClassName="failure" type="text" placeholder="Last Name" value={this.state.user.last_name} onChange={this.handleValueChange.bind(this, 'last_name')} name="last_name" validations={['required']}/>
@@ -120,6 +138,7 @@ class SignUp extends React.Component {
                         <Input key="business_phone_number" containerClassName="span2" errorClassName="failure" type="text" placeholder="Phone Number" value={this.state.user.business_phone_number} onChange={this.handleValueChange.bind(this, 'business_phone_number')} name='business_phone_number' validations={['required', 'phone']}/>
                     </div>
                     <AddressAutocomplete className="form-grid" onPlaceSelect={this.handlePlaceSelect.bind(this)} />
+                    <a className="button" onClick={this.previousPage} style={{marginRight:'1em', display:'inline'}}>Back</a>
                     <input type="submit" value="Sign Up" />
                 </Form>
             </div>
