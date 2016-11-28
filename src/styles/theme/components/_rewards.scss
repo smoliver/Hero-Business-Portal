@@ -133,9 +133,10 @@
   fill: $potential-color;
 }
 
-.rewards-item--delete {
-  margin-bottom: 12px;
+.rewards-item .rewards-item-actions--action.delete:hover {
+  fill: $failure-color;
 }
+
 
 /* * * * * * * * * * * * * * * * * * * * 
  *  Small Screen +

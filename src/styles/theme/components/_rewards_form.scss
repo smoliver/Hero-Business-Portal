@@ -58,25 +58,30 @@
   width: 100%;
 }
 
-.rewards-form--points:focus + .rewards-form--points-icon,
-.rewards-form--price:focus + .rewards-form--price-icon {
-  fill: $lime;
-}
-
 .rewards-form-actions {
   margin-left: 16px;
   margin-top: 12px;
 }
 
 .rewards-form-actions--action {
+  display: block;
   width: $icon-medium;
   height: $icon-medium;
   fill: $gray-shade-2;
   transition: fill        .2s;
+  margin-bottom: 12px;
+}
+
+.rewards-form-actions--action:last-child {
+  margin-bottom: 0px;
 }
 
 .rewards-form-actions--action:hover {
   fill: $potential-color;
+}
+
+.rewards-form-actions--action.cancel:hover {
+  fill: $failure-color;
 }
 
 /* * * * * * * * * * * * * * * * * * * * 
