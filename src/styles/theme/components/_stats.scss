@@ -27,7 +27,7 @@
   fill: $white;
 }
 
-.stats-item {
+.stat {
   padding: 32px;
   text-align: center;
   display: inline-block;
@@ -38,13 +38,13 @@
   width: $icon-xlarge;
 }
 
-.stats-item--number {
+.stat--number {
   font-size: 32pt;
   margin-bottom: 1em;
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 }
 
-.stats-item--title {
+.stat--title {
   font-size: 11pt;
   margin-bottom: 0px;
 }

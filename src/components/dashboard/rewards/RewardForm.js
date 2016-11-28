@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Validation from 'react-validation';
 import auth from '../../../auth';
+import Icon from '../../Icon';
 
 let { Form, Input, Button } = Validation.components;
 
@@ -33,13 +34,22 @@ class RewardForm extends React.Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault();
+        if (e) e.preventDefault();
 
         let formData = this.state.reward;
         formData.cost_of_goods = Math.round(parseFloat(formData.cost_of_goods) * 100);
+        
+        let rewardData = formData;
+        rewardData.id = this.props.id;
+        rewardData.editing = false;
+        rewardData.updating = true;
+        rewardData.active = true;
+
+        let idx = this.props.onUpdating(rewardData);
         formData = JSON.stringify(formData);
 
         let that = this;
+
         fetch(this.state.url, {
             method: this.state.method,
             headers: {
@@ -49,8 +59,7 @@ class RewardForm extends React.Component {
             body: formData
         }).then(response => response.json())
         .then(function(reward) {
-            reward.editing = false;
-            that.props.onUpdate(reward);
+            that.props.onUpdated(idx, reward);
         }).catch(function(err) {
             console.log(err);
         });
@@ -65,29 +74,21 @@ class RewardForm extends React.Component {
     }
 
     render() {
+        let className = this.props.className;
+        className = className ? className + ' rewards-form' : 'rewards-form';
         return (
-            <Form ref='rewardForm' onSubmit={this.handleSubmit.bind(this)}>
-                <h2>Update Reward</h2>
-                <div>
-                    <label>
-                        Name*
-                        <Input type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required']}/>
-                    </label>
+            <Form className={this.props.className + ' rewards-form'} ref='rewardForm' onSubmit={this.handleSubmit.bind(this)}>
+                <div className="rewards-form--inputs">
+                    <Input className="rewards-form--name" errorClassName="failure" type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required']} placeholder="Reward Name"/>
+                    <div className="rewards-form--row">
+                        <Icon symbol={Icon.SYMBOLS.REWARD} className="rewards-form--points-icon"/>
+                        <Input containerClassName="rewards-form--points" type='text' onChange={this.onValueChange.bind(this, 'points')} value={this.state.reward.points} name='points' placeholder='Points' validations={['required', 'integer']}/>
+                        <Icon symbol={Icon.SYMBOLS.DOLLAR} className="rewards-form--price-icon"/>
+                        <Input containerClassName="rewards-form--price" type='text' onChange={this.onValueChange.bind(this, 'cost_of_goods')} value={this.state.reward.cost_of_goods} name='cost_of_goods' placeholder='Cost of Goods' validations={['required', 'decimal']}/>
+                    </div>
                 </div>
-                <div>
-                    <label>
-                        Points*
-                        <Input type='text' onChange={this.onValueChange.bind(this, 'points')} value={this.state.reward.points} name='points' validations={['required', 'integer']}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Cost of Goods*
-                        <Input type='text' onChange={this.onValueChange.bind(this, 'cost_of_goods')} value={this.state.reward.cost_of_goods} name='cost_of_goods' validations={['required', 'decimal']}/>
-                    </label>
-                </div>
-                <div>
-                    <Button>Submit</Button>
+                <div className="rewards-form-actions">
+                    <Icon className="rewards-form-actions--action" symbol={Icon.SYMBOLS.PLUS} onClick={this.handleSubmit.bind(this)}/>
                 </div>
             </Form>
         )

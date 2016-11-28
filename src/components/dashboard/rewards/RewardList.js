@@ -6,35 +6,51 @@ import auth from '../../../auth';
 
 class RewardList extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     toggleEditing(idx) {
         this.props.onToggle(idx);
     }
 
-    updateReward(idx, reward) {
-        this.props.onUpdate(idx, reward);
+    updatingReward(idx, reward) {
+        return this.props.onUpdating(idx, reward);
+    }
+
+    updatedReward(idx, reward) {
+        return this.props.onUpdated(idx, reward);
+    }
+
+    deactivateReward(idx, reward) {
+        this.props.onDeactivate(idx, reward);
+    }
+
+    interactWithReward(idx) {
+        this.props.onInteract(idx);
     }
 
     render() {
         let rewardComponents = this.props.rewards.map((reward, idx) => {
-            let detailComponent;
-            if (reward.editing) {
-                detailComponent = <RewardForm {...reward} onUpdate={this.updateReward.bind(this, idx)} />;
-            } else {
-                detailComponent = <Reward {...reward} />;
+            if(reward.active === true){
+                if (reward.editing) {
+                    return <RewardForm {...reward} key={reward.id || idx} 
+                        onUpdating={this.updatingReward.bind(this, idx)} 
+                        onUpdated={this.updatedReward.bind(this)} />;
+                } else {
+                    return <Reward {...reward} key={reward.id || idx} 
+                        toggleEditing={this.toggleEditing.bind(this, idx)} 
+                        deactivateReward={this.deactivateReward.bind(this, idx, reward)}
+                        onUpdating={this.updatingReward.bind(this, idx)} onUpdated={this.updatedReward.bind(this)} 
+                        interactWithReward={this.interactWithReward.bind(this, idx)} 
+                        business={this.props.business} />;
+                }
             }
-            return (
-                <div key={reward.id}>
-                    {detailComponent}
-                    <button onClick={this.toggleEditing.bind(this, idx)}>
-                        {reward.editing ? 'Cancel' : 'Edit'}
-                    </button>
-                </div>
-            )
         });
         return (
-            <div>
+            <ul className="rewards-list">
                 {rewardComponents}
-            </div>
+            </ul>
         );
     }
 }

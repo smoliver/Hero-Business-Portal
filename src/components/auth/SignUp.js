@@ -151,7 +151,7 @@ class SignUp extends React.Component {
                         Sign Up
                     </h2>
                     <p className="card--sub-header">
-                        <Link to="/login">Already have an account?</Link >
+                        <Link to="/login">Already have an account?</Link>
                     </p>
                     <div className="pager">
                         <div className="pager--container">

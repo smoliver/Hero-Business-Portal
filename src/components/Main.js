@@ -10,6 +10,7 @@ import auth from '../auth';
 class Main extends React.Component {
     constructor(props) {
         super();
+        
         this.state = {
             loggedIn: auth.loggedIn()
         }
@@ -28,6 +29,7 @@ class Main extends React.Component {
     }
 
     render() {
+
         return (
             <div className="business-portal-container">
                 <Header loggedIn={this.state.loggedIn} logout={auth.logout.bind(auth, null)} />
