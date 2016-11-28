@@ -46,7 +46,12 @@ class BusinessLogic extends React.Component {
       headers: {
         'Authorization': `Token ${auth.getToken()}`
       }
-    }).then(response => response.json())
+    }).then(response => {
+      if (response.ok){
+        return response.json();
+      }
+      throw new Error ("response not ok");
+    })
     .then(business => {
       if(business['avg_customer_spent'] == undefined || business['avg_party_size'] == undefined){
         business = this.initializeBusiness(business);

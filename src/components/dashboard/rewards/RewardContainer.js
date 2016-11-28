@@ -109,7 +109,7 @@ class RewardContainer extends React.Component {
             that.setState({
                 'business': business
             });
-        }).cathc(function(err) {
+        }).catch(function(err) {
             console.log(err);
         });
     }
