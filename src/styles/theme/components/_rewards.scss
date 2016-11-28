@@ -32,11 +32,16 @@
   @include align-items(center);
   background-color: $white;
   margin: 0px 4px 4px;
-  transition: box-shadow      .3s;
+  transition: box-shadow      .3s,
+              opacity         .2s;
 }
 
 .rewards-item:last-child {
   margin-bottom:0px;
+}
+
+.rewards-item.updating {
+  opacity: .5;
 }
 
 .rewards-item.selected {
@@ -84,7 +89,7 @@
 
 .rewards-item--price {
   display: inline-block;
-  width: 20%;
+  width: 30%;
   min-width: 64px;
   margin: 0px;
   text-align: left;
@@ -100,14 +105,10 @@
 
 .rewards-item-actions {
   padding: 16px;
-  opacity: 0;
-  transition: opacity     .3s;
 }
 
-
-.rewards-item:hover .rewards-item-actions,
-.rewards-item.selected .rewards-item-actions {
-  opacity: 1;
+.rewards-item.updating .rewards-item-actions--action {
+  visibility: hidden;
 }
 
 .rewards-item-actions--action {
@@ -115,15 +116,20 @@
   width: $icon-medium;
   height: $icon-medium;
   margin-bottom: 12px;
-  fill: $gray-shade-2;
+  fill: transparent;
   transition: fill        .2s;
+}
+
+.rewards-item:hover .rewards-item-actions--action,
+.rewards-item.selected .rewards-item-actions--action {
+  fill: $gray-shade-2;
 }
 
 .rewards-item-actions--action:last-child {
   margin-bottom: 0px
 }
 
-.rewards-item-actions--action:hover {
+.rewards-item .rewards-item-actions--action:hover {
   fill: $potential-color;
 }
 
