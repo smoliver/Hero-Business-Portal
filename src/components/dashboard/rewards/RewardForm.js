@@ -11,8 +11,6 @@ class RewardForm extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderCancel = this.renderCancel.bind(this);
-        console.log("con cancel");
-        console.log(props.cancel);
         let state = {
             method: 'POST',
             url: `${process.env.API_DOMAIN}/rewards/`
@@ -77,8 +75,6 @@ class RewardForm extends React.Component {
 
     // Renders a cancel button if a cancel function is provided
     renderCancel() {
-        console.log("Cancel");
-        console.log(this.props.cancel);
         if (this.props.cancel){
             return (
                 <Icon className="rewards-form-actions--action cancel" symbol={Icon.SYMBOLS.CANCEL} onClick={this.props.cancel} />
