@@ -60,7 +60,7 @@ class RewardContainer extends React.Component {
     }
 
     updateBusiness(business){
-        fetch(`${process.env.API_DOMAIN}/business/${auth.getBusinessId()}/`,{
+        fetch(`${process.env.API_DOMAIN}/business/${this.props.business.id}/`,{
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ class RewardContainer extends React.Component {
             console.log(err);
         });
 
-        fetch(`${process.env.API_DOMAIN}/business/${auth.getBusinessId()}/`,{
+        fetch(`${process.env.API_DOMAIN}/business/${this.props.business.id}/`,{
             method: 'GET',
             headers: {
                 'Authorization': `Token ${auth.getToken()}`
@@ -109,14 +109,14 @@ class RewardContainer extends React.Component {
             that.setState({
                 'business': business
             });
-        }).cathc(function(err) {
+        }).catch(function(err) {
             console.log(err);
         });
     }
 
     componentDidMount() {
         // Fetch rewards
-        fetch(`${process.env.API_DOMAIN}/rewards/business/${auth.getBusinessId()}/`,{
+        fetch(`${process.env.API_DOMAIN}/rewards/business/${this.props.business.id}/`,{
             headers: {
                 'Authorization': `Token ${auth.getToken()}`
             },
@@ -133,6 +133,8 @@ class RewardContainer extends React.Component {
             this.setState({
                 rewards: results
             });
+        }).catch(function(err) {
+            console.log(err);
         });
     }
 
@@ -154,7 +156,8 @@ class RewardContainer extends React.Component {
                     key={this.state.refresh}
                     className="main" 
                     onUpdating={this.updatingReward.bind(this, -1)}
-                    onUpdated={this.updatedReward.bind(this)} />
+                    onUpdated={this.updatedReward.bind(this)}
+                    business={this.props.business} />
             </section>
         );
     }

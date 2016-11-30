@@ -30,7 +30,7 @@ class BusinessLogic extends React.Component {
     }
 
     return business;
-    }
+  }
 
   updateBusiness(newBusiness){
     let oldBusiness = this.state.business;

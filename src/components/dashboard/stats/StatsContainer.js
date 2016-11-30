@@ -83,8 +83,6 @@ class StatsContainer extends React.Component {
     }
 
     render() {
-        console.log("Stats container business");
-        console.log(this.props.business);
         return (
             <div className="stats">
                 {this.renderAvgSpend()}

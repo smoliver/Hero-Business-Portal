@@ -29,6 +29,9 @@ class Main extends React.Component {
     }
 
     render() {
+        React.Children.map(this.props.children, (child) => {
+            console.log(child);
+        });
 
         return (
             <div className="business-portal-container">
