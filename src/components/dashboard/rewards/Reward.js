@@ -49,7 +49,7 @@ class Reward extends React.Component {
           </h5>
         </div>
         <div className="rewards-item-actions">
-          <Icon symbol={Icon.SYMBOLS.X} className="rewards-item-actions--action" onClick={this.deactivateReward} />
+          <Icon symbol={Icon.SYMBOLS.X} className="rewards-item-actions--action delete" onClick={this.deactivateReward} />
           <Icon symbol={Icon.SYMBOLS.PENCIL} className="rewards-item-actions--action" onClick={this.toggleEditing} />
         </div>
       </li>

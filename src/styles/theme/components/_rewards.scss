@@ -10,6 +10,7 @@
   @include display(flex);
   @include flex-direction(column);
   width: 100%;
+  height: 100%;
 }
 
 .rewards--header {
@@ -133,9 +134,10 @@
   fill: $potential-color;
 }
 
-.rewards-item--delete {
-  margin-bottom: 12px;
+.rewards-item .rewards-item-actions--action.delete:hover {
+  fill: $failure-color;
 }
+
 
 /* * * * * * * * * * * * * * * * * * * * 
  *  Small Screen +
