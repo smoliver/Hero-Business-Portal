@@ -20,7 +20,7 @@ class Main extends React.Component {
         loggedIn ? this.props.router.push('/dashboard') : this.props.router.push('/login');
         this.setState({
           loggedIn
-        })
+        });
     }
 
     componentWillMount() {
@@ -29,10 +29,6 @@ class Main extends React.Component {
     }
 
     render() {
-        React.Children.map(this.props.children, (child) => {
-            console.log(child);
-        });
-
         return (
             <div className="business-portal-container">
                 <Header loggedIn={this.state.loggedIn} logout={auth.logout.bind(auth, null)} />
