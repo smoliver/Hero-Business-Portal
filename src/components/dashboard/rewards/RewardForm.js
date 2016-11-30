@@ -10,7 +10,7 @@ class RewardForm extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.renderCancel = this.renderCancel.bind(this);
         let state = {
             method: 'POST',
             url: `${process.env.API_DOMAIN}/rewards/`
@@ -73,6 +73,15 @@ class RewardForm extends React.Component {
         });
     }
 
+    // Renders a cancel button if a cancel function is provided
+    renderCancel() {
+        if (this.props.cancel){
+            return (
+                <Icon className="rewards-form-actions--action cancel" symbol={Icon.SYMBOLS.CANCEL} onClick={this.props.cancel} />
+            );
+        }
+    }
+
     render() {
         let className = this.props.className;
         className = className ? className + ' rewards-form' : 'rewards-form';
@@ -89,6 +98,7 @@ class RewardForm extends React.Component {
                 </div>
                 <div className="rewards-form-actions">
                     <Icon className="rewards-form-actions--action" symbol={Icon.SYMBOLS.PLUS} onClick={this.handleSubmit.bind(this)}/>
+                    {this.renderCancel()}
                 </div>
             </Form>
         )
