@@ -7,28 +7,83 @@
  * * * * * * * * * * * * * * * * * * * */
 
 .dashboard {
+  width: 100%;
+  @include display(flex);
+  @include flex-direction(column);
+}
+
+.dashboard--container {
   @include display(flex);
   @include flex-direction(row);
   @include flex(1);
-  width: 100%;
 }
 
-@media screen and (max-width: $tablet-size){
-  .dashboard--section {
-    width: 100%;
-  }
+.dashboard-nav {
+  @include display(flex);
+  @include flex-direction(row);
+  background-color: $lime;
+  padding: 4px;
 }
+
+.dashboard-nav--link {
+  flex: 1;
+  text-align: center;
+  fill: $lime-tint-3;
+  color: $lime-tint-3;
+  padding: 8px 0px 4px;
+  transition: color       .3s,
+              fill        .3s;
+}
+
+.dashboard-nav--link:hover {
+  fill: $lime-tint-4;
+  color: $lime-tint-4;
+}
+
+.dashboard-nav--link.active {
+  fill: $white;
+  color: $white;
+}
+
+.dashboard-nav--icon {
+  width: $icon-medium;
+  height: $icon-medium;
+  fill: inherit;
+  vertical-align: middle;
+  margin-right: 12px;
+  margin-bottom: 4px;
+}
+
+.dashboard-nav--name {
+  display: inline;
+  margin-bottom: 0px;
+}
+
+
+
+
 
 /* * * * * * * * * * * * * * * * * * * * 
  *  Tablet +
  * * * * * * * * * * * * * * * * * * * */
 @media screen and (min-width: $tablet-size) {
+}
 
+@media screen and (max-width: $small-screen-size){
+  .dashboard-section {
+    width: 100%;
+    display: none;
+  }
+  .dashboard-section.active {
+    display: block;
+  }
 }
 
 /* * * * * * * * * * * * * * * * * * * * 
  *  Small Screen +
  * * * * * * * * * * * * * * * * * * * */
 @media screen and (min-width: $small-screen-size) {
-
+  .dashboard-nav {
+    display: none;
+  }
 }
