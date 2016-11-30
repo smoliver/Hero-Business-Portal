@@ -32,7 +32,7 @@ class Main extends React.Component {
 
         return (
             <div className="business-portal-container">
-                <Header loggedIn={this.state.loggedIn} logout={auth.logout.bind(auth, null)} />
+                <Header loggedIn={this.state.loggedIn} logout={auth.logout.bind(auth, null)} business={this.props.business}/>
                 <main className="content">
                     { this.props.children }
                 </main>

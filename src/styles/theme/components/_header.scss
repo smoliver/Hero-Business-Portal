@@ -17,6 +17,7 @@
 	height: 42px;
 	width: 100%;
 	background-color: $white;
+	color: $lime;
 }
 
 .header--logo-container {
@@ -29,6 +30,20 @@
 	height: 100%;
 	width: auto;
 	display: inline-block;
+	fill: $lime;
+}
+
+.header--business {
+	margin-right: 24px;
+	text-transform: capitalize;
+}
+
+.header--thumbnail {
+	display: inline-block;
+	height: 28px;
+	// padding-bottom: 4px;
+	margin-right: 8px;
+	vertical-align: middle;
 }
 
 /* * * * * * * * * * * * * * * * * * * * 
