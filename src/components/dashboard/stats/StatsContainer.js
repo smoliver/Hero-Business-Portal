@@ -25,7 +25,6 @@ class StatsContainer extends React.Component {
             let newBusiness = {};
             newBusiness['id'] = this.props.business.id;
             newBusiness['avg_customer_spent'] = spend;
-            console.log(newBusiness);
             this.props.onUpdateBusiness(newBusiness);
         }
     }
