@@ -16,7 +16,13 @@ class Routes extends React.Component {
 
 
     createElement(Component, props) {
-        return (<Component business={this.props.business} onUpdateBusiness={this.props.onUpdateBusiness} {...props} />);
+        return (
+            <Component
+                business={this.props.business}
+                onUpdateBusiness={this.props.onUpdateBusiness}
+                onUpdateBusinessImage={this.props.onUpdateBusinessImage}
+                {...props} />
+        );
     }
 
     render() {
