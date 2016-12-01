@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Validation from 'react-validation';
 import { Link } from 'react-router';
+import Dropzone from 'react-dropzone';
 
 import AddressAutocomplete from '../inputs/AddressAutocomplete';
 import auth from '../../auth';
@@ -14,6 +15,9 @@ class Profile extends React.Component {
 
     this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
     this.resetProfile = this.resetProfile.bind(this);
+    this.handleImageSelect = this.handleImageSelect.bind(this);
+    this.handleImageUpdate = this.handleImageUpdate.bind(this);
+    this.resetImage = this.resetImage.bind(this);
 
     this.state = {
       profile: {
@@ -22,9 +26,14 @@ class Profile extends React.Component {
         avg_customer_spent: [props.business.avg_customer_spent].join(''),
         avg_party_size: [props.business.avg_party_size].join('')
       },
-      location: Object.assign({}, props.business.location)
+      location: Object.assign({}, props.business.location),
+      image: {
+        preview: props.business.image,
+      }
     }
     this.state.originalProfile = Object.assign({}, this.state.profile);
+    this.state.originalLocation = Object.assign({}, this.state.location);
+    this.state.originalImage = Object.assign({}, this.state.image);
   }
 
   handleProfileUpdate(e) {
@@ -36,20 +45,38 @@ class Profile extends React.Component {
     this.props.onUpdateBusiness(formData);
   }
 
-  handlePictureUpdate(e) {
+  resetProfile(e) {
     e.preventDefault();
 
-    let url = `${process.env.API_DOMAIN}/auth/registration/business/${this.props.business.id}/`;
-    fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    }).then(function(response) {
-      auth.login(formData.email, formData.password1);
-    }).catch(function(err) {
-      console.log(err);
+    this.setState({
+      profile: Object.assign({}, this.state.originalProfile),
+      location: Object.assign({}, this.state.originalLocation)
+    });
+  }
+
+  handleImageSelect(accepted, rejected) {
+    if (accepted.length > 0) {
+      let chosen = accepted[0];
+      this.setState({
+        image: chosen
+      })
+    }
+  }
+
+  handleImageUpdate(e) {
+    e.preventDefault();
+
+    let formData = new FormData();
+    formData.append('image', this.state.image);
+
+    this.props.onUpdateBusinessImage(formData);
+  }
+
+  resetImage(e) {
+    e.preventDefault();
+
+    this.setState({
+      image: Object.assign({}, this.state.originalImage)
     });
   }
 
@@ -57,14 +84,6 @@ class Profile extends React.Component {
     for (let component in place) {
       this.onValueChange('location', component, {target:{value:place[component]}});
     }
-  }
-
-  resetProfile(e) {
-    e.preventDefault();
-
-    this.setState({
-      profile: Object.assign({}, this.state.originalProfile)
-    });
   }
 
   onValueChange(key, attr, event) {
@@ -111,6 +130,24 @@ class Profile extends React.Component {
               <Button>Update</Button>
               <button onClick={this.resetProfile}>Reset</button>
             </Form>
+          </div>
+          <h2 className="card--header">
+            Business Image
+          </h2>
+          <div className="card--content">
+            <form className="form-grid" ref="imageForm" onSubmit={this.handleImageUpdate}>
+              <label className="span2">
+                Select Image
+                <Dropzone onDrop={this.handleImageSelect}>
+                  <div>Try dropping some files here, or click to select files to upload.</div>
+                </Dropzone>
+              </label>
+              <label className="span2">
+                Preview
+                <img className="span4" src={this.state.image.preview} />
+              </label>
+              <button type="submit">Update</button>
+            </form>
           </div>
         </div>
       </div>

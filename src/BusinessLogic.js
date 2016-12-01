@@ -10,11 +10,12 @@ class BusinessLogic extends React.Component {
       business: null
     };
 
-    this.updateBusiness = this.updateBusiness.bind(this);
     this.initializeBusiness = this.initializeBusiness.bind(this);
+    this.updateBusiness = this.updateBusiness.bind(this);
+    this.updateBusinessImage = this.updateBusinessImage.bind(this);
   }
 
-  initializeBusiness(business){
+  initializeBusiness(business) {
     // If the average customer spent is not defined
     // Sets it to a default value of $20.00
     // updates the value on the server
@@ -32,7 +33,7 @@ class BusinessLogic extends React.Component {
     return business;
   }
 
-  updateBusiness(newBusiness){
+  updateBusiness(newBusiness) {
     let oldBusiness = this.state.business;
 
     let url = `${process.env.API_DOMAIN}/business/${oldBusiness.id}/`;
@@ -43,12 +44,12 @@ class BusinessLogic extends React.Component {
         'Authorization': `Token ${auth.getToken()}`
       },
       body: JSON.stringify(newBusiness)
-    }).then((response) => {
+    }).then(response => {
       if (!response.ok) {
         throw 'Error updating profile';
       }
       return response.json();
-    }).then((business) => {
+    }).then(business => {
       this.setState({
         business
       });
@@ -57,6 +58,33 @@ class BusinessLogic extends React.Component {
       this.setState({
         business: oldBusiness
       });
+    });
+  }
+
+  updateBusinessImage(imageForm) {
+    let oldBusiness = this.state.business;
+
+    let url = `${process.env.API_DOMAIN}/business/upload/business-image/${oldBusiness.id}/`;
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${auth.getToken()}`
+      },
+      body: imageForm
+    }).then(response => {
+      if (!response.ok) {
+        throw 'Error updating business image';
+      }
+      return response.json();
+    }).then(business => {
+      this.setState({
+        business
+      })
+    }).catch(err => {
+      console.log(err);
+      this.setState({
+        business: oldBusiness
+      })
     });
   }
 
@@ -84,7 +112,7 @@ class BusinessLogic extends React.Component {
 
   render(){
     return (
-      <Routes business={this.state.business} onUpdateBusiness={this.updateBusiness} />
+      <Routes business={this.state.business} onUpdateBusiness={this.updateBusiness} onUpdateBusinessImage={this.updateBusinessImage} />
     );
   }
 }
