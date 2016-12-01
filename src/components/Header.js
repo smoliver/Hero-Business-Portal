@@ -14,7 +14,7 @@ const Header = ({ loggedIn, logout, business }) => {
     if (loggedIn && business) {
         let businessThumbnail = business.thumbnail || defaultThumbnail; 
         businessComponent = (
-            <Link to={{pagename: "profile"}} className="header--business">
+            <Link to="/profile" className="header--business">
                 <img src={businessThumbnail} className="header--thumbnail"/>
                 {business.name}
             </Link>
