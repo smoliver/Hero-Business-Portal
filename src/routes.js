@@ -5,6 +5,7 @@ import Main from './components/Main';
 import Dashboard from './components/dashboard/Dashboard';
 import LogIn from './components/auth/LogIn';
 import SignUp from './components/auth/SignUp';
+import ProfileContainer from './components/profile/ProfileContainer';
 
 class Routes extends React.Component {
     constructor() {
@@ -25,6 +26,7 @@ class Routes extends React.Component {
                     <Route path="dashboard" component={Dashboard} />
                     <Route path="signup" component={SignUp} />
                     <Route path="login" component={LogIn} />
+                    <Route path="profile" component={ProfileContainer} />
                 </Route>
             </Router>
         )

@@ -35,8 +35,28 @@ class BusinessLogic extends React.Component {
   updateBusiness(newBusiness){
     let oldBusiness = this.state.business;
 
-    this.setState({
-      business: newBusiness
+    let url = `${process.env.API_DOMAIN}/business/${oldBusiness.id}/`;
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${auth.getToken()}`
+      },
+      body: JSON.stringify(newBusiness)
+    }).then((response) => {
+      if (!response.ok) {
+        throw 'Error updating profile';
+      }
+      return response.json();
+    }).then((business) => {
+      this.setState({
+        business
+      });
+    }).catch((err) => {
+      console.log(err);
+      this.setState({
+        business: oldBusiness
+      });
     });
   }
 

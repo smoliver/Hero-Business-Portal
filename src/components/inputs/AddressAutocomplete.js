@@ -8,20 +8,16 @@ import HeroStaticMap from '../maps/HeroStaticMap';
 let { Input } = Validation.components;
 
 class AddressAutocomplete extends React.Component {
-    constructor() {
+    constructor(props) {
         super();
         
         this.selectPlace = this.selectPlace.bind(this);
         this.state = {
             autocomplete: null,
-            selectedAddress: '',
+            selectedAddress: props.location.raw || '',
             address: {
-                route: '',
-                city: '',
-                state: '',
-                zipcode: '',
-                latitude: '',
-                longitude: ''
+                latitude: props.location.latitude,
+                longitude: props.location.longitude
             }
         }
     }
