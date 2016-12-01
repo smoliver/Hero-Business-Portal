@@ -10,40 +10,76 @@ class StatsContainer extends React.Component {
         super();
 
         this.updateAvgSpend = this.updateAvgSpend.bind(this);
-        this.updatePartySize = this.updatePartySize.bind(this);
-        this.updateBusiness = this.updateBusiness.bind(this);
+        this.toggleEditing = this.toggleEditing.bind(this);
         this.renderBenefits = this.renderBenefits.bind(this);
         this.renderRewardsRedeemed = this.renderRewardsRedeemed.bind(this);
         this.renderAvgSpend = this.renderAvgSpend.bind(this);
         this.state = {
             rewardsRedeemed: null,
-            business: null
+            editing: false
         }
     }
 
-    updateBusiness(newBusiness){
-        this.props.onUpdateBusiness(newBusiness);
+    updateAvgSpend(spend){
+        if (spend){
+            let newBusiness = {};
+            newBusiness['id'] = this.props.business.id;
+            newBusiness['avg_customer_spent'] = spend;
+            console.log(newBusiness);
+            this.props.onUpdateBusiness(newBusiness);
+        }
     }
 
-
-    updatePartySize(size){
-        let newBusiness = this.props.business;
-        newBusiness['avg_party_size'] = size;
-        this.updateBusiness(newBusiness);
+    toggleEditing() {
+        this.setState({
+            editing: !this.state.editing
+        })
     }
 
-    updateAvgSpend(spent){
-        let newBusiness = this.props.business;
-        newBusiness['avg_customer_spent'] = spent;
-        this.updateBusiness(newBusiness);
+    onValueChange(attr, event) {
+        this.setState({
+            [attr]: event.target.value
+        }); 
     }
 
-    renderAvgSpend() {
+    renderAvgSpend(editing) {
         if(this.props.business && this.props.business['avg_customer_spent']){
+            let Display = editing ? StatForm : Stat ;
+            let actions;
+            if (editing) {
+                actions = (
+                    <div className="stats-card--actions">
+                        <Icon symbol={Icon.SYMBOLS.PLUS} 
+                            key={1}
+                            onClick={() => { 
+                                this.updateAvgSpend(this.state['avg_customer_spent']); 
+                                this.toggleEditing(); 
+                            }} 
+                            className="stats-card--action"  />
+                        <Icon symbol={Icon.SYMBOLS.CANCEL} 
+                            key={2}
+                            onClick={this.toggleEditing} 
+                            className="stats-card--action cancel"/>
+                    </div>
+                )
+            }
+            else {
+                actions =(
+                    <div className="stats-card--actions">
+                        <Icon symbol={Icon.SYMBOLS.PENCIL} 
+                        key={3}
+                        onClick={this.toggleEditing} 
+                        className="stats-card--action" />
+                    </div>
+                )
+            }
             return (
                 <div className="stats-card">
-                    <Stat name={'Average Customer Spend'} 
-                        value={this.props.business['avg_customer_spent']} />
+                    <Display name={'Average Customer Spend'} 
+                        value={this.props.business['avg_customer_spent']} 
+                        onValueChange={this.onValueChange.bind(this, 'avg_customer_spent')}
+                        onSubmit={() => { updateAvgSpend(this.state['avg_customer_spent']) }} />
+                        {actions}
                 </div>
             );
         }
@@ -85,7 +121,7 @@ class StatsContainer extends React.Component {
     render() {
         return (
             <div className="stats">
-                {this.renderAvgSpend()}
+                {this.renderAvgSpend(this.state.editing)}
                 {this.renderRewardsRedeemed()}
                 {this.renderBenefits()}
             </div>

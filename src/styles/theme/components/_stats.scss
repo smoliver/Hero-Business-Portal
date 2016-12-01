@@ -28,6 +28,36 @@
   fill: $white;
 }
 
+.stats-card--actions {
+  @include display(flex);
+  @include justify-content(center);
+  @include flex-direction(column);
+  padding: 32px;
+  background-color: $white;
+  @include align-self(stretch);
+}
+
+.stats-card--action {
+  display: block;
+  width: $icon-medium;
+  height: $icon-medium;
+  margin-bottom: 16px;
+  fill: $gray-shade-2;
+  transition: fill        .3s;
+}
+
+.stats-card--action:last-child {
+  margin-bottom: 0px;
+}
+
+.stats-card--action.cancel:hover {
+  fill: $failure-color;
+}
+
+.stats-card--action:hover {
+  fill: $potential-color;
+}
+
 .stat {
   padding: 32px;
   text-align: center;
@@ -39,7 +69,7 @@
   width: $icon-xlarge;
 }
 
-.stat--number {
+.stat--value {
   font-size: 32pt;
   margin-bottom: 1em;
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
@@ -48,6 +78,18 @@
 .stat--title {
   font-size: 11pt;
   margin-bottom: 0px;
+}
+
+.stat-form {
+  padding: 32px 0px 32px 32px;
+  background-color: white;
+  text-align: center;
+  text-align: center;
+  color: $gray-shade-2;
+}
+
+.stat-form--title {
+  margin: 1em 0px 0px;
 }
 
 /* * * * * * * * * * * * * * * * * * * * 
