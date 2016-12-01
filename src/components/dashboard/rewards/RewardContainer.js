@@ -89,7 +89,7 @@ class RewardContainer extends React.Component {
 
   componentDidMount() {
     // Fetch rewards
-    fetch(`${process.env.API_DOMAIN}/rewards/business/${auth.getBusinessId()}/`,{
+    fetch(`${process.env.API_DOMAIN}/rewards/business/${this.props.business.id}/`,{
       headers: {
         'Authorization': `Token ${auth.getToken()}`
       },
@@ -117,7 +117,7 @@ class RewardContainer extends React.Component {
         </h3>
         <RewardList 
           rewards={this.state.rewards} 
-          business={this.state.business}
+          business={this.props.business}
           onUpdating={this.updatingReward.bind(this)}
           onUpdated={this.updatedReward.bind(this)} 
           onToggle={this.toggleEditing.bind(this)}
@@ -125,6 +125,7 @@ class RewardContainer extends React.Component {
           onInteract={this.interactWithReward.bind(this)} />
         <RewardForm 
           key={this.state.refresh}
+          business={this.props.business}
           className="main" 
           onUpdating={this.updatingReward.bind(this, -1)}
           onUpdated={this.updatedReward.bind(this)} />

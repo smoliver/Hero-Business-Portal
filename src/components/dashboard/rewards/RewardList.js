@@ -37,7 +37,8 @@ class RewardList extends React.Component {
                     return <RewardForm {...reward} key={reward.id || idx} 
                         onUpdating={this.updatingReward.bind(this, idx)} 
                         onUpdated={this.updatedReward.bind(this)}
-                        cancel={this.toggleEditing.bind(this, idx)} />;
+                        cancel={this.toggleEditing.bind(this, idx)}
+                        business={this.props.business} />;
                 } else {
                     return <Reward {...reward} key={reward.id || idx} 
                         toggleEditing={this.toggleEditing.bind(this, idx)} 

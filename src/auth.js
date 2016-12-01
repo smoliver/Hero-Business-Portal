@@ -1,19 +1,17 @@
 
 // Adapted from https://github.com/ReactTraining/react-router/blob/master/examples/auth-flow/auth.js
-let storage = {
-    store(details) {
-        localStorage.token = details.key;
-        localStorage.businessId = details.user.businesses[0].id;
-        localStorage.business = details.user.businesses[0];
-    },
-    clear() {
-        delete localStorage.token;
-        delete localStorage.businessId;
-        delete localStorage.business;
-    }
-}
 
 export default {
+    storage: {
+        store(details) {
+            localStorage.token = details.key;
+            localStorage.businessId = details.user.businesses[0].id;
+        },
+        clear() {
+            delete localStorage.token;
+            delete localStorage.businessId;
+        }
+    },
     login(email, password, cb) {
         if (localStorage.token) {
             if (cb) cb(true);
@@ -33,7 +31,7 @@ export default {
                 })
                 .then(response => response.json())
                 .then(details => {
-                    storage.store(details);
+                    this.storage.store(details);
                     if (cb) cb(true);
                     this.onChange(true);
                 })
@@ -56,7 +54,7 @@ export default {
     },
 
     logout(cb) {
-        storage.clear();
+        this.storage.clear();
         if (cb) cb(false);
         this.onChange(false);
     },

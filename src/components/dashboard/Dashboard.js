@@ -13,7 +13,7 @@ const Dashboard = ({business, onUpdateBusiness, location: {hash}}) => {
   // provide to DashboardSection's `active` prop if it should be the default
   let defaultTo = !hash || ![REWARDS, STATS].includes(hash);
 
-  return (
+  return business ? (
     <div className="dashboard">
       <div className="dashboard-nav">
         <DashboardLink to={{ pathname: 'dashboard', hash: REWARDS }} active={hash == REWARDS || defaultTo} > 
@@ -27,14 +27,14 @@ const Dashboard = ({business, onUpdateBusiness, location: {hash}}) => {
       </div>
       <div className="dashboard--container">
         <DashboardSection active={hash == REWARDS || defaultTo}>
-          <RewardContainer  business={business} />
+          <RewardContainer business={business} />
         </DashboardSection>
         <DashboardSection active={hash == STATS}>
           <StatsContainer business={business} onUpdateBusiness={onUpdateBusiness}/>
         </DashboardSection>
       </div>
     </div>
-  ) 
+  ) : null;
 };
 
 export default Dashboard;

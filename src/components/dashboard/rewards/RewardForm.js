@@ -27,7 +27,7 @@ class RewardForm extends React.Component {
             name: [props.name].join(''),
             points: [props.points].join(''),
             cost_of_goods: [props.cost_of_goods].join(''),
-            business: auth.getBusinessId()
+            business: this.props.business.id
         }
 
         this.state = state;
@@ -39,7 +39,7 @@ class RewardForm extends React.Component {
         let formData = this.state.reward;
         formData.cost_of_goods = Math.round(parseFloat(formData.cost_of_goods) * 100);
         
-        let rewardData = formData;
+        let rewardData = Object.assign({}, formData);
         rewardData.id = this.props.id;
         rewardData.editing = false;
         rewardData.updating = true;
