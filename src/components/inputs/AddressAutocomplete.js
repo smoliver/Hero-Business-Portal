@@ -10,14 +10,17 @@ let { Input } = Validation.components;
 class AddressAutocomplete extends React.Component {
     constructor(props) {
         super();
+
+        let location = props.location || {},
+            { raw, latitude, longitude } = location;
         
         this.selectPlace = this.selectPlace.bind(this);
         this.state = {
             autocomplete: null,
-            selectedAddress: props.location.raw || '',
+            selectedAddress: raw || '',
             address: {
-                latitude: props.location.latitude,
-                longitude: props.location.longitude
+                latitude,
+                longitude
             }
         }
     }

@@ -44,7 +44,7 @@ class LogIn extends React.Component {
                     </h2>
                     <p className="card--sub-header">
                         <Link to="/signup">Create an Account</Link>
-                        <Link>Forgot your password?</Link>
+                        <a href={`${process.env.API_DOMAIN}/auth/password/reset/`} target="_blank">Forgot your password?</a>
                     </p>
                     <div className="card--content form-grid">
                         <Input containerClassName="span4" errorClassName="failure" type="email" placeholder="Email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
