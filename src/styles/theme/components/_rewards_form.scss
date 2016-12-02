@@ -16,7 +16,7 @@
 }
 
 .rewards-form.main {
-  border-top: 4px solid $lime-tint-1;
+  border-top: 3px solid $lime;
 }
 
 .rewards-form--inputs {
@@ -85,8 +85,10 @@
 }
 
 /* * * * * * * * * * * * * * * * * * * * 
- *  Tablet +
+ *  Small Screen +
  * * * * * * * * * * * * * * * * * * * */
-@media screen and (min-width: $tablet-size) {
-
+@media screen and (min-width: $small-screen-size) {
+  .rewards-form.main {
+    border-top-color: $lime-shade-1;
+  }
 }

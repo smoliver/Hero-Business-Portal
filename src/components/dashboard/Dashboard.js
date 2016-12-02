@@ -29,7 +29,7 @@ const Dashboard = ({business, onUpdateBusiness, location: {hash}}) => {
         <DashboardSection active={hash == REWARDS || defaultTo}>
           <RewardContainer business={business} />
         </DashboardSection>
-        <DashboardSection active={hash == STATS}>
+        <DashboardSection active={hash == STATS} className="grow">
           <StatsContainer business={business} onUpdateBusiness={onUpdateBusiness}/>
         </DashboardSection>
       </div>

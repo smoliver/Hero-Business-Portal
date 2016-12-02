@@ -46,8 +46,8 @@
 }
 
 .dashboard-nav--icon {
-  width: $icon-medium;
-  height: $icon-medium;
+  width: 1.6em;
+  height: 1.6em;
   fill: inherit;
   vertical-align: middle;
   margin-right: 12px;
@@ -58,10 +58,6 @@
   display: inline;
   margin-bottom: 0px;
 }
-
-
-
-
 
 /* * * * * * * * * * * * * * * * * * * * 
  *  Tablet +
@@ -85,5 +81,9 @@
 @media screen and (min-width: $small-screen-size) {
   .dashboard-nav {
     display: none;
+  }
+
+  .dashboard-section.grow {
+    @include flex(1);
   }
 }

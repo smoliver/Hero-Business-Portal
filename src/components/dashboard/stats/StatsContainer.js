@@ -11,6 +11,7 @@ class StatsContainer extends React.Component {
 
         this.updateAvgSpend = this.updateAvgSpend.bind(this);
         this.toggleEditing = this.toggleEditing.bind(this);
+        this.fetchRewardsRedeemed = this.fetchRewardsRedeemed.bind(this);
         this.renderBenefits = this.renderBenefits.bind(this);
         this.renderRewardsRedeemed = this.renderRewardsRedeemed.bind(this);
         this.renderAvgSpend = this.renderAvgSpend.bind(this);
@@ -33,6 +34,32 @@ class StatsContainer extends React.Component {
         this.setState({
             editing: !this.state.editing
         })
+    }
+
+    fetchRewardsRedeemed() {
+        if (this.props.business) {
+            fetch(`${process.env.API_DOMAIN}/business/transactions/${this.props.business.id}/`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${auth.getToken()}`
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error ("Rewards Redeemed endpoint returned an error")
+            }).then(results => {
+                this.setState({
+                    rewardsRedeemed: results.count
+                });
+            }).catch(function(err){
+                console.log(err);
+            })
+        }
+
+        else {
+
+        }
     }
 
     onValueChange(attr, event) {
@@ -73,7 +100,7 @@ class StatsContainer extends React.Component {
                 )
             }
             return (
-                <div className="stats-card">
+                <div className="stats-card" key={1}>
                     <Display name={'Average Customer Spend'} 
                         value={this.props.business['avg_customer_spent']} 
                         onValueChange={this.onValueChange.bind(this, 'avg_customer_spent')}
@@ -87,9 +114,9 @@ class StatsContainer extends React.Component {
 
     renderRewardsRedeemed() {
         let rewardsRedeemed = this.state.rewardsRedeemed;
-        if(!(rewardsRedeemed === null || rewardsRedeemed === undefined)){
+        if(!(rewardsRedeemed == null)){
             return (
-                <div className="stats-card">
+                <div className="stats-card" key={2}>
                     <Stat name={'Rewards Redeemed'}
                         value={this.state.rewardsRedeemed} />
                 </div>
@@ -103,11 +130,11 @@ class StatsContainer extends React.Component {
         let customerSpend = this.props.business ? this.props.business['avg_customer_spent'] : undefined;
         let partySize = this.props.business ? this.props.business['avg_party_size'] : undefined;
 
-        if (rewardsRedeemed != undefined && customerSpend != undefined && partySize != partySize) {
+        if (rewardsRedeemed != undefined && customerSpend != undefined && partySize != undefined) {
             let trafficDriven = partySize * rewardsRedeemed;
             let estimatedProfit = trafficDriven * customerSpend;
             return (
-                <div className="stats-card">
+                <div className="stats-card" key={3}>
                     <Stat name={'Estimated Traffic Driven'} value={trafficDriven} />
                     <Icon className="stats-icon" symbol={Icon.SYMBOLS.REWARD} />
                     <Stat name={'Estimated Profits'} value={estimatedProfit} />
@@ -117,12 +144,22 @@ class StatsContainer extends React.Component {
         return;
     }
 
+    componentDidMount() {
+        this.fetchRewardsRedeemed();
+    }
+
     render() {
         return (
             <div className="stats">
-                {this.renderAvgSpend(this.state.editing)}
-                {this.renderRewardsRedeemed()}
-                {this.renderBenefits()}
+                <h3 className="stats-header">
+                    <Icon symbol={Icon.SYMBOLS.GRAPH} className="stats-header--icon"/>
+                    Statistics
+                </h3>
+                <div className="stats--container">
+                    {this.renderAvgSpend(this.state.editing)}
+                    {this.renderRewardsRedeemed()}
+                    {this.renderBenefits()}
+                </div>
             </div>
         );
     }

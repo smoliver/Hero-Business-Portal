@@ -2,8 +2,8 @@ import React from 'react';
 
 const DashboardSection = ({className, active, children}) =>{
 
-	if (className) className += ' dashboard-section';
-	else className = 'dashboard-section';
+	// If classname is undefined sets it to just dashboard-section
+	className = className = `${className || ''}  dashboard-section`
 	if (active) className += ' active';
 	return (
 		<div className={className}>
