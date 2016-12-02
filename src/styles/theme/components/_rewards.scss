@@ -14,7 +14,7 @@
   background-color: $gray-tint-3;
 }
 
-.rewards--header {
+.rewards-header {
   display: none;
 }
 
@@ -148,12 +148,22 @@
     width: 480px;
   }
 
-  .rewards--header {
+  .rewards-header {
     display: block;
     background-color: $lime-shade-1;
-    padding: 12px;
+    padding: 12px 0px 8px;
     text-align: center;
     color: $white;
     margin: 0px;
+  }
+
+  .rewards-header--icon {
+    display: inline-block;
+    fill: $white;
+    height: 1.2em;
+    width: 1.2em;
+    margin-bottom: 4px;
+    margin-right: .6em;
+    vertical-align: middle;
   }
 }

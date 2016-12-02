@@ -8,6 +8,7 @@
 
 .dashboard {
   width: 100%;
+  max-height: calc(100vh - 42px - 32px);
   @include display(flex);
   @include flex-direction(column);
 }
