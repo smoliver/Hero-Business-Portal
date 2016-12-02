@@ -7,10 +7,15 @@ class BusinessLogic extends React.Component {
     super();
 
     this.state = {
-      business: null
+      business: null,
+      request: {
+        open: false,
+        errors: {}
+      }
     };
 
     this.initializeBusiness = this.initializeBusiness.bind(this);
+    this.fetchBusiness = this.fetchBusiness.bind(this);
     this.updateBusiness = this.updateBusiness.bind(this);
     this.updateBusinessImage = this.updateBusinessImage.bind(this);
   }
@@ -36,7 +41,14 @@ class BusinessLogic extends React.Component {
   updateBusiness(newBusiness) {
     let oldBusiness = this.state.business;
 
-    let url = `${process.env.API_DOMAIN}/business/${oldBusiness.id}/`;
+    let url = `${process.env.API_DOMAIN}/business/${oldBusiness.id}/`,
+      ok;
+    this.setState({
+      request: {
+        open: true,
+        errors: {}
+      }
+    });
     fetch(url, {
       method: 'PUT',
       headers: {
@@ -45,18 +57,30 @@ class BusinessLogic extends React.Component {
       },
       body: JSON.stringify(newBusiness)
     }).then(response => {
-      if (!response.ok) {
-        throw 'Error updating profile';
-      }
+      ok = response.ok;
       return response.json();
+    }).then(values => {
+      if (!ok) {
+        throw values;
+      }
+      return values;
     }).then(business => {
       this.setState({
-        business
+        business,
+        request: {
+          open: false,
+          errors: {}
+        }
       });
     }).catch((err) => {
       console.log(err);
       this.setState({
-        business: oldBusiness
+        business: oldBusiness,
+        request: {
+          open: false,
+          errors: err,
+          target: 'update-business'
+        }
       });
     });
   }
@@ -64,7 +88,14 @@ class BusinessLogic extends React.Component {
   updateBusinessImage(imageForm) {
     let oldBusiness = this.state.business;
 
-    let url = `${process.env.API_DOMAIN}/business/upload/business-image/${oldBusiness.id}/`;
+    let url = `${process.env.API_DOMAIN}/business/upload/business-image/${oldBusiness.id}/`,
+      ok;
+    this.setState({
+      request: {
+        open: true,
+        errors: {}
+      }
+    });
     fetch(url, {
       method: 'POST',
       headers: {
@@ -72,23 +103,35 @@ class BusinessLogic extends React.Component {
       },
       body: imageForm
     }).then(response => {
-      if (!response.ok) {
-        throw 'Error updating business image';
-      }
+      ok = response.ok;
       return response.json();
+    }).then(values => {
+      if (!ok) {
+        throw values;
+      }
+      return values;
     }).then(business => {
       this.setState({
-        business
+        business,
+        request: {
+          open: false,
+          errors: {}
+        }
       })
     }).catch(err => {
       console.log(err);
       this.setState({
-        business: oldBusiness
+        business: oldBusiness,
+        request: {
+          open: false,
+          errors: err,
+          target: 'update-business-image'
+        }
       })
     });
   }
 
-  componentDidMount() {
+  fetchBusiness() {
     fetch(`${process.env.API_DOMAIN}/business/${auth.getBusinessId()}/`, {
       method: 'GET',
       headers: {
@@ -115,9 +158,18 @@ class BusinessLogic extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.fetchBusiness();
+  }
+
   render(){
     return (
-      <Routes business={this.state.business} onUpdateBusiness={this.updateBusiness} onUpdateBusinessImage={this.updateBusinessImage} />
+      <Routes
+        business={this.state.business}
+        onUpdateBusiness={this.updateBusiness}
+        onUpdateBusinessImage={this.updateBusinessImage}
+        onLogin={this.fetchBusiness}
+        request={this.state.request} />
     );
   }
 }

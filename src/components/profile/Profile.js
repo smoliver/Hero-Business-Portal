@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import Dropzone from 'react-dropzone';
 
 import AddressAutocomplete from '../inputs/AddressAutocomplete';
+import ErrorSubmit from '../inputs/ErrorSubmit';
 import auth from '../../auth';
 
 let { Form, Input, Button } = Validation.components;
@@ -127,7 +128,7 @@ class Profile extends React.Component {
                   <Input key="avg_party_size" containerClassName="span4" errorClassName="failure" type="text" placeholder="Average Party Size" value={this.state.profile.avg_party_size} onChange={this.onValueChange.bind(this, 'profile', 'avg_party_size')} name='avg_party_size' validations={['required', 'integer']}/>
                 </label>
               </div>
-              <Button>Update</Button>
+              <ErrorSubmit id="update-business" {...this.props.request} cta="Update" />
               <button onClick={this.resetProfile}>Reset</button>
             </Form>
           </div>
@@ -146,7 +147,7 @@ class Profile extends React.Component {
                 Preview
                 <img className="span4" src={this.state.image.preview} />
               </label>
-              <button type="submit">Update</button>
+              <ErrorSubmit id="update-business-image" {...this.props.request} cta="Update" />
             </form>
           </div>
         </div>

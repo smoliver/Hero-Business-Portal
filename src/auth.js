@@ -19,6 +19,7 @@ export default {
             return;
         }
         if (email && password) {
+            let ok;
             fetch(`${process.env.API_DOMAIN}/auth/login/business/`, {
                     method: 'POST',
                     headers: {
@@ -29,8 +30,14 @@ export default {
                         password
                     })
                 })
-                .then(response => response.json())
+                .then(response => {
+                    ok = response.ok;
+                    return response.json();
+                })
                 .then(details => {
+                    if (!ok) {
+                        throw details;
+                    }
                     this.storage.store(details);
                     if (cb) cb(true);
                     this.onChange(true);

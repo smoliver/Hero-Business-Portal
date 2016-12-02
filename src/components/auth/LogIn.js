@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import Validation from 'react-validation';
 
+import ErrorSubmit from '../inputs/ErrorSubmit';
 import auth from '../../auth';
 
 let { Form, Input, Button } = Validation.components;
 
 class LogIn extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -17,14 +18,42 @@ class LogIn extends React.Component {
             user: {
                 email: '',
                 password: '',
-            }
+            },
+            request: props.request
         }
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
-        auth.login(this.state.user.email, this.state.user.password);
+        this.setState({
+            request: {
+                open: true,
+                errors: {}
+            }
+        });
+        auth.login(this.state.user.email, this.state.user.password, (loggedIn) => {
+            if (loggedIn) {
+                this.setState({
+                    request: {
+                        open: false,
+                        errors: {}
+                    }
+                });
+                this.props.onLogin();
+            } else {
+                console.log('Yo');
+                this.setState({
+                    request: {
+                        open: false,
+                        errors: {
+                            email: ['Could not find username/password combo']
+                        },
+                        target: 'login'
+                    }
+                });
+            }
+        });
     }
 
     onValueChange(attr, event) {
@@ -49,7 +78,7 @@ class LogIn extends React.Component {
                     <div className="card--content form-grid">
                         <Input containerClassName="span4" errorClassName="failure" type="email" placeholder="Email" value={this.state.user.email} onChange={this.onValueChange.bind(this, 'email')} name='email' validations={['required', 'email']}/>
                         <Input containerClassName="span4" errorClassName="failure" type="password" placeholder="Password" value={this.state.user.password} onChange={this.onValueChange.bind(this, 'password')} name='password' validations={['required']}/>
-                        <Button>Log In</Button>
+                        <ErrorSubmit id="login" {...this.state.request} cta="Log In" />
                     </div>
                 </Form>
             </div>
