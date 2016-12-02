@@ -31,12 +31,6 @@ class Dashboard extends React.Component {
     });
   }
 
-  clickTarget(fn, event) {
-    if(event.currentTarget == event.target){
-      fn();
-    }
-  }
-
   showHelp(content) {
     this.setState({
       help: true,
