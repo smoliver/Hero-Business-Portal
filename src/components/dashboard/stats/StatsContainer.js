@@ -37,6 +37,7 @@ class StatsContainer extends React.Component {
     }
 
     fetchRewardsRedeemed() {
+        console.log("fetching rewards redeemed");
         if (this.props.business) {
             fetch(`${process.env.API_DOMAIN}/business/transactions/${this.props.business.id}/`, {
                 method: 'GET',
@@ -146,6 +147,17 @@ class StatsContainer extends React.Component {
 
     componentDidMount() {
         this.fetchRewardsRedeemed();
+        let updateReemedCount = setTimeout(this.fetchRewardsRedeemed, 60000);
+        this.setState({
+            timer: updateReemedCount
+        });
+    }
+
+    componentWillUnmount() {
+        if(this.state.timer) clearInterval(this.state.timer);
+        this.setState({
+            timer: null
+        });
     }
 
     render() {
