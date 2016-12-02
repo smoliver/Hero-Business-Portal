@@ -1,0 +1,65 @@
+/*---------------------------------------
+# Help
+---------------------------------------*/
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Help +
+ * * * * * * * * * * * * * * * * * * * */
+
+.help {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  @include display(flex);
+  background-color: $white;
+  #{$headers} {
+    margin-bottom: .7em;
+  }
+}
+
+.help--header {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px;
+  background-color: $gray-tint-4;
+  text-align: right;
+  line-height: 0px;
+}
+
+.help--exit {
+  height: $icon-medium;
+  width: $icon-medium;
+  fill: $gray-shade-2;
+  transition: fill      .3s;
+}
+
+.help--exit:hover {
+  fill: $failure-color;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Tablet +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $tablet-size) {
+  .help {
+    @include align-items(center);
+    @include justify-content(center);
+    background-color: $black-30;
+  }
+
+  .help--display {
+    background-color: $white;
+  }
+
+}
+
+/* * * * * * * * * * * * * * * * * * * * 
+ *  Small Screen +
+ * * * * * * * * * * * * * * * * * * * */
+@media screen and (min-width: $small-screen-size) {
+
+}

@@ -37,7 +37,6 @@ class StatsContainer extends React.Component {
     }
 
     fetchRewardsRedeemed() {
-        console.log("fetching rewards redeemed");
         if (this.props.business) {
             fetch(`${process.env.API_DOMAIN}/business/transactions/${this.props.business.id}/`, {
                 method: 'GET',
@@ -73,6 +72,13 @@ class StatsContainer extends React.Component {
         if(this.props.business && this.props.business['avg_customer_spent']){
             let Display = editing ? StatForm : Stat ;
             let actions;
+            let helpContent = (
+                <div>
+                    <h4>Average Customer Spend</h4>
+                    <p>The average spend of a customer during a visit to your establishment.  We set it to a default of $20 but we suggest you update it in the dashboard.</p>
+                </div>
+            )
+
             if (editing) {
                 actions = (
                     <div className="stats-card--actions">
@@ -97,6 +103,10 @@ class StatsContainer extends React.Component {
                         key={3}
                         onClick={this.toggleEditing} 
                         className="stats-card--action" />
+                        <Icon symbol={Icon.SYMBOLS.HELP}
+                        key={4}
+                        onClick={() => { this.props.showHelp(helpContent) }}
+                        className="stats-card--action" />
                     </div>
                 )
             }
@@ -115,11 +125,24 @@ class StatsContainer extends React.Component {
 
     renderRewardsRedeemed() {
         let rewardsRedeemed = this.state.rewardsRedeemed;
+
+        let helpContent = (
+            <div>
+                <h4>Rewards Redeemed</h4>
+                <p>The total number of rewards redeemed by users. Calculated by the app.</p>
+            </div>
+        )
+        
         if(!(rewardsRedeemed == null)){
             return (
                 <div className="stats-card" key={2}>
                     <Stat name={'Rewards Redeemed'}
                         value={this.state.rewardsRedeemed} />
+                    <div className="stats-card--actions">
+                        <Icon symbol={Icon.SYMBOLS.HELP}
+                            onClick={() => { this.props.showHelp(helpContent) }}
+                            className="stats-card--action" />
+                    </div>
                 </div>
             )
         }
@@ -131,6 +154,15 @@ class StatsContainer extends React.Component {
         let customerSpend = this.props.business ? this.props.business['avg_customer_spent'] : undefined;
         let partySize = this.props.business ? this.props.business['avg_party_size'] : undefined;
 
+        let helpContent = (
+            <div>
+                <h4>Traffic Driven</h4>
+                <p>The number of customers brought through the door by the HERO app.  Calculated by the app by tracking your average party size and multiplying that by the number of rewards redeemed.</p>
+                <h4>Additional Revenue</h4>
+                <p>Estimated profits Hero has brought to your business.  Calculated by the app using its metrics of traffic driven and your estimated customer Average Spend.</p>
+            </div>
+        )
+
         if (rewardsRedeemed != undefined && customerSpend != undefined && partySize != undefined) {
             let trafficDriven = partySize * rewardsRedeemed;
             let estimatedProfit = trafficDriven * customerSpend;
@@ -138,7 +170,12 @@ class StatsContainer extends React.Component {
                 <div className="stats-card" key={3}>
                     <Stat name={'Estimated Traffic Driven'} value={trafficDriven} />
                     <Icon className="stats-icon" symbol={Icon.SYMBOLS.REWARD} />
-                    <Stat name={'Estimated Profits'} value={estimatedProfit} />
+                    <Stat name={'Additional Revenues'} value={estimatedProfit} />
+                    <div className="stats-card--actions">
+                        <Icon symbol={Icon.SYMBOLS.HELP}
+                            onClick={() => { this.props.showHelp(helpContent) }}
+                            className="stats-card--action" />
+                    </div>
                 </div>
             )
         }
