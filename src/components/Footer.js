@@ -6,7 +6,7 @@ const Footer = () => (
             &copy;Hero 2016
         </div>
         <div className="footer-links">
-            <a>FAQ</a>
+            <a href="https://heroapp.zendesk.com/hc/en-us/sections/207248267-FAQ-for-Businesses-">Help</a>
         </div>
     </footer>
 )

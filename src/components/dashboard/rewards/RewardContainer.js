@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Icon from '../../Icon';
 import RewardList from './RewardList';
 import RewardForm from './RewardForm';
 import auth from '../../../auth';
@@ -112,7 +113,8 @@ class RewardContainer extends React.Component {
   render() {
     return (
       <section className="rewards">
-        <h3 className="rewards--header">
+        <h3 className="rewards-header">
+          <Icon symbol={Icon.SYMBOLS.REWARD} className="rewards-header--icon"/>
           Rewards
         </h3>
         <RewardList 
