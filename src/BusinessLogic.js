@@ -39,9 +39,10 @@ class BusinessLogic extends React.Component {
   }
 
   updateBusiness(newBusiness) {
+    let oldBusiness = this.state.business;
     if (newBusiness.avg_customer_spent) newBusiness.avg_customer_spent = Math.round(newBusiness.avg_customer_spent * 100);
 
-    let url = `${process.env.API_DOMAIN}/business/${newBusiness.id}/`,
+    let url = `${process.env.API_DOMAIN}/business/${oldBusiness ? oldBusiness.id : newBusiness.id}/`,
       ok;
     this.setState({
       request: {
@@ -75,7 +76,6 @@ class BusinessLogic extends React.Component {
     }).catch((err) => {
       console.log(err);
       this.setState({
-        business: oldBusiness,
         request: {
           open: false,
           errors: err,
