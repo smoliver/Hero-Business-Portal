@@ -144,6 +144,8 @@ class BusinessLogic extends React.Component {
       throw new Error ("response not ok");
     })
     .then(business => {
+      console.log("logic mounted");
+      console.log(business);
       if(business['avg_customer_spent'] == undefined || business['avg_party_size'] == undefined){
         business = this.initializeBusiness(business);
         this.updateBusiness(business);
