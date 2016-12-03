@@ -25,7 +25,7 @@ class BusinessLogic extends React.Component {
     // Sets it to a default value of $20.00
     // updates the value on the server
     if (business['avg_customer_spent'] == undefined){
-        business['avg_customer_spent'] = 2000
+        business['avg_customer_spent'] = 20
     } 
 
     // If the average party size is not defined
@@ -39,9 +39,9 @@ class BusinessLogic extends React.Component {
   }
 
   updateBusiness(newBusiness) {
-    let oldBusiness = this.state.business;
+    if (newBusiness.avg_customer_spent) newBusiness.avg_customer_spent = Math.round(newBusiness.avg_customer_spent * 100);
 
-    let url = `${process.env.API_DOMAIN}/business/${oldBusiness.id}/`,
+    let url = `${process.env.API_DOMAIN}/business/${newBusiness.id}/`,
       ok;
     this.setState({
       request: {
@@ -131,8 +131,8 @@ class BusinessLogic extends React.Component {
     });
   }
 
-  fetchBusiness() {
-    fetch(`${process.env.API_DOMAIN}/business/${auth.getBusinessId()}/`, {
+  fetchBusiness(businessId) {
+    fetch(`${process.env.API_DOMAIN}/business/${businessId}/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token ${auth.getToken()}`
@@ -159,7 +159,7 @@ class BusinessLogic extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchBusiness();
+    this.fetchBusiness(auth.getBusinessId());
   }
 
   render(){

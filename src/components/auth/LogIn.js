@@ -13,6 +13,7 @@ class LogIn extends React.Component {
         super(props);
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateAndContinue = this.validateAndContinue.bind(this);
 
         this.state = {
             user: {
@@ -32,17 +33,18 @@ class LogIn extends React.Component {
                 errors: {}
             }
         });
-        auth.login(this.state.user.email, this.state.user.password, (loggedIn) => {
-            if (loggedIn) {
+        console.log(auth.getBusinessId());
+        auth.login(this.state.user.email, this.state.user.password, (status) => {
+            if (status.loggedIn) {
                 this.setState({
                     request: {
                         open: false,
                         errors: {}
                     }
                 });
-                this.props.onLogin();
+                console.log('Biz Id', status.businessId);
+                this.props.onLogin(status.businessId);
             } else {
-                console.log('Yo');
                 this.setState({
                     request: {
                         open: false,
@@ -64,10 +66,20 @@ class LogIn extends React.Component {
         });
     }
 
+    validateAndContinue(name, next, e) {
+        e.preventDefault();
+
+        var invalid = this.refs[name].validateAll();
+        if (Object.keys(invalid).length === 0) {
+            // Valid
+            next(e);
+        }
+    }
+
     render() {
         return (
             <div className="card-container">
-                <Form className="card" onSubmit={this.handleSubmit}>
+                <Form ref="loginForm" className="card" onSubmit={this.validateAndContinue.bind(this, 'loginForm', this.handleSubmit)}>
                     <h2 className="card--header">
                         Log In
                     </h2>

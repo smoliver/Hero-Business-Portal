@@ -6,8 +6,11 @@ import Icon from '../../Icon'
 import auth from '../../../auth';
 
 class StatsContainer extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
+        let dollarsSpent;
+        if (props.business) dollarsSpent = props.business.avg_customer_spent / 100;
 
         this.updateAvgSpend = this.updateAvgSpend.bind(this);
         this.toggleEditing = this.toggleEditing.bind(this);
@@ -16,7 +19,8 @@ class StatsContainer extends React.Component {
         this.renderAvgSpend = this.renderAvgSpend.bind(this);
         this.state = {
             rewardsRedeemed: null,
-            editing: false
+            editing: false,
+            avg_customer_spent: dollarsSpent
         }
     }
 
@@ -42,7 +46,7 @@ class StatsContainer extends React.Component {
     }
 
     renderAvgSpend(editing) {
-        if(this.props.business && this.props.business['avg_customer_spent']){
+        if(this.props.business && this.state['avg_customer_spent']){
             let Display = editing ? StatForm : Stat ;
             let actions;
             if (editing) {
@@ -75,7 +79,7 @@ class StatsContainer extends React.Component {
             return (
                 <div className="stats-card">
                     <Display name={'Average Customer Spend'} 
-                        value={this.props.business['avg_customer_spent']} 
+                        value={this.state['avg_customer_spent']} 
                         onValueChange={this.onValueChange.bind(this, 'avg_customer_spent')}
                         onSubmit={() => { updateAvgSpend(this.state['avg_customer_spent']) }} />
                         {actions}
@@ -100,7 +104,7 @@ class StatsContainer extends React.Component {
 
     renderBenefits() {
         let rewardsRedeemed = this.state.rewardsRedeemed;
-        let customerSpend = this.props.business ? this.props.business['avg_customer_spent'] : undefined;
+        let customerSpend = this.props.business ? this.state['avg_customer_spent'] : undefined;
         let partySize = this.props.business ? this.props.business['avg_party_size'] : undefined;
 
         if (rewardsRedeemed != undefined && customerSpend != undefined && partySize != partySize) {
