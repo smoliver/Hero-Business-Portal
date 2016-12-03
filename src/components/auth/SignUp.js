@@ -5,6 +5,7 @@ import Validation from 'react-validation';
 import { Link } from 'react-router';
 
 import AddressAutocomplete from '../inputs/AddressAutocomplete';
+import ErrorSubmit from '../inputs/ErrorSubmit';
 import auth from '../../auth';
 
 let { Form, Input, Button } = Validation.components;
@@ -34,7 +35,8 @@ class SignUp extends React.Component {
                 location_zipcode: '',
                 location_latitude: '',
                 location_longitude: ''
-            }
+            },
+            request: this.props.request
         }
     }
 
@@ -57,6 +59,12 @@ class SignUp extends React.Component {
         let formData = this.state.user;
         formData.business_phone_number = phone(formData.business_phone_number)[0].slice(-10);
 
+        this.setState({
+            request: {
+                open: true,
+                errors: {}
+            }
+        });
         let url = `${process.env.API_DOMAIN}/auth/registration/business/`,
             ok;
         fetch(url, {
@@ -73,10 +81,22 @@ class SignUp extends React.Component {
                 throw values;
             }
             return values;
-        }).then(function(user) {
+        }).then(user => {
+            this.setState({
+                request: {
+                    open: false,
+                    errors: {}
+                }
+            });
             auth.login(formData.email, formData.password1);
-        }).catch(function(err) {
-            console.log("Err", err);
+        }).catch(err => {
+            this.setState({
+                request: {
+                    open: false,
+                    errors: err,
+                    target: 'signup'
+                }
+            });
         });
     }
 
@@ -139,7 +159,7 @@ class SignUp extends React.Component {
                     </div>
                     <AddressAutocomplete className="form-grid" onPlaceSelect={this.handlePlaceSelect.bind(this)} />
                     <a className="button" onClick={this.previousPage} style={{marginRight:'1em', display:'inline'}}>Back</a>
-                    <input type="submit" value="Sign Up" />
+                    <ErrorSubmit id="signup" cta="Sign Up" {...this.state.request} />
                 </Form>
             </div>
         );

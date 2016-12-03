@@ -63,6 +63,10 @@ class AddressAutocomplete extends React.Component {
                         address['city'] = component.short_name;
                         break;
 
+                    case 'sublocality_level_1':
+                        address['city'] = address['city'] || component.short_name;
+                        break;
+
                     case 'administrative_area_level_1':
                         address['state'] = component.short_name;
                         break;
