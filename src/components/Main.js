@@ -16,10 +16,11 @@ class Main extends React.Component {
         }
     }
 
-    updateAuth(loggedIn) {
-        loggedIn ? this.props.router.push('/dashboard') : this.props.router.push('/login');
+    updateAuth(status) {
+
+        status.loggedIn ? this.props.router.push('/dashboard') : this.props.router.push('/login');
         this.setState({
-          loggedIn
+          loggedIn: status.loggedIn
         });
     }
 

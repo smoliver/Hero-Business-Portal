@@ -1,9 +1,15 @@
 
 // Adapted from https://github.com/ReactTraining/react-router/blob/master/examples/auth-flow/auth.js
 
+let statusObj = {
+    loggedIn: false,
+    businessId: null
+}
+
 export default {
     storage: {
         store(details) {
+            console.log('stored');
             localStorage.token = details.key;
             localStorage.businessId = details.user.businesses[0].id;
         },
@@ -13,12 +19,18 @@ export default {
         }
     },
     login(email, password, cb) {
+        let status = Object.assign({}, statusObj);
         if (localStorage.token) {
-            if (cb) cb(true);
-            this.onChange(true);
+            status = {
+                loggedIn: true,
+                businessId: this.getBusinessId()
+            }
+            if (cb) cb(status);
+            this.onChange(status);
             return;
         }
         if (email && password) {
+            let ok;
             fetch(`${process.env.API_DOMAIN}/auth/login/business/`, {
                     method: 'POST',
                     headers: {
@@ -29,19 +41,29 @@ export default {
                         password
                     })
                 })
-                .then(response => response.json())
+                .then(response => {
+                    ok = response.ok;
+                    return response.json();
+                })
                 .then(details => {
+                    if (!ok) {
+                        throw details;
+                    }
                     this.storage.store(details);
-                    if (cb) cb(true);
-                    this.onChange(true);
+                    status = {
+                        loggedIn: true,
+                        businessId: this.getBusinessId()
+                    }
+                    if (cb) cb(status);
+                    this.onChange(status);
                 })
                 .catch(err => {
-                    if (cb) cb(false);
-                    this.onChange(false);
+                    if (cb) cb(status);
+                    this.onChange(status);
                 });
         } else {
-            if (cb) cb(false);
-            this.onChange(false);
+            if (cb) cb(status);
+            this.onChange(status);
         }
     },
 
@@ -54,9 +76,10 @@ export default {
     },
 
     logout(cb) {
+        status = Object.assign({}, statusObj);
         this.storage.clear();
-        if (cb) cb(false);
-        this.onChange(false);
+        if (cb) cb(status);
+        this.onChange(status);
     },
 
     loggedIn() {

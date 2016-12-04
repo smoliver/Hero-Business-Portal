@@ -20,13 +20,15 @@ class RewardForm extends React.Component {
                 url: `${state.url}${props.id}/`
             }
         }
+        let dollarCost;
+        if (props.cost_of_goods) dollarCost = props.cost_of_goods / 100;
 
         // Convert props to state
         state.reward = {
             name: [props.name].join(''),
             points: [props.points].join(''),
-            cost_of_goods: [props.cost_of_goods].join(''),
-            business: this.props.business.id
+            cost_of_goods: [dollarCost].join(''),
+            business: props.business.id
         }
 
         this.state = state;
@@ -75,6 +77,7 @@ class RewardForm extends React.Component {
     render() {
         let className = this.props.className;
         className = className ? className + ' rewards-form' : 'rewards-form';
+
         return (
             <Form className={this.props.className + ' rewards-form'} ref='rewardForm' onSubmit={this.handleSubmit.bind(this)}>
                 <div className="rewards-form--inputs">
