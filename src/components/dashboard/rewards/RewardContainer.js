@@ -61,6 +61,19 @@ class RewardContainer extends React.Component {
     })
   }
 
+  help() {
+    let content = (
+      <div>
+        <h4>Rewards</h4>
+        <p>Create, Edit, and delete rewards.  Give them descriptive names (eg. 1 free appetizer).</p>
+        <p>Cost of goods should be how much it costs you to buy those products.</p>
+        <p>Points represents the in-app cost for a user to redeem the reward (taking a cab home gives users 150pts and being the designated driver gives them 1000pts)</p>
+        <p>Click 'Help' in the footer for some more hints about rewards!</p>
+      </div>
+    );
+    this.props.showHelp(content);
+  }
+
   // Sets active state locally and on the server to false
   deactivateReward(idx, reward) {
     this.state.rewards[idx].updating = true;
@@ -130,7 +143,8 @@ class RewardContainer extends React.Component {
           business={this.props.business}
           className="main" 
           onUpdating={this.updatingReward.bind(this, -1)}
-          onUpdated={this.updatedReward.bind(this)} />
+          onUpdated={this.updatedReward.bind(this)}
+          help={this.help.bind(this)} />
       </section>
     );
   }

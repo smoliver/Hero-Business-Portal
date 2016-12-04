@@ -16,7 +16,8 @@ Icon.SYMBOLS = {
 	'DOLLAR': 'dollar',
 	'PLUS': 'plus',
 	'CANCEL': 'cancel',
-	'GRAPH': 'graph'
+	'GRAPH': 'graph',
+	'HELP': 'question-mark'
 }
 
 export default Icon;
