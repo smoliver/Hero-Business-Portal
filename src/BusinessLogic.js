@@ -7,6 +7,7 @@ class BusinessLogic extends React.Component {
     super();
 
     this.state = {
+      auth: auth.getStatus(),
       business: null,
       request: {
         open: false,
@@ -15,7 +16,7 @@ class BusinessLogic extends React.Component {
     };
 
     this.initializeBusiness = this.initializeBusiness.bind(this);
-    this.fetchBusiness = this.fetchBusiness.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
     this.updateBusiness = this.updateBusiness.bind(this);
     this.updateBusinessImage = this.updateBusinessImage.bind(this);
   }
@@ -39,10 +40,9 @@ class BusinessLogic extends React.Component {
   }
 
   updateBusiness(newBusiness) {
-    let oldBusiness = this.state.business;
     if (newBusiness.avg_customer_spent) newBusiness.avg_customer_spent = Math.round(newBusiness.avg_customer_spent * 100);
 
-    let url = `${process.env.API_DOMAIN}/business/${oldBusiness ? oldBusiness.id : newBusiness.id}/`,
+    let url = `${process.env.API_DOMAIN}/business/${this.state.auth.businessId}/`,
       ok;
     this.setState({
       request: {
@@ -54,7 +54,7 @@ class BusinessLogic extends React.Component {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${auth.getToken()}`
+        'Authorization': `Token ${this.state.auth.token}`
       },
       body: JSON.stringify(newBusiness)
     }).then(response => {
@@ -86,9 +86,7 @@ class BusinessLogic extends React.Component {
   }
 
   updateBusinessImage(imageForm) {
-    let oldBusiness = this.state.business;
-
-    let url = `${process.env.API_DOMAIN}/business/upload/business-image/${oldBusiness.id}/`,
+    let url = `${process.env.API_DOMAIN}/business/upload/business-image/${this.state.auth.businessId}/`,
       ok;
     this.setState({
       request: {
@@ -99,7 +97,7 @@ class BusinessLogic extends React.Component {
     fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': `Token ${auth.getToken()}`
+        'Authorization': `Token ${this.state.auth.token}`
       },
       body: imageForm
     }).then(response => {
@@ -121,7 +119,6 @@ class BusinessLogic extends React.Component {
     }).catch(err => {
       console.log(err);
       this.setState({
-        business: oldBusiness,
         request: {
           open: false,
           errors: err,
@@ -131,11 +128,18 @@ class BusinessLogic extends React.Component {
     });
   }
 
-  fetchBusiness(businessId) {
-    fetch(`${process.env.API_DOMAIN}/business/${businessId}/`, {
+  handleLogin(token, businessId) {
+    this.setState({
+      auth: {
+        loggedIn: true,
+        token,
+        businessId
+      }
+    });
+    fetch(`${process.env.API_DOMAIN}/business/${this.state.auth.businessId}/`, {
       method: 'GET',
       headers: {
-        'Authorization': `Token ${auth.getToken()}`
+        'Authorization': `Token ${this.state.auth.token}`
       }
     }).then(response => {
       if (response.ok){
@@ -144,8 +148,6 @@ class BusinessLogic extends React.Component {
       throw new Error ("response not ok");
     })
     .then(business => {
-      console.log("logic mounted");
-      console.log(business);
       if(business['avg_customer_spent'] == undefined || business['avg_party_size'] == undefined){
         business = this.initializeBusiness(business);
         this.updateBusiness(business);
@@ -161,7 +163,8 @@ class BusinessLogic extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchBusiness(auth.getBusinessId());
+    console.log("MOUNTY");
+    this.handleLogin(this.state.auth.token, this.state.auth.businessId);
   }
 
   render(){
@@ -170,7 +173,7 @@ class BusinessLogic extends React.Component {
         business={this.state.business}
         onUpdateBusiness={this.updateBusiness}
         onUpdateBusinessImage={this.updateBusinessImage}
-        onLogin={this.fetchBusiness}
+        onLogin={this.handleLogin}
         request={this.state.request} />
     );
   }

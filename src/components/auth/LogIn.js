@@ -8,7 +8,29 @@ import auth from '../../auth';
 
 let { Form, Input, Button } = Validation.components;
 
-class LogIn extends React.Component {
+export const loginResponse = function(status) {
+    if (status.loggedIn) {
+        this.setState({
+            request: {
+                open: false,
+                errors: {}
+            }
+        });
+        this.props.onLogin(status.token, status.businessId);
+    } else {
+        this.setState({
+            request: {
+                open: false,
+                errors: {
+                    email: ['Could not find username/password combo']
+                },
+                target: 'login'
+            }
+        });
+    }
+}
+
+export class LogIn extends React.Component {
     constructor(props) {
         super(props);
 
@@ -33,29 +55,7 @@ class LogIn extends React.Component {
                 errors: {}
             }
         });
-        console.log(auth.getBusinessId());
-        auth.login(this.state.user.email, this.state.user.password, (status) => {
-            if (status.loggedIn) {
-                this.setState({
-                    request: {
-                        open: false,
-                        errors: {}
-                    }
-                });
-                console.log('Biz Id', status.businessId);
-                this.props.onLogin(status.businessId);
-            } else {
-                this.setState({
-                    request: {
-                        open: false,
-                        errors: {
-                            email: ['Could not find username/password combo']
-                        },
-                        target: 'login'
-                    }
-                });
-            }
-        });
+        auth.login(this.state.user.email, this.state.user.password, loginResponse.bind(this));
     }
 
     onValueChange(attr, event) {

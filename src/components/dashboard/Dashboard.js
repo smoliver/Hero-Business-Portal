@@ -60,11 +60,14 @@ class Dashboard extends React.Component {
         </div>
         <div className="dashboard--container">
           <DashboardSection active={hash == REWARDS}>
-            <RewardContainer business={this.props.business} 
+            <RewardContainer
+              key={`${this.props.business.id}-rewards`}
+              business={this.props.business} 
               showHelp={this.showHelp} />
           </DashboardSection>
           <DashboardSection active={hash == STATS} className="grow">
             <StatsContainer business={this.props.business} 
+              key={`${this.props.business.id}-stats`}
               onUpdateBusiness={this.props.onUpdateBusiness}
               showHelp={this.showHelp}/>
           </DashboardSection>

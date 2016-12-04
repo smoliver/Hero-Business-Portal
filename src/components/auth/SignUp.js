@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import AddressAutocomplete from '../inputs/AddressAutocomplete';
 import ErrorSubmit from '../inputs/ErrorSubmit';
 import auth from '../../auth';
+import { loginResponse } from './LogIn.js';
 
 let { Form, Input, Button } = Validation.components;
 
@@ -88,7 +89,7 @@ class SignUp extends React.Component {
                     errors: {}
                 }
             });
-            auth.login(formData.email, formData.password1);
+            auth.login(formData.email, formData.password1, loginResponse.bind(this));
         }).catch(err => {
             this.setState({
                 request: {

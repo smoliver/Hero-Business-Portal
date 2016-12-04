@@ -3,13 +3,13 @@
 
 let statusObj = {
     loggedIn: false,
-    businessId: null
+    businessId: null,
+    token: null
 }
 
 export default {
     storage: {
         store(details) {
-            console.log('stored');
             localStorage.token = details.key;
             localStorage.businessId = details.user.businesses[0].id;
         },
@@ -23,7 +23,8 @@ export default {
         if (localStorage.token) {
             status = {
                 loggedIn: true,
-                businessId: this.getBusinessId()
+                businessId: this.getBusinessId(),
+                token: this.getToken()
             }
             if (cb) cb(status);
             this.onChange(status);
@@ -52,7 +53,8 @@ export default {
                     this.storage.store(details);
                     status = {
                         loggedIn: true,
-                        businessId: this.getBusinessId()
+                        businessId: this.getBusinessId(),
+                        token: this.getToken()
                     }
                     if (cb) cb(status);
                     this.onChange(status);
@@ -73,6 +75,15 @@ export default {
 
     getBusinessId() {
         return localStorage.businessId;
+    },
+
+    getStatus() {
+        let status = {
+            token: this.getToken(),
+            businessId: this.getBusinessId()
+        };
+        status.loggedIn = status.businessId != null;
+        return status;
     },
 
     logout(cb) {
