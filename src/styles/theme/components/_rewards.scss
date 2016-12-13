@@ -107,18 +107,23 @@
 
 .rewards-item-actions {
   padding: 16px;
+  @include align-self (stretch);
+  @include display (flex);
+  @include flex-direction (column);
+  @include justify-content (space-around);
 }
 
 .rewards-item.updating .rewards-item-actions--action {
   visibility: hidden;
+
 }
 
 .rewards-item-actions--action {
   display: block;
   width: $icon-medium;
   height: $icon-medium;
-  margin-bottom: 12px;
   fill: transparent;
+  cursor: pointer;
   transition: fill        .2s;
 }
 
@@ -127,9 +132,6 @@
   fill: $gray-shade-2;
 }
 
-.rewards-item-actions--action:last-child {
-  margin-bottom: 0px
-}
 
 .rewards-item .rewards-item-actions--action:hover {
   fill: $potential-color;

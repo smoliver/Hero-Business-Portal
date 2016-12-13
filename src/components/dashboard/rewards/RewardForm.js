@@ -77,6 +77,7 @@ class RewardForm extends React.Component {
     render() {
         let className = this.props.className;
         className = className ? className + ' rewards-form' : 'rewards-form';
+        let completeIcon = this.props.cancel != null ? Icon.SYMBOLS.CHECK : Icon.SYMBOLS.PLUS;
 
         return (
             <Form className={this.props.className + ' rewards-form'} ref='rewardForm' onSubmit={this.handleSubmit.bind(this)}>
@@ -90,7 +91,7 @@ class RewardForm extends React.Component {
                     </div>
                 </div>
                 <div className="rewards-form-actions">
-                    <Icon className="rewards-form-actions--action" symbol={Icon.SYMBOLS.PLUS} onClick={this.handleSubmit.bind(this)}/>
+                    <Icon className="rewards-form-actions--action" symbol={completeIcon} onClick={this.handleSubmit.bind(this)}/>
                     {this.props.cancel && 
                         <Icon className="rewards-form-actions--action cancel" symbol={Icon.SYMBOLS.CANCEL} onClick={this.props.cancel} />
                     }

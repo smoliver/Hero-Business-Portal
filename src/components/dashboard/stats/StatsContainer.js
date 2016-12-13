@@ -60,10 +60,6 @@ class StatsContainer extends React.Component {
                 console.log(err);
             })
         }
-
-        else {
-
-        }
     }
 
     onValueChange(attr, event) {
@@ -73,7 +69,7 @@ class StatsContainer extends React.Component {
     }
 
     renderAvgSpend(editing) {
-        if(this.props.business && this.state['avg_customer_spent']){
+        if(this.props.business && (this.state['avg_customer_spent'] || editing)){
             let Display = editing ? StatForm : Stat ;
             let actions;
             let helpContent = (
@@ -86,14 +82,16 @@ class StatsContainer extends React.Component {
             if (editing) {
                 actions = (
                     <div className="stats-card--actions">
-                        <Icon symbol={Icon.SYMBOLS.PLUS} 
+                        <Icon 
+                            symbol={Icon.SYMBOLS.CHECK} 
                             key={1}
                             onClick={() => { 
                                 this.updateAvgSpend(this.state['avg_customer_spent']); 
                                 this.toggleEditing(); 
                             }} 
                             className="stats-card--action"  />
-                        <Icon symbol={Icon.SYMBOLS.CANCEL} 
+                        <Icon 
+                            symbol={Icon.SYMBOLS.CANCEL} 
                             key={2}
                             onClick={this.toggleEditing} 
                             className="stats-card--action cancel"/>
@@ -103,14 +101,15 @@ class StatsContainer extends React.Component {
             else {
                 actions =(
                     <div className="stats-card--actions">
-                        <Icon symbol={Icon.SYMBOLS.PENCIL} 
-                        key={3}
-                        onClick={this.toggleEditing} 
-                        className="stats-card--action" />
+                        <Icon 
+                            symbol={Icon.SYMBOLS.PENCIL} 
+                            key={3}
+                            onClick={this.toggleEditing} 
+                            className="stats-card--action" />
                         <Icon symbol={Icon.SYMBOLS.HELP}
-                        key={4}
-                        onClick={() => { this.props.showHelp(helpContent) }}
-                        className="stats-card--action" />
+                            key={4}
+                            onClick={() => { this.props.showHelp(helpContent) }}
+                            className="stats-card--action" />
                     </div>
                 )
             }
@@ -155,8 +154,8 @@ class StatsContainer extends React.Component {
 
     renderBenefits() {
         let rewardsRedeemed = this.state.rewardsRedeemed;
-        let customerSpend = this.props.business ? this.state['avg_customer_spent'] : undefined;
-        let partySize = this.props.business ? this.props.business['avg_party_size'] : undefined;
+        let customerSpend = this.props.business ? this.state['avg_customer_spent'] || 0 : undefined;
+        let partySize = this.props.business ? this.props.business['avg_party_size'] || 0 : undefined;
 
         let helpContent = (
             <div>

@@ -33,9 +33,9 @@
 
 .stats-card--actions {
   @include display(flex);
-  @include justify-content(center);
+  @include justify-content(space-around);
   @include flex-direction(column);
-  padding: 32px 16px;
+  padding: 16px;
   background-color: $white;
   @include align-self(stretch);
 }
@@ -44,13 +44,9 @@
   display: block;
   width: $icon-medium;
   height: $icon-medium;
-  margin-bottom: 16px;
   fill: $gray-shade-2;
+  cursor: pointer;
   transition: fill        .3s;
-}
-
-.stats-card--action:last-child {
-  margin-bottom: 0px;
 }
 
 .stats-card--action.cancel:hover {
@@ -84,7 +80,7 @@
 }
 
 .stat-form {
-  padding: 32px 0px 32px 32px;
+  padding: 32px 8px 32px 24px;
   background-color: white;
   text-align: center;
   text-align: center;
