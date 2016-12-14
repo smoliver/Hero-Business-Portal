@@ -163,7 +163,6 @@ class BusinessLogic extends React.Component {
   }
 
   componentDidMount() {
-    console.log("MOUNTY");
     this.handleLogin(this.state.auth.token, this.state.auth.businessId);
   }
 

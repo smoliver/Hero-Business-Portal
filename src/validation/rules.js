@@ -39,12 +39,6 @@ let rules = {
         },
         hint: () => <p className="error">Passwords should be equal.</p>
     },
-    min_len_8: {
-        rule: value => {
-            return value.toString().length >= 8
-        },
-        hint: () => <p className="error">Must be at least 8 characters long.</p>
-    },
     decimal: {
         rule: value => {
             return value ? validator.isDecimal(value) : false
@@ -73,6 +67,44 @@ let rules = {
         hint: () => <p className="error">Must submit a valid phone number</p>
     }
 }
+
+// Length rules
+let lengthRule = (length, phrase, comparator) => {
+    return {
+        rule: value => {
+            return comparator(value.toString().length, length);
+        },
+        hint: () => <p className="error">{`Must be ${phrase} ${length} characters long.`}</p>
+    }
+}
+
+let atLeast = (target, base) => target >= base,
+    atMost = (target, base) => target <= base;
+
+let lengths = [
+    {
+        length: 2,
+        phrase: 'at least',
+        comparator: atLeast,
+        ruleName: 'min_len_2'
+    },
+    {
+        length: 8,
+        phrase: 'at least',
+        comparator: atLeast,
+        ruleName: 'min_len_8'
+    },
+    {
+        length: 80,
+        phrase: 'at most',
+        comparator: atMost,
+        ruleName: 'max_len_80'
+    }
+]
+
+lengths.forEach((length) => {
+    rules[length.ruleName] = lengthRule(length.length, length.phrase, length.comparator);
+});
 
 Object.assign(Validation.rules, rules);
 
