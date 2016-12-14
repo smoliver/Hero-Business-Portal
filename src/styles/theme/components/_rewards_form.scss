@@ -72,17 +72,18 @@
   width: $icon-medium;
   height: $icon-medium;
   margin-bottom: 12px;
-  fill: $gray-shade-2;
   cursor: pointer;
+  fill: $gray-shade-2;
   transition: fill        .2s;
-}
-
-.rewards-form-actions--action:last-child {
-  margin-bottom: 0px;
 }
 
 .rewards-form-actions--action:hover {
   fill: $potential-color;
+  cursor: default;
+}
+
+.rewards-form-actions--action:disabled {
+  fill: $gray-tint-3;
 }
 
 .rewards-form-actions--action.cancel:hover {
