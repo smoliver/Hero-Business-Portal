@@ -5,9 +5,7 @@
 /* * * * * * * * * * * * * * * * * * * * 
  *  Mobile +
  * * * * * * * * * * * * * * * * * * * */
-button,
-.button,
-input[type="submit"] {
+.button {
   background-color: $lime;
   display: inline-block;
   box-sizing: border-box;
@@ -28,15 +26,11 @@ input[type="submit"] {
 
 } 
 
-button:hover,
-.button:hover,
-input[type="submit"]:hover {
+.button:hover {
   background-color: $lime-tint-1;
 }
 
-button:disabled,
-.button:disabled,
-input[type="submit"]:disabled {
+.button:disabled {
   opacity: 0.4;
 }
 

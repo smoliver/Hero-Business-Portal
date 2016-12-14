@@ -132,6 +132,10 @@
   fill: $gray-shade-2;
 }
 
+.rewards-item:hover .rewards-item-actions--action.disabled,
+.rewards-item.selected .rewards-item-actions--action.disabled {
+  fill: $gray;
+}
 
 .rewards-item .rewards-item-actions--action:hover {
   fill: $potential-color;
@@ -140,6 +144,7 @@
 .rewards-item .rewards-item-actions--action.delete:hover {
   fill: $failure-color;
 }
+
 
 
 /* * * * * * * * * * * * * * * * * * * * 
