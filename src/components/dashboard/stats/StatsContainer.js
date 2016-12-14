@@ -89,7 +89,6 @@ class StatsContainer extends React.Component {
     }
 
     renderAvgSpend(editing) {
-        console.log(this.state['avg_customer_spent']);
         if(this.props.business && (this.state['avg_customer_spent'] || editing)){
             let StatsCard = editing ? Form : (props) => (<div {...props}>{props.children}</div>);
             // if editing add form submit props to the container
