@@ -57,6 +57,11 @@
   fill: $potential-color;
 }
 
+.stats-card--action:disabled {
+  fill: $gray-tint-3;
+  cursor: default;
+}
+
 .stat {
   padding: 32px;
   text-align: center;

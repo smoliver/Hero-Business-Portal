@@ -1,7 +1,7 @@
 import React from 'react';
 import Validation from 'react-validation';
 
-let { Form, Input, Button } = Validation.components;
+let { Input } = Validation.components;
 
 class StatForm extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class StatForm extends React.Component {
     render() {
         let className = this.props.className || "";
         return (
-            <Form className={`${className} stat-form`} ref='statForm' onSubmit={this.handleSubmit}>
+            <div className={`${className} stat-form`}>
                 <Input containerClassName="stat-form--value" 
                     type="text" 
                     onChange={this.props.onValueChange} 
@@ -29,7 +29,7 @@ class StatForm extends React.Component {
                     name='value' 
                     validations={['required', 'integer']}/>
                 <h6 className="stat-form--title">{this.props.name}</h6>
-            </Form>
+            </div>
         );
     }
 }
