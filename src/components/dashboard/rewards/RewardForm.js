@@ -10,6 +10,7 @@ class RewardForm extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateAndContinue = this.validateAndContinue.bind(this);
         let state = {
             method: 'POST',
             url: `${process.env.API_DOMAIN}/rewards/`
@@ -66,6 +67,17 @@ class RewardForm extends React.Component {
         });
     }
 
+    validateAndContinue(name, next, e) {
+        e.preventDefault();
+
+        var invalid = this.refs[name].validateAll();
+        console.log(invalid);
+        if (Object.keys(invalid).length === 0) {
+            // Valid
+            next(e);
+        }
+    }
+
     onValueChange(attr, event) {
         let reward = this.state.reward;
         reward[attr] = event.target.value;
@@ -78,9 +90,11 @@ class RewardForm extends React.Component {
         let className = this.props.className;
         className = className ? className + ' rewards-form' : 'rewards-form';
         let completeIcon = this.props.cancel != null ? Icon.SYMBOLS.CHECK : Icon.SYMBOLS.PLUS;
+        let formName = 'rewardForm';
+        let validateAndContinue = this.validateAndContinue.bind(this, formName, this.handleSubmit);
 
         return (
-            <Form className={this.props.className + ' rewards-form'} ref='rewardForm' onSubmit={this.handleSubmit.bind(this)}>
+            <Form className={this.props.className + ' rewards-form'} ref={formName} onSubmit={validateAndContinue}>
                 <div className="rewards-form--inputs">
                     <Input className="rewards-form--name" errorClassName="failure" type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required']} placeholder="Reward Name"/>
                     <div className="rewards-form--row">
