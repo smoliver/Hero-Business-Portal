@@ -40,7 +40,10 @@ class BusinessLogic extends React.Component {
   }
 
   updateBusiness(newBusiness) {
+    // Format business object
     if (newBusiness.avg_customer_spent) newBusiness.avg_customer_spent = Math.round(newBusiness.avg_customer_spent * 100);
+    let invalidAttributes = ['image'];
+    invalidAttributes.forEach((attr) => delete newBusiness[attr]);
 
     let url = `${process.env.API_DOMAIN}/business/${this.state.auth.businessId}/`,
       ok;
