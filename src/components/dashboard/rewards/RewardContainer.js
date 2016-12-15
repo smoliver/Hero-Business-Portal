@@ -5,6 +5,11 @@ import RewardList from './RewardList';
 import RewardForm from './RewardForm';
 import auth from '../../../auth';
 
+import costOfGoodsHelp from  '../../../images/cost-of-goods-help.png';
+import pointsHelp from '../../../images/points-help.png';
+
+const ZENDESK_ARTICLE = "https://heroapp.zendesk.com/hc/en-us/sections/207248267-FAQ-for-Businesses-";
+
 class RewardContainer extends React.Component {
   constructor() {
     super();
@@ -66,9 +71,12 @@ class RewardContainer extends React.Component {
       <div>
         <h4>Rewards</h4>
         <p>Create, Edit, and delete rewards.  Give them descriptive names (eg. 1 free appetizer).</p>
-        <p>Cost of goods should be how much it costs you to buy those products.</p>
+        <img src={pointsHelp} />
         <p>Points represents the in-app cost for a user to redeem the reward (taking a cab home gives users 150pts and being the designated driver gives them 1000pts)</p>
-        <p>Click 'Help' in the footer for some more hints about rewards!</p>
+        <img src={costOfGoodsHelp} />
+        <p>Cost of goods should be how much it costs you to buy those products.</p>
+        <p><a href={ZENDESK_ARTICLE}>Check out our FAQ for some more hints about rewards</a></p>
+
       </div>
     );
     this.props.showHelp(content);

@@ -1,9 +1,14 @@
 import React from 'react';
+import Validation from 'react-validation';
 
 import Stat from './Stat';
 import StatForm from './StatForm';
 import Icon from '../../Icon'
 import auth from '../../../auth';
+
+let { Form, Button } = Validation.components;
+
+const ZENDESK_ARTICLE = "https://heroapp.zendesk.com/hc/en-us/sections/207248267-FAQ-for-Businesses-";
 
 class StatsContainer extends React.Component {
     constructor(props) {
@@ -21,12 +26,16 @@ class StatsContainer extends React.Component {
         this.state = {
             rewardsRedeemed: null,
             editing: false,
-            avg_customer_spent: dollarsSpent
+            avg_customer_spent: dollarsSpent,
+            avg_customer_spent_input: dollarsSpent
         }
     }
 
     updateAvgSpend(spend){
         if (spend){
+            this.setState({
+                avg_customer_spent: spend
+            }); 
             let newBusiness = {};
             newBusiness['id'] = this.props.business.id;
             newBusiness['avg_customer_spent'] = spend;
@@ -34,10 +43,23 @@ class StatsContainer extends React.Component {
         }
     }
 
+    cancelEditing(attr, val){
+        this.setState({
+            [attr]: val
+        })
+        this.toggleEditing();
+    }
+
     toggleEditing() {
         this.setState({
             editing: !this.state.editing
         })
+    }
+
+    handleAvgSpendSubmit(e) {
+        if (e) e.preventDefault();
+        this.updateAvgSpend(this.state['avg_customer_spent_input']);
+        this.toggleEditing();
     }
 
     fetchRewardsRedeemed() {
@@ -60,10 +82,6 @@ class StatsContainer extends React.Component {
                 console.log(err);
             })
         }
-
-        else {
-
-        }
     }
 
     onValueChange(attr, event) {
@@ -73,29 +91,36 @@ class StatsContainer extends React.Component {
     }
 
     renderAvgSpend(editing) {
-        if(this.props.business && this.state['avg_customer_spent']){
+        if(this.props.business && (this.state['avg_customer_spent'] || editing)){
+            let StatsCard = editing ? Form : (props) => (<div {...props}>{props.children}</div>);
+            // if editing add form submit props to the container
+            let cardProps = editing ? {
+                ref: 'statForm',
+                onSubmit: this.handleAvgSpendSubmit.bind(this)
+            } : {};
             let Display = editing ? StatForm : Stat ;
-            let actions;
             let helpContent = (
                 <div>
                     <h4>Average Customer Spend</h4>
                     <p>The average spend of a customer during a visit to your establishment.  We set it to a default of $20 but we suggest you update it in the dashboard.</p>
+                    <p><a href={ZENDESK_ARTICLE}>Check out our FAQ for more information</a></p>
                 </div>
             )
 
+            let actions;
             if (editing) {
                 actions = (
                     <div className="stats-card--actions">
-                        <Icon symbol={Icon.SYMBOLS.PLUS} 
-                            key={1}
-                            onClick={() => { 
-                                this.updateAvgSpend(this.state['avg_customer_spent']); 
-                                this.toggleEditing(); 
-                            }} 
-                            className="stats-card--action"  />
-                        <Icon symbol={Icon.SYMBOLS.CANCEL} 
+                        <Button className="stats-card--action">
+                            <Icon 
+                                symbol={Icon.SYMBOLS.CHECK} 
+                                key={1}
+                            />
+                        </Button>
+                        <Icon 
+                            symbol={Icon.SYMBOLS.CANCEL} 
                             key={2}
-                            onClick={this.toggleEditing} 
+                            onClick={this.cancelEditing.bind(this, 'avg_customer_spent_input', this.state['avg_customer_spent'])} 
                             className="stats-card--action cancel"/>
                     </div>
                 )
@@ -103,25 +128,26 @@ class StatsContainer extends React.Component {
             else {
                 actions =(
                     <div className="stats-card--actions">
-                        <Icon symbol={Icon.SYMBOLS.PENCIL} 
-                        key={3}
-                        onClick={this.toggleEditing} 
-                        className="stats-card--action" />
+                        <Icon 
+                            symbol={Icon.SYMBOLS.PENCIL} 
+                            key={3}
+                            onClick={this.toggleEditing} 
+                            className="stats-card--action" />
                         <Icon symbol={Icon.SYMBOLS.HELP}
-                        key={4}
-                        onClick={() => { this.props.showHelp(helpContent) }}
-                        className="stats-card--action" />
+                            key={4}
+                            onClick={() => { this.props.showHelp(helpContent) }}
+                            className="stats-card--action" />
                     </div>
                 )
             }
             return (
-                <div className="stats-card" key={1}>
+                <StatsCard className="stats-card" key={1} {...cardProps}>
                     <Display name={'Average Customer Spend'} 
-                        value={this.state['avg_customer_spent']} 
-                        onValueChange={this.onValueChange.bind(this, 'avg_customer_spent')}
-                        onSubmit={() => { updateAvgSpend(this.state['avg_customer_spent']) }} />
+                        value={this.state['avg_customer_spent']}
+                        symbol='$' 
+                        onValueChange={this.onValueChange.bind(this, 'avg_customer_spent_input')}/>
                         {actions}
-                </div>
+                </StatsCard>
             );
         }
         return;
@@ -134,6 +160,7 @@ class StatsContainer extends React.Component {
             <div>
                 <h4>Rewards Redeemed</h4>
                 <p>The total number of rewards redeemed by users. Calculated by the app.</p>
+                <p><a href={ZENDESK_ARTICLE}>Check out our FAQ for more information</a></p>
             </div>
         )
         
@@ -155,8 +182,8 @@ class StatsContainer extends React.Component {
 
     renderBenefits() {
         let rewardsRedeemed = this.state.rewardsRedeemed;
-        let customerSpend = this.props.business ? this.state['avg_customer_spent'] : undefined;
-        let partySize = this.props.business ? this.props.business['avg_party_size'] : undefined;
+        let customerSpend = this.props.business ? this.state['avg_customer_spent'] || 0 : undefined;
+        let partySize = this.props.business ? this.props.business['avg_party_size'] || 0 : undefined;
 
         let helpContent = (
             <div>
@@ -164,6 +191,7 @@ class StatsContainer extends React.Component {
                 <p>The number of customers brought through the door by the HERO app.  Calculated by the app by tracking your average party size and multiplying that by the number of rewards redeemed.</p>
                 <h4>Additional Revenue</h4>
                 <p>Estimated profits Hero has brought to your business.  Calculated by the app using its metrics of traffic driven and your estimated customer Average Spend.</p>
+                <p><a href={ZENDESK_ARTICLE}>Check out our FAQ for more information</a></p>
             </div>
         )
 
@@ -174,7 +202,7 @@ class StatsContainer extends React.Component {
                 <div className="stats-card" key={3}>
                     <Stat name={'Estimated Traffic Driven'} value={trafficDriven} />
                     <Icon className="stats-icon" symbol={Icon.SYMBOLS.REWARD} />
-                    <Stat name={'Additional Revenues'} value={estimatedProfit} />
+                    <Stat name={'Additional Revenues'} symbol='$' value={estimatedProfit} />
                     <div className="stats-card--actions">
                         <Icon symbol={Icon.SYMBOLS.HELP}
                             onClick={() => { this.props.showHelp(helpContent) }}

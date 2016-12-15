@@ -12,12 +12,18 @@ class Main extends React.Component {
         super();
         
         this.state = {
-            loggedIn: auth.loggedIn()
+            loggedIn: auth.loggedIn(),
+            menuActive: false
         }
     }
 
-    updateAuth(status) {
+    toggleMenu() {
+        this.setState({
+            menuActive: !this.state.menuActive
+        })
+    }
 
+    updateAuth(status) {
         status.loggedIn ? this.props.router.push('/dashboard') : this.props.router.push('/login');
         this.setState({
           loggedIn: status.loggedIn
@@ -30,9 +36,15 @@ class Main extends React.Component {
     }
 
     render() {
+        let active = this.state.menuActive ? 'active' : '';
         return (
             <div className="business-portal-container">
-                <Header loggedIn={this.state.loggedIn} logout={auth.logout.bind(auth, null)} business={this.props.business}/>
+                <Header 
+                    className={active}
+                    toggleActive={this.toggleMenu.bind(this)}
+                    loggedIn={this.state.loggedIn} 
+                    logout={auth.logout.bind(auth, null)} 
+                    business={this.props.business}/>
                 <main className="content">
                     { this.props.children }
                 </main>

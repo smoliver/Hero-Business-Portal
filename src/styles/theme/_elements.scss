@@ -64,6 +64,22 @@ input[type="checkbox"] {
   background-color: $gray-tint-2;
 }
 
+button,
+input[type="submit"] {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0px;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-size: inherit;
+  font-family: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  overflow: hidden;
+}
+
 #{$text-input} {
   box-sizing: border-box;
   padding: .8em 1em;

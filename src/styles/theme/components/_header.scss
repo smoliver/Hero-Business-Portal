@@ -8,6 +8,7 @@
 
 .header {
 	position: absolute;
+	z-index: 100;
 	left: 0;
 	top: 0;
 	@include display(flex);
@@ -16,6 +17,7 @@
 	box-sizing: border-box;
 	height: 42px;
 	width: 100%;
+	overflow: visible;
 	background-color: $white;
 	color: $lime;
 }
@@ -24,6 +26,7 @@
 	box-sizing: border-box;
 	height: 100%;
 	padding: 8px;
+	cursor: pointer;
 }
 
 .header--logo {
@@ -33,24 +36,90 @@
 	fill: $lime;
 }
 
-.header--business {
-	margin-right: 24px;
+.header--hamburger,
+.header.active .header--hamburger:hover {
+	height: 24px;
+	width: 24px;
+	display: inline-block;
+	fill: $gray-shade-2;
+	cursor: pointer;
+	transition: fill		.2s;
+}
+
+.header.active .header--hamburger,
+.header--hamburger:hover {
+	fill: $lime;
+}
+
+.header--options {
+	display: none;
+}
+
+.header--option {
 	text-transform: capitalize;
 }
 
 .header--thumbnail {
 	display: inline-block;
 	height: 28px;
-	// padding-bottom: 4px;
 	margin-right: 8px;
 	vertical-align: middle;
 }
+
+@media screen and (max-width: $tablet-size) {
+	.header.active .header--options {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		display: block;
+		padding: 8px 0px;
+		border-bottom: 1px solid $gray-tint-2;
+		background-color: $white;
+	}
+
+	.header--option {
+		position: relative;
+		display: block;
+		padding: 8px 8% 8px calc(8% + 40px);
+	}
+
+	.header--thumbnail {
+		position: absolute;
+		left: 8%;
+		top: 2px;
+	}
+
+}
+
+
 
 /* * * * * * * * * * * * * * * * * * * * 
  *  Tablet +
  * * * * * * * * * * * * * * * * * * * */
 @media screen and (min-width: $tablet-size) {
+	.header--hamburger {
+		display: none;
+	}
 
+	.header--options {
+		display: block;
+	}
+
+	.header--option {
+		margin-right: 24px;
+	}
+
+	.header--option:last-child {
+		margin-right: 0px;
+	}
+	
+	.header--thumbnail {
+		display: inline-block;
+		height: 28px;
+		margin-right: 8px;
+		vertical-align: middle;
+	}
 }
 
 /* * * * * * * * * * * * * * * * * * * * 

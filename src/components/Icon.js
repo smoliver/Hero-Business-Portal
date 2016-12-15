@@ -9,15 +9,17 @@ const Icon = ({className, symbol, onClick, viewBox='0 0 100 100'}) => (
 )
 
 Icon.SYMBOLS = {
-	'PENCIL': 'pencil',
-	'LOGO': 'logo',
-	'X': 'x',
-	'REWARD': 'reward',
-	'DOLLAR': 'dollar',
-	'PLUS': 'plus',
 	'CANCEL': 'cancel',
+	'CHECK': 'check',
+	'DOLLAR': 'dollar',
 	'GRAPH': 'graph',
-	'HELP': 'question-mark'
+	'HELP': 'question-mark',
+	'LOGO': 'logo',
+	'MENU': 'menu',
+	'PENCIL': 'pencil',
+	'PLUS': 'plus',
+	'REWARD': 'reward',
+	'X': 'x'
 }
 
 export default Icon;

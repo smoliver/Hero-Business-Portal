@@ -7,7 +7,7 @@
  * * * * * * * * * * * * * * * * * * * */
 
 .footer {
-	height: 32px;
+	height: 34px;
 	width: 100%;
 	background-color: $white;
 	@include display(flex);
@@ -19,22 +19,4 @@
 
 .footer a {
 	color: $lime;
-}
-
-.footer--links {
-
-}
-
-/* * * * * * * * * * * * * * * * * * * * 
- *  Tablet +
- * * * * * * * * * * * * * * * * * * * */
-@media screen and (min-width: $tablet-size) {
-
-}
-
-/* * * * * * * * * * * * * * * * * * * * 
- *  Small Screen +
- * * * * * * * * * * * * * * * * * * * */
-@media screen and (min-width: $small-screen-size) {
-
 }

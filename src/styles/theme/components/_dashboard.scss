@@ -31,7 +31,7 @@
   text-align: center;
   fill: $lime-tint-3;
   color: $lime-tint-3;
-  padding: 8px 0px 4px;
+  padding: 6px 0px 0px;
   transition: color       .3s,
               fill        .3s;
 }
@@ -42,17 +42,26 @@
 }
 
 .dashboard-nav--link.active {
-  fill: $white;
+  fill: $lime;
   color: $white;
 }
 
 .dashboard-nav--icon {
-  width: 1.6em;
-  height: 1.6em;
+  width: 1.2em;
+  height: 1.2em;
+  padding: .6em;
   fill: inherit;
+  border-radius: 1.2em;
   vertical-align: middle;
-  margin-right: 12px;
-  margin-bottom: 4px;
+  margin-right: .6em;
+  margin-bottom: 6px;
+  overflow: visible;
+  background-color: transparent;
+  transition: background-color    .2s;
+}
+
+.dashboard-nav--link.active .dashboard-nav--icon{
+  background-color: $white;
 }
 
 .dashboard-nav--name {

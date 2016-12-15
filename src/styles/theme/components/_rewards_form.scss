@@ -17,6 +17,7 @@
 
 .rewards-form.main {
   border-top: 3px solid $lime;
+  padding: 24px 16px;
 }
 
 .rewards-form--inputs {
@@ -59,25 +60,30 @@
 }
 
 .rewards-form-actions {
-  margin-left: 16px;
-  margin-top: 12px;
+  @include display (flex);
+  @include flex-direction (column);
+  @include justify-content (space-around);
+  padding-left: 16px;
+
 }
 
 .rewards-form-actions--action {
   display: block;
   width: $icon-medium;
   height: $icon-medium;
+  margin-bottom: 12px;
+  cursor: pointer;
   fill: $gray-shade-2;
   transition: fill        .2s;
-  margin-bottom: 12px;
-}
-
-.rewards-form-actions--action:last-child {
-  margin-bottom: 0px;
 }
 
 .rewards-form-actions--action:hover {
   fill: $potential-color;
+  cursor: default;
+}
+
+.rewards-form-actions--action:disabled {
+  fill: $gray-tint-3;
 }
 
 .rewards-form-actions--action.cancel:hover {

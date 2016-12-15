@@ -10,6 +10,7 @@ class RewardForm extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateAndContinue = this.validateAndContinue.bind(this);
         let state = {
             method: 'POST',
             url: `${process.env.API_DOMAIN}/rewards/`
@@ -66,6 +67,17 @@ class RewardForm extends React.Component {
         });
     }
 
+    validateAndContinue(name, next, e) {
+        e.preventDefault();
+
+        var invalid = this.refs[name].validateAll();
+        console.log(invalid);
+        if (Object.keys(invalid).length === 0) {
+            // Valid
+            next(e);
+        }
+    }
+
     onValueChange(attr, event) {
         let reward = this.state.reward;
         reward[attr] = event.target.value;
@@ -77,20 +89,25 @@ class RewardForm extends React.Component {
     render() {
         let className = this.props.className;
         className = className ? className + ' rewards-form' : 'rewards-form';
+        let completeIcon = this.props.cancel != null ? Icon.SYMBOLS.CHECK : Icon.SYMBOLS.PLUS;
+        let formName = 'rewardForm';
+        let validateAndContinue = this.validateAndContinue.bind(this, formName, this.handleSubmit);
 
         return (
-            <Form className={this.props.className + ' rewards-form'} ref='rewardForm' onSubmit={this.handleSubmit.bind(this)}>
+            <Form className={this.props.className + ' rewards-form'} ref={formName} onSubmit={validateAndContinue}>
                 <div className="rewards-form--inputs">
-                    <Input className="rewards-form--name" errorClassName="failure" type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required']} placeholder="Reward Name"/>
+                    <Input className="rewards-form--name" errorClassName="failure" type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required', 'min_len_2', 'max_len_80']} placeholder="Reward Name"/>
                     <div className="rewards-form--row">
                         <Icon symbol={Icon.SYMBOLS.REWARD} className="rewards-form--points-icon"/>
-                        <Input containerClassName="rewards-form--points" type='text' onChange={this.onValueChange.bind(this, 'points')} value={this.state.reward.points} name='points' placeholder='Points' validations={['required', 'integer']}/>
+                        <Input containerClassName="rewards-form--points" type='text' onChange={this.onValueChange.bind(this, 'points')} value={this.state.reward.points} name='points' placeholder='Points' validations={['required', 'integer', 'non_negative']}/>
                         <Icon symbol={Icon.SYMBOLS.DOLLAR} className="rewards-form--price-icon"/>
-                        <Input containerClassName="rewards-form--price" type='text' onChange={this.onValueChange.bind(this, 'cost_of_goods')} value={this.state.reward.cost_of_goods} name='cost_of_goods' placeholder='Cost of Goods' validations={['required', 'decimal']}/>
+                        <Input containerClassName="rewards-form--price" type='text' onChange={this.onValueChange.bind(this, 'cost_of_goods')} value={this.state.reward.cost_of_goods} name='cost_of_goods' placeholder='Cost of Goods' validations={['required', 'decimal', 'non_negative']}/>
                     </div>
                 </div>
                 <div className="rewards-form-actions">
-                    <Icon className="rewards-form-actions--action" symbol={Icon.SYMBOLS.PLUS} onClick={this.handleSubmit.bind(this)}/>
+                    <Button className="rewards-form-actions--action">
+                        <Icon symbol={completeIcon}/>
+                    </Button>
                     {this.props.cancel && 
                         <Icon className="rewards-form-actions--action cancel" symbol={Icon.SYMBOLS.CANCEL} onClick={this.props.cancel} />
                     }
