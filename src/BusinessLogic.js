@@ -163,7 +163,9 @@ class BusinessLogic extends React.Component {
   }
 
   componentDidMount() {
-    this.handleLogin(this.state.auth.token, this.state.auth.businessId);
+    if (this.state.auth.token) {
+      this.handleLogin(this.state.auth.token, this.state.auth.businessId);
+    }
   }
 
   render(){
