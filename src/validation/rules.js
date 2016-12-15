@@ -65,6 +65,12 @@ let rules = {
             return formatted.length > 0;
         },
         hint: () => <p className="error">Must submit a valid phone number</p>
+    },
+    non_negative: {
+        rule: value => {
+            return parseFloat(value) > 0;
+        },
+        hint: () => <p className="error">Value must be non-negative.</p>
     }
 }
 

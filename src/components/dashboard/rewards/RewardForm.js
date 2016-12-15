@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Validation from 'react-validation';
-import Dropzone from 'react-dropzone';
 import auth from '../../../auth';
 import Icon from '../../Icon';
 
@@ -97,12 +96,12 @@ class RewardForm extends React.Component {
         return (
             <Form className={this.props.className + ' rewards-form'} ref={formName} onSubmit={validateAndContinue}>
                 <div className="rewards-form--inputs">
-                    <Input className="rewards-form--name" errorClassName="failure" type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required']} placeholder="Reward Name"/>
+                    <Input className="rewards-form--name" errorClassName="failure" type='text' onChange={this.onValueChange.bind(this, 'name')} value={this.state.reward.name} name='name' validations={['required', 'min_len_2', 'max_len_80']} placeholder="Reward Name"/>
                     <div className="rewards-form--row">
                         <Icon symbol={Icon.SYMBOLS.REWARD} className="rewards-form--points-icon"/>
-                        <Input containerClassName="rewards-form--points" type='text' onChange={this.onValueChange.bind(this, 'points')} value={this.state.reward.points} name='points' placeholder='Points' validations={['required', 'integer']}/>
+                        <Input containerClassName="rewards-form--points" type='text' onChange={this.onValueChange.bind(this, 'points')} value={this.state.reward.points} name='points' placeholder='Points' validations={['required', 'integer', 'non_negative']}/>
                         <Icon symbol={Icon.SYMBOLS.DOLLAR} className="rewards-form--price-icon"/>
-                        <Input containerClassName="rewards-form--price" type='text' onChange={this.onValueChange.bind(this, 'cost_of_goods')} value={this.state.reward.cost_of_goods} name='cost_of_goods' placeholder='Cost of Goods' validations={['required', 'decimal']}/>
+                        <Input containerClassName="rewards-form--price" type='text' onChange={this.onValueChange.bind(this, 'cost_of_goods')} value={this.state.reward.cost_of_goods} name='cost_of_goods' placeholder='Cost of Goods' validations={['required', 'decimal', 'non_negative']}/>
                     </div>
                 </div>
                 <div className="rewards-form-actions">
