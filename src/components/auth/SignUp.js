@@ -181,8 +181,8 @@ class SignUp extends React.Component {
                         <Input key="business_phone_number" containerClassName="span2" errorClassName="failure" type="text" placeholder="Phone Number" value={this.state.user.business_phone_number} onChange={this.handleValueChange.bind(this, 'business_phone_number')} name='business_phone_number' validations={['required', 'phone']}/>
                     </div>
                     <AddressAutocomplete className="form-grid" onPlaceSelect={this.handlePlaceSelect.bind(this)} />
-                    <a className="button" onClick={this.previousPage} style={{marginRight:'1em', display:'inline'}}>Back</a>
                     <button className="button" type="submit">Continue</button>
+                    <button className="button" onClick={this.previousPage} style={{marginRight:'1em', float:'left'}}>Back</button>
                 </Form>
             </div>
         );
@@ -207,8 +207,8 @@ class SignUp extends React.Component {
                             }
                         </label>
                     </div>
-                    <a className="button" onClick={this.previousPage} style={{marginRight:'1em', display:'inline'}}>Back</a>
                     <ErrorSubmit id="signup" cta="Sign Up" {...this.state.request} />
+                    <button className="button" onClick={this.previousPage} style={{marginRight:'1em', float: 'left'}}>Back</button>
                 </Form>
             </div>
         );
