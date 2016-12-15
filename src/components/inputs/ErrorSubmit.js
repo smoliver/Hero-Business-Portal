@@ -15,7 +15,7 @@ const ErrorSubmit = ({ className, open, errors, cta, key, target, id }) => {
   }
   return (
     <div className={`error-submit ${className}`}>
-      <input type="submit" value={cta} disabled={open} />
+      <button type="submit" className="button" disabled={open}>{cta}</button>
       {feedback}
     </div>
   );

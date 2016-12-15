@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import phone from 'phone';
 import Validation from 'react-validation';
 import { Link } from 'react-router';
+import Dropzone from 'react-dropzone';
 
 import AddressAutocomplete from '../inputs/AddressAutocomplete';
 import ErrorSubmit from '../inputs/ErrorSubmit';
@@ -18,9 +19,10 @@ class SignUp extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.previousPage = this.previousPage.bind(this);
+        this.handleImageSelect = this.handleImageSelect.bind(this);
 
         this.state = {
-            page: props.page ? props.page % 2 : 0,
+            page: props.page ? props.page % 3 : 0,
             user: {
                 email: '',
                 password1: '',
@@ -37,12 +39,13 @@ class SignUp extends React.Component {
                 location_latitude: '',
                 location_longitude: ''
             },
+            image: {},
             request: this.props.request
         }
     }
 
     changePage(offset) {
-        let nextPage = (this.state.page + offset) % 2;
+        let nextPage = (this.state.page + offset) % 3;
         this.setState({
             page: nextPage
         });
@@ -89,7 +92,17 @@ class SignUp extends React.Component {
                     errors: {}
                 }
             });
-            auth.login(formData.email, formData.password1, loginResponse.bind(this));
+            auth.login(formData.email, formData.password1, (status) => {
+                loginResponse.call(this, status);
+
+                // Check for image
+                if (this.state.image.name) {
+                    let formData = new FormData();
+                    formData.append('image', this.state.image);
+
+                    this.props.onUpdateBusinessImage(formData);
+                }
+            });
         }).catch(err => {
             this.setState({
                 request: {
@@ -99,6 +112,15 @@ class SignUp extends React.Component {
                 }
             });
         });
+    }
+
+    handleImageSelect(accepted, rejected) {
+        if (accepted.length > 0) {
+            let chosen = accepted[0];
+            this.setState({
+                image: chosen
+            });
+        }
     }
 
     validateAndContinue(name, next, e) {
@@ -133,7 +155,7 @@ class SignUp extends React.Component {
         let accountSection = (
             <div className="card--content pager--display">
                 <h3>Account</h3>
-                <Form ref="form1" onSubmit={this.validateAndContinue.bind(this, 'form1', this.nextPage)}>
+                <Form ref="accountForm" onSubmit={this.validateAndContinue.bind(this, 'accountForm', this.nextPage)}>
                     <div className="form-grid">
                         <Input key="first_name" containerClassName="span2" errorClassName="failure" type="text" placeholder="First Name" value={this.state.user.first_name} onChange={this.handleValueChange.bind(this, 'first_name')} name="first_name" validations={['required']}/>
                         <Input key="last_name" containerClassName="span2" errorClassName="failure" type="text" placeholder="Last Name" value={this.state.user.last_name} onChange={this.handleValueChange.bind(this, 'last_name')} name="last_name" validations={['required']}/>
@@ -146,25 +168,51 @@ class SignUp extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <input type="submit" value="Continue" />
+                    <button className="button" type="submit">Continue</button>
                 </Form>
             </div>
         );
         let businessSection = (
             <div className="card--content pager--display">
                 <h3>Business</h3>
-                <Form ref="businessForm" onSubmit={this.validateAndContinue.bind(this, 'businessForm', this.handleSubmit)}>
+                <Form ref="businessForm" onSubmit={this.validateAndContinue.bind(this, 'businessForm', this.nextPage)}>
                     <div className="form-grid">
                         <Input key="business_name" containerClassName="span2" errorClassName="failure" type="text" placeholder="Business Name" value={this.state.user.business_name} onChange={this.handleValueChange.bind(this, 'business_name')} name='business_name' validations={['required']}/>
                         <Input key="business_phone_number" containerClassName="span2" errorClassName="failure" type="text" placeholder="Phone Number" value={this.state.user.business_phone_number} onChange={this.handleValueChange.bind(this, 'business_phone_number')} name='business_phone_number' validations={['required', 'phone']}/>
                     </div>
                     <AddressAutocomplete className="form-grid" onPlaceSelect={this.handlePlaceSelect.bind(this)} />
                     <a className="button" onClick={this.previousPage} style={{marginRight:'1em', display:'inline'}}>Back</a>
+                    <button className="button" type="submit">Continue</button>
+                </Form>
+            </div>
+        );
+        let imageSection = (
+            <div className="card--content pager--display">
+                <h3>Business Image</h3>
+                <Form ref="imageForm" onSubmit={this.validateAndContinue.bind(this, 'imageForm', this.handleSubmit)}>
+                    <div className="form-grid">
+                        <label className="span2">
+                            <p className="span4">Select Image</p>
+                            <Dropzone onDrop={this.handleImageSelect}>
+                                <div style={{padding:10}}>Try dropping some files here, or click to select files to upload.</div>
+                            </Dropzone>
+                        </label>
+                        <label className="span2">
+                            <p className="span4">Preview</p>
+                            {this.state.image.preview &&
+                                <img className="span3" src={this.state.image.preview} />
+                            }
+                            {!this.state.image.preview &&
+                                <em>No image selected.</em>
+                            }
+                        </label>
+                    </div>
+                    <a className="button" onClick={this.previousPage} style={{marginRight:'1em', display:'inline'}}>Back</a>
                     <ErrorSubmit id="signup" cta="Sign Up" {...this.state.request} />
                 </Form>
             </div>
         );
-        let pages = [accountSection, businessSection];
+        let pages = [accountSection, businessSection, imageSection];
         return (
             <div className="card-container">
                 <div className="card wide">

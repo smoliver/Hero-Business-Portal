@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Validation from 'react-validation';
+import Dropzone from 'react-dropzone';
 import auth from '../../../auth';
 import Icon from '../../Icon';
 

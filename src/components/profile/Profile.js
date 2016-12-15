@@ -143,8 +143,8 @@ class Profile extends React.Component {
                   <Input key="avg_party_size" containerClassName="span4" errorClassName="failure" type="text" placeholder="Average Party Size" value={this.state.profile.avg_party_size} onChange={this.onValueChange.bind(this, 'profile', 'avg_party_size')} name='avg_party_size' validations={['required', 'integer']}/>
                 </label>
               </div>
-              <ErrorSubmit id="update-business" {...this.props.request} cta="Update" />
-              <button onClick={this.resetProfile} style={{marginLeft:'1em'}}>Reset</button>
+              <ErrorSubmit className="span2" id="update-business" {...this.props.request} cta="Update" />
+              <button className="button span2" style={{marginLeft:'1em'}} onClick={this.resetProfile}>Reset</button>
             </Form>
           </div>
           <h2 className="card--header">
