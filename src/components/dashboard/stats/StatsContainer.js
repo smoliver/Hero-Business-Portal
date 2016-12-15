@@ -8,6 +8,8 @@ import auth from '../../../auth';
 
 let { Form, Button } = Validation.components;
 
+const ZENDESK_ARTICLE = "https://heroapp.zendesk.com/hc/en-us/sections/207248267-FAQ-for-Businesses-";
+
 class StatsContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -101,6 +103,7 @@ class StatsContainer extends React.Component {
                 <div>
                     <h4>Average Customer Spend</h4>
                     <p>The average spend of a customer during a visit to your establishment.  We set it to a default of $20 but we suggest you update it in the dashboard.</p>
+                    <p><a href={ZENDESK_ARTICLE}>Check out our FAQ for more information</a></p>
                 </div>
             )
 
@@ -140,7 +143,8 @@ class StatsContainer extends React.Component {
             return (
                 <StatsCard className="stats-card" key={1} {...cardProps}>
                     <Display name={'Average Customer Spend'} 
-                        value={this.state['avg_customer_spent']} 
+                        value={this.state['avg_customer_spent']}
+                        symbol='$' 
                         onValueChange={this.onValueChange.bind(this, 'avg_customer_spent_input')}/>
                         {actions}
                 </StatsCard>
@@ -156,6 +160,7 @@ class StatsContainer extends React.Component {
             <div>
                 <h4>Rewards Redeemed</h4>
                 <p>The total number of rewards redeemed by users. Calculated by the app.</p>
+                <p><a href={ZENDESK_ARTICLE}>Check out our FAQ for more information</a></p>
             </div>
         )
         
@@ -186,6 +191,7 @@ class StatsContainer extends React.Component {
                 <p>The number of customers brought through the door by the HERO app.  Calculated by the app by tracking your average party size and multiplying that by the number of rewards redeemed.</p>
                 <h4>Additional Revenue</h4>
                 <p>Estimated profits Hero has brought to your business.  Calculated by the app using its metrics of traffic driven and your estimated customer Average Spend.</p>
+                <p><a href={ZENDESK_ARTICLE}>Check out our FAQ for more information</a></p>
             </div>
         )
 
@@ -196,7 +202,7 @@ class StatsContainer extends React.Component {
                 <div className="stats-card" key={3}>
                     <Stat name={'Estimated Traffic Driven'} value={trafficDriven} />
                     <Icon className="stats-icon" symbol={Icon.SYMBOLS.REWARD} />
-                    <Stat name={'Additional Revenues'} value={estimatedProfit} />
+                    <Stat name={'Additional Revenues'} symbol='$' value={estimatedProfit} />
                     <div className="stats-card--actions">
                         <Icon symbol={Icon.SYMBOLS.HELP}
                             onClick={() => { this.props.showHelp(helpContent) }}
