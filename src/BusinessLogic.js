@@ -50,7 +50,7 @@ class BusinessLogic extends React.Component {
         errors: {}
       }
     });
-    fetch(url, {
+    return fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ class BusinessLogic extends React.Component {
         errors: {}
       }
     });
-    fetch(url, {
+    return fetch(url, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${this.state.auth.token}`
@@ -122,7 +122,7 @@ class BusinessLogic extends React.Component {
         request: {
           open: false,
           errors: err,
-          target: 'update-business-image'
+          target: 'update-business'
         }
       })
     });

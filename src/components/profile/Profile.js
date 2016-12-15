@@ -15,10 +15,10 @@ class Profile extends React.Component {
     super(props);
 
     this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
-    this.resetProfile = this.resetProfile.bind(this);
     this.handleImageSelect = this.handleImageSelect.bind(this);
     this.handleImageUpdate = this.handleImageUpdate.bind(this);
-    this.resetImage = this.resetImage.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.validateAndContinue = this.validateAndContinue.bind(this);
 
     let dollarsSpent;
@@ -35,9 +35,6 @@ class Profile extends React.Component {
         preview: props.business.thumbnail
       }
     }
-    this.state.originalProfile = Object.assign({}, this.state.profile);
-    this.state.originalLocation = Object.assign({}, this.state.location);
-    this.state.originalImage = Object.assign({}, this.state.image);
   }
 
   handleProfileUpdate(e) {
@@ -46,16 +43,7 @@ class Profile extends React.Component {
     let formData = Object.assign({}, this.state.profile);
     formData.location = Object.assign({}, this.state.location);
 
-    this.props.onUpdateBusiness(formData);
-  }
-
-  resetProfile(e) {
-    e.preventDefault();
-
-    this.setState({
-      profile: Object.assign({}, this.state.originalProfile),
-      location: Object.assign({}, this.state.originalLocation)
-    });
+    return this.props.onUpdateBusiness(formData);
   }
 
   handleImageSelect(accepted, rejected) {
@@ -70,20 +58,44 @@ class Profile extends React.Component {
   handleImageUpdate(e) {
     e.preventDefault();
 
-    if (this.state.image.name) {
-      let formData = new FormData();
-      formData.append('image', this.state.image);
+    return new Promise((resolve, reject) => {
+      if (this.state.image.name) {
+        let formData = new FormData();
+        formData.append('image', this.state.image);
 
-      this.props.onUpdateBusinessImage(formData);
-    }
+        this.props.onUpdateBusinessImage(formData).then((nextVal) => {
+          resolve(nextVal);
+        });
+      } else {
+        resolve(true);
+      }
+    });
   }
 
-  resetImage(e) {
+  handleSave(e) {
     e.preventDefault();
 
-    this.setState({
-      image: Object.assign({}, this.state.originalImage)
-    });
+    this.handleProfileUpdate(e).then((profileVal) => {
+      if (Object.keys(this.props.request.errors).length > 0) {
+        throw new Error('Error updating profile');
+      }
+      return this.handleImageUpdate(e);
+    }).then((imageVal) => {
+      if (Object.keys(this.props.request.errors).length > 0) {
+        throw new Error('Error updating profile image');
+      }
+      return true;
+    }).then((success) => {
+      this.props.router.push('/dashboard');
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+  handleCancel(e) {
+    e.preventDefault();
+
+    this.props.router.push('/dashboard');
   }
 
   onPlaceSelect(place) {
@@ -117,7 +129,7 @@ class Profile extends React.Component {
             Profile
           </h2>
           <div className="card--content">
-            <Form ref="profileForm" onSubmit={this.validateAndContinue.bind(this, 'profileForm', this.handleProfileUpdate)}>
+            <Form ref="profileForm" onSubmit={this.validateAndContinue.bind(this, 'profileForm', this.handleSave)}>
               <h3>Business</h3>
               <div className="form-grid">
                 <label className="span2">
@@ -142,28 +154,20 @@ class Profile extends React.Component {
                   Average Party Size
                   <Input key="avg_party_size" containerClassName="span4" errorClassName="failure" type="text" placeholder="Average Party Size" value={this.state.profile.avg_party_size} onChange={this.onValueChange.bind(this, 'profile', 'avg_party_size')} name='avg_party_size' validations={['required', 'integer']}/>
                 </label>
+                <label className="span2">
+                  <p className="span4">Select Image</p>
+                  <Dropzone onDrop={this.handleImageSelect}>
+                    <div style={{padding:10}}>Try dropping some files here, or click to select files to upload.</div>
+                  </Dropzone>
+                </label>
+                <label className="span2">
+                  <p className="span4">Preview</p>
+                  <img className="span3" src={this.state.image.preview} />
+                </label>
               </div>
-              <ErrorSubmit className="span2" id="update-business" {...this.props.request} cta="Update" />
-              <button className="button span2" style={{marginLeft:'1em'}} onClick={this.resetProfile}>Reset</button>
+              <ErrorSubmit className="span2" id="update-business" {...this.props.request} cta="Save" />
+              <button className="button span2" style={{marginLeft:'1em'}} onClick={this.handleCancel}>Cancel</button>
             </Form>
-          </div>
-          <h2 className="card--header">
-            Business Image
-          </h2>
-          <div className="card--content">
-            <form className="form-grid" ref="imageForm" onSubmit={this.handleImageUpdate}>
-              <label className="span2">
-                <p className="span4">Select Image</p>
-                <Dropzone onDrop={this.handleImageSelect}>
-                  <div style={{padding:10}}>Try dropping some files here, or click to select files to upload.</div>
-                </Dropzone>
-              </label>
-              <label className="span2">
-                <p className="span4">Preview</p>
-                <img className="span3" src={this.state.image.preview} />
-              </label>
-              <ErrorSubmit id="update-business-image" {...this.props.request} cta="Update" />
-            </form>
           </div>
         </div>
       </div>
