@@ -28,7 +28,7 @@ const Header = ({ className, toggleActive, loggedIn, logout, business }) => {
             {businessComponent}
             {authComponent}
             <a className="header--option" href={ZENDESK_HELP_LINK}>
-                Help
+                FAQ
             </a>
         </div>
     );
