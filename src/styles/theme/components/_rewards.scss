@@ -61,7 +61,6 @@
   box-sizing: border-box;
   @include flex(1);
   padding: 16px;
-  text-align: justify;
 }
 
 .rewards-item--title {
@@ -130,11 +129,6 @@
 .rewards-item:hover .rewards-item-actions--action,
 .rewards-item.selected .rewards-item-actions--action {
   fill: $gray-shade-2;
-}
-
-.rewards-item:hover .rewards-item-actions--action.disabled,
-.rewards-item.selected .rewards-item-actions--action.disabled {
-  fill: $gray;
 }
 
 .rewards-item .rewards-item-actions--action:hover {

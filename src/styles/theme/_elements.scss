@@ -80,10 +80,6 @@ input[type="submit"] {
   overflow: hidden;
 }
 
-button.disabled {
-  opacity: .4;
-}
-
 #{$text-input} {
   box-sizing: border-box;
   padding: .8em 1em;

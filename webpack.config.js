@@ -39,6 +39,7 @@ module.exports = {
           compress: { warnings: false }
         })
     ] : []),
+    devtool: '#cheap-source-map',
     module: {
         loaders: [
             {
