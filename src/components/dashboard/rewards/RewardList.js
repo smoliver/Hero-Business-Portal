@@ -2,6 +2,7 @@ import React from 'react';
 
 import Reward from './Reward';
 import RewardForm from './RewardForm';
+import RewardDeleted from './RewardDeleted';
 import auth from '../../../auth';
 
 class RewardList extends React.Component {
@@ -23,7 +24,11 @@ class RewardList extends React.Component {
     }
 
     deactivateReward(idx, reward) {
-        this.props.onDeactivate(idx, reward);
+        return this.props.onDeactivate(idx, reward);
+    }
+
+    activateReward(idx, reward) {
+        return this.props.onActivate(idx, reward);
     }
 
     interactWithReward(idx) {
@@ -47,6 +52,10 @@ class RewardList extends React.Component {
                         interactWithReward={this.interactWithReward.bind(this, idx)} 
                         business={this.props.business} />;
                 }
+            } else if (reward.active === false && reward.undoDuration) {
+                return <RewardDeleted key={reward.id || idx}
+                    rewardName={reward.name}
+                    undo={this.activateReward.bind(this, idx, reward)} />
             }
         });
         return (

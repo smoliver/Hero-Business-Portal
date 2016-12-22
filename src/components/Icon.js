@@ -19,6 +19,7 @@ Icon.SYMBOLS = {
 	'PENCIL': 'pencil',
 	'PLUS': 'plus',
 	'REWARD': 'reward',
+	'UNDO': 'undo',
 	'X': 'x'
 }
 

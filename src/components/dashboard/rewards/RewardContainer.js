@@ -83,14 +83,15 @@ class RewardContainer extends React.Component {
   }
 
   // Sets active state locally and on the server to false
+  // Sets state to updating befeore
   deactivateReward(idx, reward) {
     this.state.rewards[idx].updating = true;
     this.setState({
       rewards: this.state.rewards
     });
-    let inactive = {'active': false};
-    let that = this;
+    let inactive = { 'active': false };
 
+    console.log (`${process.env.API_DOMAIN}/rewards/${reward.id}/`);
     fetch(`${process.env.API_DOMAIN}/rewards/${reward.id}/`, {
       method: 'PUT',
       headers: {
@@ -98,14 +99,71 @@ class RewardContainer extends React.Component {
         'Authorization': `Token ${auth.getToken()}`
       },
       body: inactive
-    }).then(response => response.json())
-    .then(function(reward) {
-      that.state.rewards[idx].active = false;
-      that.setState({
-        rewards: that.state.rewards
+    }).then (response => {
+      let values = response.json ();
+      let ok = response.ok;
+      if (!ok){
+        throw values;
+      }
+      return values;
+    }).then((reward) => {
+      // Deactivate the reward, but make it undoable
+      this.state.rewards[idx].active = false;
+      this.state.rewards[idx].undoDuration = window.setTimeout (this.notUndoable.bind (this, idx), 10000);
+      this.setState({
+        rewards: this.state.rewards
       });
     }).catch(function(err) {
       console.log(err);
+    });
+  }
+
+  notUndoable (idx) {
+    if (this.state.rewards[idx].undoDuration){
+      window.clearTimeout (this.state.rewards[idx].undoDuration);
+      this.state.rewards[idx].undoDuration = null;
+      this.setState({
+        rewards: this.state.rewards
+      });
+    }
+  }
+
+  activateReward(idx, reward) {
+    let rewardUnaltered = this.state.rewards[idx];
+    this.state.rewards[idx].updating = true;
+    this.state.rewards[idx].active = true;
+    this.setState({
+      rewards: this.state.rewards
+    });
+
+    let active = { 'active': true };
+    fetch(`${process.env.API_DOMAIN}/rewards/${reward.id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${auth.getToken()}`
+      },
+      body: active
+    }).then (response => {
+      let values = response.json ();
+      let ok = response.ok;
+      if (!ok){
+        throw values;
+      }
+      return values;
+    }).then(reward => {
+      this.state.rewards[idx] = reward;
+      this.setState({
+        rewards: this.state.rewards
+      });
+    }).catch(err => {
+      this.state.rewards[idx] = rewardUnaltered;
+      this.setState({
+        rewards: this.state.rewards
+      });
+      console.log('Error with activate reward request');
+      console.log(err);
+
     });
   }
 
@@ -123,6 +181,7 @@ class RewardContainer extends React.Component {
         reward.updating = false;
         reward.interacting = false;
         reward.active = true;
+        reward.undoDuration = null;
         return reward;
       });
       this.setState({
@@ -145,6 +204,7 @@ class RewardContainer extends React.Component {
           onUpdated={this.updatedReward.bind(this)} 
           onToggle={this.toggleEditing.bind(this)}
           onDeactivate={this.deactivateReward.bind(this)}
+          onActivate={this.activateReward.bind(this)}
           onInteract={this.interactWithReward.bind(this)} />
         <RewardForm 
           key={this.state.refresh}

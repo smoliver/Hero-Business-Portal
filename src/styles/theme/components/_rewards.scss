@@ -139,6 +139,44 @@
   fill: $failure-color;
 }
 
+.reward-deleted {
+  position: relative;
+  box-sizing: border-box;
+  @include display(flex);
+  @include justify-content(left);
+  @include align-items(center);
+  padding: 16px;
+  background-color: $gray-shade-2;
+  color: $white;
+  fill: $white;
+  margin: 0px 4px 4px;
+  transition: background-color .2s;
+}
+
+.reward-deleted:hover {
+  background-color: $potential-color;
+}
+
+.reward-deleted--name {
+  @include flex (1);
+  margin-bottom: 0px;
+}
+
+.reward-deleted--undo {
+  margin-bottom: -0.3em;
+  margin-left:.5em;
+}
+
+.reward-deleted--icon {
+  width: 1.4em;
+  height: 1.4em;
+  margin-bottom: .3em;
+  margin-left: .5em;
+  vertical-align: middle;
+}
+
+
+
 
 
 /* * * * * * * * * * * * * * * * * * * * 

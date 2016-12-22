@@ -47,6 +47,8 @@ class RewardForm extends React.Component {
         rewardData.updating = true;
         rewardData.active = true;
 
+        // Index is not bound to onUpdated
+        // The index of the Reward Form and reward item are not always the same
         let idx = this.props.onUpdating(rewardData);
         formData = JSON.stringify(formData);
 
