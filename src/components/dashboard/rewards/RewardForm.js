@@ -73,7 +73,6 @@ class RewardForm extends React.Component {
         e.preventDefault();
 
         var invalid = this.refs[name].validateAll();
-        console.log(invalid);
         if (Object.keys(invalid).length === 0) {
             // Valid
             next(e);

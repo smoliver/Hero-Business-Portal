@@ -89,16 +89,16 @@ class RewardContainer extends React.Component {
     this.setState({
       rewards: this.state.rewards
     });
-    let inactive = { 'active': false };
+    let inactive = { 'active' : false };
 
-    console.log (`${process.env.API_DOMAIN}/rewards/${reward.id}/`);
+
     fetch(`${process.env.API_DOMAIN}/rewards/${reward.id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${auth.getToken()}`
       },
-      body: inactive
+      body: JSON.stringify (inactive)
     }).then (response => {
       let values = response.json ();
       let ok = response.ok;
@@ -109,7 +109,7 @@ class RewardContainer extends React.Component {
     }).then((reward) => {
       // Deactivate the reward, but make it undoable
       this.state.rewards[idx].active = false;
-      this.state.rewards[idx].undoDuration = window.setTimeout (this.notUndoable.bind (this, idx), 10000);
+      this.state.rewards[idx].undoDuration = window.setTimeout (this.notUndoable.bind (this, idx), 8000);
       this.setState({
         rewards: this.state.rewards
       });
@@ -136,14 +136,14 @@ class RewardContainer extends React.Component {
       rewards: this.state.rewards
     });
 
-    let active = { 'active': true };
+    let active = { 'active' : true };
     fetch(`${process.env.API_DOMAIN}/rewards/${reward.id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${auth.getToken()}`
       },
-      body: active
+      body: JSON.stringify (active)
     }).then (response => {
       let values = response.json ();
       let ok = response.ok;
